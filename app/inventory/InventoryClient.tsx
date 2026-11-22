@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Search,
@@ -551,14 +550,15 @@ export default function InventoryClient({
                 <span>انتخاب سریع گوشی</span>
               </div>
               {hasActiveFilters && (
-                <button
-                  type="button"
+                <MetalButton
+                  size="xs"
+                  preset="silver"
                   onClick={resetAllFilters}
-                  className="text-xs font-semibold text-blue-700 dark:text-blue-300 hover:underline cursor-pointer inline-flex items-center gap-1"
+                  innerClassName="px-2.5 text-xs"
                 >
-                  <RotateCcw className="w-3.5 h-3.5" />
+                  <RotateCcw className="w-3 h-3 shrink-0" />
                   <span>پاک کردن</span>
-                </button>
+                </MetalButton>
               )}
             </div>
 
