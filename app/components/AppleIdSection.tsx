@@ -16,6 +16,8 @@ import {
   RotateCcw,
 } from "lucide-react";
 import config from "../../config.json";
+import HaloButton from "./ui/HaloButton";
+import MetalButton from "./ui/MetalButton";
 
 interface AppleIdSectionProps {
   lalezarClassName?: string;
@@ -172,46 +174,38 @@ export default function AppleIdSection({ lalezarClassName = "" }: AppleIdSection
           </div>
 
           <div className="w-full max-w-sm flex flex-col gap-2.5">
-            <a
-              href={telegramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="min-h-[48px] w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 active:scale-[0.98] text-white font-bold text-sm transition-all flex items-center justify-center gap-2"
-            >
+            <HaloButton href={telegramUrl} tone="blue" size="md" fullWidth>
               <Send className="w-4 h-4 shrink-0" />
               <span>ارسال سفارش در تلگرام</span>
-            </a>
+            </HaloButton>
 
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="min-h-[48px] w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 active:scale-[0.98] text-white dark:text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2"
-            >
+            <HaloButton href={whatsappUrl} tone="emerald" size="md" fullWidth>
               <MessageCircle className="w-4 h-4 shrink-0" />
               <span>ارسال سفارش در واتساپ</span>
-            </a>
+            </HaloButton>
 
-            <button
-              type="button"
+            <MetalButton
+              preset="silver"
+              size="md"
+              fullWidth
               onClick={() => handleCopyMessage(preparedMessage)}
-              className="min-h-[44px] w-full py-2.5 px-4 rounded-xl bg-white dark:bg-[#11192e] hover:bg-blue-50 dark:hover:bg-[#182442] text-[#0a1628] dark:text-slate-100 text-sm font-semibold transition-colors border border-blue-200 dark:border-blue-400/20 flex items-center justify-center gap-2 cursor-pointer"
             >
               {copied ? <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-4 h-4" />}
               <span>{copied ? "متن سفارش کپی شد" : "کپی متن سفارش"}</span>
-            </button>
+            </MetalButton>
 
-            <button
-              type="button"
+            <MetalButton
+              preset="silver"
+              size="sm"
+              fullWidth
               onClick={() => {
                 setPreparedMessage(null);
                 setCopied(false);
               }}
-              className="mt-1 py-2 text-sm text-slate-600 dark:text-slate-400 hover:text-[#0a1628] dark:hover:text-white transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>بازگشت و ویرایش اطلاعات</span>
-            </button>
+            </MetalButton>
           </div>
         </div>
       ) : (
@@ -288,22 +282,20 @@ export default function AppleIdSection({ lalezarClassName = "" }: AppleIdSection
           )}
 
           <div className="flex flex-col sm:flex-row gap-3 mt-1">
-            <button
-              type="submit"
-              className="min-h-[52px] flex-1 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 active:scale-[0.98] text-white font-bold text-base transition-all flex items-center justify-center gap-2 cursor-pointer touch-manipulation shadow-[0_6px_20px_rgba(11,99,246,0.20)]"
-            >
+            <HaloButton type="submit" tone="blue" size="lg" className="flex-1">
               <Send className="w-4 h-4 shrink-0" />
               <span>آماده‌سازی و ارسال سفارش</span>
-            </button>
+            </HaloButton>
 
-            <button
-              type="button"
+            <MetalButton
+              preset="silver"
+              size="lg"
               onClick={() => handleCopyMessage()}
-              className="min-h-[52px] sm:w-auto py-3 px-5 rounded-xl bg-blue-50/70 dark:bg-[#11192e] hover:bg-blue-100/80 dark:hover:bg-[#182442] text-[#0a1628] dark:text-slate-100 font-semibold text-sm transition-colors border border-blue-200 dark:border-blue-400/20 flex items-center justify-center gap-2 cursor-pointer touch-manipulation whitespace-nowrap"
+              className="sm:w-auto"
             >
               {copied ? <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-4 h-4" />}
               <span>{copied ? "کپی شد" : "کپی متن سفارش"}</span>
-            </button>
+            </MetalButton>
           </div>
         </form>
       )}

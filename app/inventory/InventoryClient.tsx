@@ -22,6 +22,8 @@ import type { InventoryItem } from "./page";
 import config from "../../config.json";
 import TopNav from "../components/TopNav";
 import ThemeToggle from "../components/ThemeToggle";
+import HaloButton from "../components/ui/HaloButton";
+import MetalButton, { MetalIconButton } from "../components/ui/MetalButton";
 import InventoryCard from "./components/InventoryCard";
 import TechnicalInspectionSheet from "./components/TechnicalInspectionSheet";
 import {
@@ -267,13 +269,15 @@ export default function InventoryClient({
           </div>
 
           <div className="flex items-center gap-2.5">
-            <a
+            <MetalButton
               href={config.contact.phoneUrl}
-              className="hidden sm:inline-flex min-h-[40px] px-3.5 py-1.5 rounded-xl bg-white dark:bg-[#0b101d] border border-blue-200 dark:border-blue-400/20 text-[#0a1628] dark:text-slate-100 text-xs font-bold items-center gap-1.5 hover:bg-blue-50/70 dark:hover:bg-[#11192e] transition-colors"
+              preset="silver"
+              size="xs"
+              className="hidden sm:inline-flex"
             >
-              <PhoneCall className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <PhoneCall className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
               <span className="tabular-nums">{config.contact.phone}</span>
-            </a>
+            </MetalButton>
             <ThemeToggle />
           </div>
         </div>
@@ -339,27 +343,25 @@ export default function InventoryClient({
               )}
             </div>
 
-            <button
-              type="button"
+            <MetalButton
+              size="md"
+              preset={showMobileAdvanced || advancedFilterCount > 0 ? "chromatic" : "silver"}
+              active={showMobileAdvanced || advancedFilterCount > 0}
               onClick={() => setShowMobileAdvanced((prev) => !prev)}
-              aria-expanded={showMobileAdvanced}
-              className={`min-h-[46px] px-3.5 py-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap touch-manipulation ${
-                showMobileAdvanced || advancedFilterCount > 0
-                  ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400"
-                  : "bg-blue-50/70 dark:bg-[#11192e] border-blue-100 dark:border-blue-400/20 text-[#0a1628] dark:text-slate-200"
-              }`}
+              ariaExpanded={showMobileAdvanced}
+              innerClassName="px-3.5 text-xs"
             >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
+              <SlidersHorizontal className="w-3.5 h-3.5 shrink-0" />
               <span>فیلترها</span>
               {advancedFilterCount > 0 && (
                 <span className="px-1.5 py-0.5 rounded bg-white text-blue-700 text-[11px] font-mono tabular-nums leading-none font-bold">
                   {advancedFilterCount}
                 </span>
               )}
-            </button>
+            </MetalButton>
           </div>
 
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
             {(
               [
                 { id: "all", label: "همه" },
@@ -370,34 +372,32 @@ export default function InventoryClient({
             ).map((s) => {
               const active = selectedSeriesFilter === s.id;
               return (
-                <button
+                <MetalButton
                   key={s.id}
-                  type="button"
+                  size="xs"
+                  active={active}
                   onClick={() => {
                     setSelectedSeriesFilter(active && s.id !== "all" ? "all" : s.id);
                     setSelectedModelFilter("all");
                   }}
-                  className={`min-h-[38px] py-1.5 px-3.5 rounded-xl text-xs font-semibold border cursor-pointer whitespace-nowrap shrink-0 touch-manipulation ${
-                    active
-                      ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400 font-bold"
-                      : "bg-blue-50/60 dark:bg-[#11192e]/80 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300"
-                  }`}
                 >
                   {s.label}
-                </button>
+                </MetalButton>
               );
             })}
 
-            <button
-              type="button"
+            <MetalButton
+              size="xs"
+              preset={sortOption !== "default" ? "chromatic" : "silver"}
+              active={sortOption !== "default"}
               onClick={() =>
                 setSortOption((prev) =>
                   prev === "default" ? "price-asc" : prev === "price-asc" ? "price-desc" : "default"
                 )
               }
-              className="min-h-[38px] py-1.5 px-3 rounded-xl bg-blue-50/70 dark:bg-[#11192e] border border-blue-100 dark:border-blue-400/18 text-[#0a1628] dark:text-slate-200 text-xs font-semibold flex items-center gap-1 whitespace-nowrap shrink-0 mr-auto touch-manipulation"
+              className="mr-auto"
             >
-              <ArrowUpDown className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <ArrowUpDown className={`w-3.5 h-3.5 shrink-0 ${sortOption !== "default" ? "text-white" : "text-blue-600 dark:text-blue-400"}`} />
               <span>
                 {sortOption === "default"
                   ? "پیشنهادی"
@@ -405,7 +405,7 @@ export default function InventoryClient({
                   ? "ارزان‌ترین"
                   : "گران‌ترین"}
               </span>
-            </button>
+            </MetalButton>
           </div>
 
           <AnimatePresence initial={false}>
@@ -419,149 +419,118 @@ export default function InventoryClient({
               >
                 <div className="flex flex-col gap-3 pt-3 border-t border-blue-100 dark:border-blue-400/15">
                   <div className="grid grid-cols-3 gap-1.5">
-                    <button
-                      type="button"
+                    <MetalButton
+                      size="xs"
+                      fullWidth
+                      active={registryFilter === "all"}
                       onClick={() => setRegistryFilter("all")}
-                      className={`min-h-[40px] rounded-xl text-xs font-semibold border ${
-                        registryFilter === "all"
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 font-bold"
-                          : "bg-blue-50/60 dark:bg-[#11192e]/80 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300"
-                      }`}
                     >
                       همه ({items.length})
-                    </button>
-                    <button
-                      type="button"
+                    </MetalButton>
+                    <MetalButton
+                      size="xs"
+                      fullWidth
+                      active={registryFilter === "with-reg"}
                       onClick={() =>
                         setRegistryFilter(registryFilter === "with-reg" ? "all" : "with-reg")
                       }
-                      className={`min-h-[40px] rounded-xl text-xs font-semibold border ${
-                        registryFilter === "with-reg"
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 font-bold"
-                          : "bg-blue-50/60 dark:bg-[#11192e]/80 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300"
-                      }`}
                     >
                       با رجیستر ({registryCounts.withReg})
-                    </button>
-                    <button
-                      type="button"
+                    </MetalButton>
+                    <MetalButton
+                      size="xs"
+                      fullWidth
+                      active={registryFilter === "no-reg"}
                       onClick={() =>
                         setRegistryFilter(registryFilter === "no-reg" ? "all" : "no-reg")
                       }
-                      className={`min-h-[40px] rounded-xl text-xs font-semibold border ${
-                        registryFilter === "no-reg"
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 font-bold"
-                          : "bg-blue-50/60 dark:bg-[#11192e]/80 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300"
-                      }`}
                     >
                       بدون رجیستر ({registryCounts.noReg})
-                    </button>
+                    </MetalButton>
                   </div>
 
-                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-                    <button
-                      type="button"
+                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+                    <MetalButton
+                      size="xs"
+                      active={selectedModelFilter === "all"}
                       onClick={() => setSelectedModelFilter("all")}
-                      className={`min-h-[38px] px-3 rounded-xl text-xs font-semibold border whitespace-nowrap ${
-                        selectedModelFilter === "all"
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 font-bold"
-                          : "bg-blue-50/60 dark:bg-[#11192e]/80 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300"
-                      }`}
                     >
                       همه مدل‌ها
-                    </button>
+                    </MetalButton>
                     {availableModels.map((m) => (
-                      <button
+                      <MetalButton
                         key={m.name}
-                        type="button"
+                        size="xs"
                         dir="ltr"
+                        active={selectedModelFilter === m.name}
                         onClick={() =>
                           setSelectedModelFilter(selectedModelFilter === m.name ? "all" : m.name)
                         }
-                        className={`min-h-[38px] px-3 rounded-xl text-xs font-semibold border whitespace-nowrap ${
-                          selectedModelFilter === m.name
-                            ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 font-bold"
-                            : "bg-blue-50/60 dark:bg-[#11192e]/80 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-200"
-                        }`}
                       >
                         {m.name} ({m.count})
-                      </button>
+                      </MetalButton>
                     ))}
                   </div>
 
                   <div className="flex flex-wrap gap-1.5">
-                    <button
-                      type="button"
+                    <MetalButton
+                      size="xs"
+                      active={selectedCapacityFilter === "all"}
                       onClick={() => setSelectedCapacityFilter("all")}
-                      className={`min-h-[38px] px-3 rounded-xl text-xs font-semibold border ${
-                        selectedCapacityFilter === "all"
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 font-bold"
-                          : "bg-blue-50/60 dark:bg-[#11192e]/80 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300"
-                      }`}
                     >
                       همه ظرفیت‌ها
-                    </button>
+                    </MetalButton>
                     {availableCapacities.map((cap) => (
-                      <button
+                      <MetalButton
                         key={cap}
-                        type="button"
+                        size="xs"
+                        active={selectedCapacityFilter === cap}
                         onClick={() =>
                           setSelectedCapacityFilter(selectedCapacityFilter === cap ? "all" : cap)
                         }
-                        className={`min-h-[38px] px-3 rounded-xl text-xs font-mono font-semibold border ${
-                          selectedCapacityFilter === cap
-                            ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 font-bold"
-                            : "bg-blue-50/60 dark:bg-[#11192e]/80 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-200"
-                        }`}
+                        innerClassName="font-mono"
                       >
                         {cap}
-                      </button>
+                      </MetalButton>
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-                    <button
-                      type="button"
+                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+                    <MetalButton
+                      size="xs"
+                      active={selectedColorFilter === "all"}
                       onClick={() => setSelectedColorFilter("all")}
-                      className={`min-h-[38px] px-3 rounded-xl text-xs font-semibold border whitespace-nowrap ${
-                        selectedColorFilter === "all"
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 font-bold"
-                          : "bg-blue-50/60 dark:bg-[#11192e]/80 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300"
-                      }`}
                     >
                       همه رنگ‌ها
-                    </button>
+                    </MetalButton>
                     {availableColors.map((col) => (
-                      <button
+                      <MetalButton
                         key={col.name}
-                        type="button"
+                        size="xs"
+                        active={selectedColorFilter === col.name}
                         onClick={() =>
                           setSelectedColorFilter(selectedColorFilter === col.name ? "all" : col.name)
                         }
-                        className={`min-h-[38px] px-3 rounded-xl text-xs font-semibold border flex items-center gap-2 whitespace-nowrap ${
-                          selectedColorFilter === col.name
-                            ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600"
-                            : "bg-blue-50/60 dark:bg-[#11192e]/80 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-200"
-                        }`}
                       >
                         <span
                           className="w-3 h-3 rounded-full border border-black/20 dark:border-white/40 shrink-0"
                           style={{ backgroundColor: col.hex }}
                         />
                         <span>{col.compactName}</span>
-                      </button>
+                      </MetalButton>
                     ))}
                   </div>
 
                   {hasActiveFilters && (
-                    <button
-                      type="button"
+                    <MetalButton
+                      size="sm"
+                      preset="chromatic"
+                      fullWidth
                       onClick={resetAllFilters}
-                      className="min-h-[42px] w-full rounded-xl bg-blue-50 dark:bg-blue-500/15 border border-blue-200 dark:border-blue-400/30 text-blue-800 dark:text-blue-200 text-xs font-semibold flex items-center justify-center gap-1.5"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
                       <span>پاک کردن همه فیلترها</span>
-                    </button>
+                    </MetalButton>
                   )}
                 </div>
               </motion.div>
@@ -637,32 +606,32 @@ export default function InventoryClient({
                     hint: "قیمت اقتصادی‌تر",
                   },
                 ].map((opt) => (
-                  <button
+                  <MetalButton
                     key={opt.id}
-                    type="button"
+                    size="sm"
+                    fullWidth
+                    active={registryFilter === opt.id}
                     onClick={() => {
                       setRegistryFilter(opt.id);
                       setSelectedModelFilter("all");
                     }}
-                    className={`min-h-[42px] px-3 py-2 rounded-xl text-xs font-semibold text-right border transition-colors cursor-pointer flex flex-col gap-0.5 ${
-                      registryFilter === opt.id
-                        ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400 font-bold"
-                        : "bg-blue-50/50 dark:bg-[#11192e]/60 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300 hover:bg-blue-100/70 dark:hover:bg-[#182442]"
-                    }`}
+                    innerClassName="justify-start text-right py-2 px-3"
                   >
-                    <span>{opt.label}</span>
-                    {opt.hint && (
-                      <span
-                        className={`text-[11px] font-normal ${
-                          registryFilter === opt.id
-                            ? "text-blue-100"
-                            : "text-slate-500 dark:text-slate-400"
-                        }`}
-                      >
-                        {opt.hint}
-                      </span>
-                    )}
-                  </button>
+                    <span className="flex flex-col items-start gap-0.5 text-right w-full">
+                      <span className="text-xs">{opt.label}</span>
+                      {opt.hint && (
+                        <span
+                          className={`text-[11px] font-normal ${
+                            registryFilter === opt.id
+                              ? "text-blue-100"
+                              : "text-slate-500 dark:text-slate-400"
+                          }`}
+                        >
+                          {opt.hint}
+                        </span>
+                      )}
+                    </span>
+                  </MetalButton>
                 ))}
               </div>
             </div>
@@ -681,21 +650,18 @@ export default function InventoryClient({
                 ).map((s) => {
                   const active = selectedSeriesFilter === s.id;
                   return (
-                    <button
+                    <MetalButton
                       key={s.id}
-                      type="button"
+                      size="xs"
+                      fullWidth
+                      active={active}
                       onClick={() => {
                         setSelectedSeriesFilter(active && s.id !== "all" ? "all" : s.id);
                         setSelectedModelFilter("all");
                       }}
-                      className={`min-h-[38px] px-2.5 py-1.5 rounded-xl text-xs font-semibold border transition-colors cursor-pointer ${
-                        active
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400 font-bold"
-                          : "bg-blue-50/50 dark:bg-[#11192e]/60 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300 hover:bg-blue-100/70 dark:hover:bg-[#182442]"
-                      }`}
                     >
                       {s.label}
-                    </button>
+                    </MetalButton>
                   );
                 })}
               </div>
@@ -704,36 +670,36 @@ export default function InventoryClient({
             {/* Models */}
             <div className="flex flex-col gap-2 pt-3 border-t border-blue-100 dark:border-blue-400/15">
               <span className="text-xs font-bold text-slate-700 dark:text-slate-300">مدل دقیق</span>
-              <div className="flex flex-col gap-1">
-                <button
-                  type="button"
+              <div className="flex flex-col gap-1.5">
+                <MetalButton
+                  size="xs"
+                  fullWidth
+                  active={selectedModelFilter === "all"}
                   onClick={() => setSelectedModelFilter("all")}
-                  className={`min-h-[38px] px-3 py-1.5 rounded-xl text-xs font-semibold text-right transition-colors cursor-pointer ${
-                    selectedModelFilter === "all"
-                      ? "bg-blue-50 dark:bg-blue-500/20 text-blue-800 dark:text-blue-200 font-bold"
-                      : "text-slate-600 dark:text-slate-300 hover:bg-blue-50/60 dark:hover:bg-[#11192e]"
-                  }`}
+                  innerClassName="justify-start px-3"
                 >
                   همه مدل‌ها
-                </button>
+                </MetalButton>
                 {availableModels.map((m) => {
                   const active = selectedModelFilter === m.name;
                   return (
-                    <button
+                    <MetalButton
                       key={m.name}
-                      type="button"
+                      size="xs"
+                      fullWidth
+                      active={active}
                       onClick={() => setSelectedModelFilter(active ? "all" : m.name)}
-                      className={`min-h-[38px] px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
-                        active
-                          ? "bg-blue-50 dark:bg-blue-500/20 text-blue-800 dark:text-blue-200 font-bold"
-                          : "text-slate-700 dark:text-slate-300 hover:bg-blue-50/60 dark:hover:bg-[#11192e]"
-                      }`}
+                      innerClassName="justify-between px-3"
                     >
                       <span dir="ltr">{m.name}</span>
-                      <span className="text-xs font-mono tabular-nums text-slate-500 dark:text-slate-400">
+                      <span
+                        className={`text-xs font-mono tabular-nums ${
+                          active ? "text-blue-100" : "text-slate-500 dark:text-slate-400"
+                        }`}
+                      >
                         {m.count}
                       </span>
-                    </button>
+                    </MetalButton>
                   );
                 })}
               </div>
@@ -746,18 +712,15 @@ export default function InventoryClient({
                 {availableCapacities.map((cap) => {
                   const active = selectedCapacityFilter === cap;
                   return (
-                    <button
+                    <MetalButton
                       key={cap}
-                      type="button"
+                      size="xs"
+                      active={active}
                       onClick={() => setSelectedCapacityFilter(active ? "all" : cap)}
-                      className={`min-h-[38px] px-3 py-1 rounded-xl text-xs font-mono font-semibold border transition-colors cursor-pointer ${
-                        active
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 font-bold"
-                          : "bg-blue-50/50 dark:bg-[#11192e]/60 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300 hover:bg-blue-100/70 dark:hover:bg-[#182442]"
-                      }`}
+                      innerClassName="font-mono"
                     >
                       {cap}
-                    </button>
+                    </MetalButton>
                   );
                 })}
               </div>
@@ -770,22 +733,18 @@ export default function InventoryClient({
                 {availableColors.map((col) => {
                   const active = selectedColorFilter === col.name;
                   return (
-                    <button
+                    <MetalButton
                       key={col.name}
-                      type="button"
+                      size="xs"
+                      active={active}
                       onClick={() => setSelectedColorFilter(active ? "all" : col.name)}
-                      className={`min-h-[36px] px-2.5 py-1 rounded-xl text-xs font-semibold border flex items-center gap-1.5 transition-colors cursor-pointer ${
-                        active
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600"
-                          : "bg-blue-50/50 dark:bg-[#11192e]/60 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300 hover:bg-blue-100/70 dark:hover:bg-[#182442]"
-                      }`}
                     >
                       <span
                         className="w-3 h-3 rounded-full border border-black/20 dark:border-white/40 shrink-0"
                         style={{ backgroundColor: col.hex }}
                       />
                       <span>{col.compactName}</span>
-                    </button>
+                    </MetalButton>
                   );
                 })}
               </div>
@@ -802,18 +761,15 @@ export default function InventoryClient({
                     { id: "active", label: "اکتیو" },
                   ] as const
                 ).map((st) => (
-                  <button
+                  <MetalButton
                     key={st.id}
-                    type="button"
+                    size="xs"
+                    fullWidth
+                    active={activationFilter === st.id}
                     onClick={() => setActivationFilter(st.id)}
-                    className={`min-h-[38px] px-2 py-1 rounded-xl text-xs font-semibold border transition-colors cursor-pointer ${
-                      activationFilter === st.id
-                        ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 font-bold"
-                        : "bg-blue-50/50 dark:bg-[#11192e]/60 border-blue-100 dark:border-blue-400/15 text-slate-700 dark:text-slate-300 hover:bg-blue-100/70 dark:hover:bg-[#182442]"
-                    }`}
                   >
                     {st.label}
-                  </button>
+                  </MetalButton>
                 ))}
               </div>
             </div>
@@ -831,16 +787,17 @@ export default function InventoryClient({
               </div>
 
               <div className="flex items-center gap-2">
-                <button
-                  type="button"
+                <MetalButton
+                  size="xs"
+                  preset={sortOption !== "default" ? "chromatic" : "silver"}
+                  active={sortOption !== "default"}
                   onClick={() =>
                     setSortOption((prev) =>
                       prev === "default" ? "price-asc" : prev === "price-asc" ? "price-desc" : "default"
                     )
                   }
-                  className="min-h-[40px] px-3.5 py-1.5 rounded-xl bg-blue-50/70 dark:bg-[#11192e] border border-blue-100 dark:border-blue-400/20 text-[#0a1628] dark:text-slate-200 hover:bg-blue-100/80 dark:hover:bg-[#182442] text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap transition-colors"
                 >
-                  <ArrowUpDown className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                  <ArrowUpDown className={`w-3.5 h-3.5 shrink-0 ${sortOption !== "default" ? "text-white" : "text-blue-600 dark:text-blue-400"}`} />
                   <span>
                     {sortOption === "default"
                       ? "مرتب‌سازی: پیشنهادی"
@@ -848,35 +805,29 @@ export default function InventoryClient({
                       ? "مرتب‌سازی: ارزان‌ترین"
                       : "مرتب‌سازی: گران‌ترین"}
                   </span>
-                </button>
+                </MetalButton>
 
-                <div className="flex items-center gap-1 bg-blue-50/70 dark:bg-[#11192e] p-1 rounded-xl border border-blue-100 dark:border-blue-400/20">
-                  <button
-                    type="button"
+                <div className="flex items-center gap-1.5">
+                  <MetalButton
+                    size="xs"
+                    preset={viewMode === "cards" ? "chromatic" : "silver"}
+                    active={viewMode === "cards"}
                     onClick={() => setViewMode("cards")}
-                    aria-label="نمای کارتی"
-                    className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors whitespace-nowrap ${
-                      viewMode === "cards"
-                        ? "bg-blue-600 text-white font-bold shadow-xs"
-                        : "text-slate-600 dark:text-slate-300 hover:text-[#0a1628] dark:hover:text-white"
-                    }`}
+                    ariaLabel="نمای کارتی"
                   >
-                    <LayoutGrid className="w-3.5 h-3.5" />
+                    <LayoutGrid className="w-3.5 h-3.5 shrink-0" />
                     <span>کارتی</span>
-                  </button>
-                  <button
-                    type="button"
+                  </MetalButton>
+                  <MetalButton
+                    size="xs"
+                    preset={viewMode === "table" ? "chromatic" : "silver"}
+                    active={viewMode === "table"}
                     onClick={() => setViewMode("table")}
-                    aria-label="نمای جدولی مقایسه‌ای"
-                    className={`min-h-[34px] px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors whitespace-nowrap ${
-                      viewMode === "table"
-                        ? "bg-blue-600 text-white font-bold shadow-xs"
-                        : "text-slate-600 dark:text-slate-300 hover:text-[#0a1628] dark:hover:text-white"
-                    }`}
+                    ariaLabel="نمای جدولی مقایسه‌ای"
                   >
-                    <Table2 className="w-3.5 h-3.5" />
+                    <Table2 className="w-3.5 h-3.5 shrink-0" />
                     <span>جدولی</span>
-                  </button>
+                  </MetalButton>
                 </div>
               </div>
             </div>
@@ -894,19 +845,12 @@ export default function InventoryClient({
                   فیلترها را پاک کنید یا مدل دلخواه خود را در صف انتظار VIP ثبت کنید تا به محض موجود شدن با شما تماس بگیریم.
                 </p>
                 <div className="flex items-center gap-2.5 mt-2">
-                  <button
-                    type="button"
-                    onClick={resetAllFilters}
-                    className="min-h-[44px] px-4 py-2 rounded-xl bg-blue-600 dark:bg-blue-500 text-white text-sm font-semibold cursor-pointer transition-opacity hover:opacity-90"
-                  >
+                  <HaloButton tone="blue" size="sm" onClick={resetAllFilters}>
                     نمایش کل موجودی
-                  </button>
-                  <Link
-                    href="/?tab=waitlist#services"
-                    className="min-h-[44px] px-4 py-2 rounded-xl bg-blue-50 dark:bg-[#11192e] border border-blue-200 dark:border-blue-400/25 text-blue-700 dark:text-blue-300 text-sm font-bold transition-colors inline-flex items-center"
-                  >
+                  </HaloButton>
+                  <MetalButton href="/?tab=waitlist#services" preset="silver" size="sm">
                     ثبت در صف VIP
-                  </Link>
+                  </MetalButton>
                 </div>
               </div>
             ) : (
@@ -1100,38 +1044,28 @@ export default function InventoryClient({
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
-            <a
-              href={config.contact.phoneUrl}
-              className="min-h-[42px] flex items-center gap-1.5 px-3 py-2 rounded-xl bg-blue-600 dark:bg-blue-500 text-white text-xs font-bold active:scale-95 transition-all whitespace-nowrap touch-manipulation"
-            >
-              <PhoneCall className="w-3.5 h-3.5" />
+            <HaloButton href={config.contact.phoneUrl} tone="blue" size="sm">
+              <PhoneCall className="w-3.5 h-3.5 shrink-0" />
               <span>تماس</span>
-            </a>
-            <Link
-              href="/?tab=waitlist#services"
-              className="min-h-[42px] flex items-center gap-1 px-3 py-2 rounded-xl bg-blue-50 dark:bg-[#11192e] border border-blue-200 dark:border-blue-400/25 text-blue-700 dark:text-blue-300 text-xs font-bold active:scale-95 transition-all whitespace-nowrap touch-manipulation"
-            >
-              <Target className="w-3.5 h-3.5" />
+            </HaloButton>
+            <MetalButton href="/?tab=waitlist#services" preset="silver" size="sm">
+              <Target className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
               <span>صف VIP</span>
-            </Link>
-            <a
+            </MetalButton>
+            <MetalIconButton
               href={config.contact.telegramExpertUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-[42px] h-[42px] flex items-center justify-center rounded-xl bg-sky-50 dark:bg-sky-500/15 border border-sky-200 dark:border-sky-400/30 text-sky-600 dark:text-sky-300 active:scale-95 transition-all touch-manipulation"
-              aria-label="ارتباط با کارشناس تلگرام"
+              preset="chromatic"
+              ariaLabel="ارتباط با کارشناس تلگرام"
             >
-              <Send className="w-4 h-4" />
-            </a>
-            <a
+              <Send className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+            </MetalIconButton>
+            <MetalIconButton
               href={config.contact.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-[42px] h-[42px] flex items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-500/15 border border-emerald-200 dark:border-emerald-400/30 text-emerald-600 dark:text-emerald-300 active:scale-95 transition-all touch-manipulation"
-              aria-label="ارتباط در واتساپ"
+              preset="silver"
+              ariaLabel="ارتباط در واتساپ"
             >
-              <MessageCircle className="w-4 h-4" />
-            </a>
+              <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            </MetalIconButton>
           </div>
         </div>
       </div>

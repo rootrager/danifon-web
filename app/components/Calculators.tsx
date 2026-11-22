@@ -4,6 +4,8 @@ import React, { useState, useMemo, useEffect, useId } from "react";
 import { Calculator, ShieldCheck, Send, MessageCircle, AlertTriangle, ChevronDown } from "lucide-react";
 import config from "../../config.json";
 import { formatMillionHelper } from "../inventory/components/inventoryHelpers";
+import HaloButton from "./ui/HaloButton";
+import MetalButton from "./ui/MetalButton";
 
 interface CalculatorsProps {
   lalezarClassName?: string;
@@ -141,32 +143,28 @@ export default function Calculators({
   return (
     <div className="w-full flex flex-col gap-5" dir="rtl">
       {!hideHeaderTabs && (
-        <div className="grid grid-cols-2 gap-1.5 bg-blue-50/70 dark:bg-[#060913] p-1 rounded-xl border border-blue-100 dark:border-blue-400/15">
-          <button
-            type="button"
+        <div className="grid grid-cols-2 gap-2">
+          <MetalButton
+            size="sm"
+            fullWidth
+            preset={currentTab === "installment" ? "chromatic" : "silver"}
+            active={currentTab === "installment"}
             onClick={() => handleTabSwitch("installment")}
-            className={`min-h-[42px] py-2 px-3 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation ${
-              currentTab === "installment"
-                ? "bg-blue-600 text-white shadow-xs"
-                : "text-slate-600 dark:text-slate-300 hover:text-[#0a1628] dark:hover:text-white"
-            }`}
           >
-            <Calculator className="w-4 h-4" />
+            <Calculator className="w-4 h-4 shrink-0" />
             <span>محاسبه اقساط</span>
-          </button>
+          </MetalButton>
 
-          <button
-            type="button"
+          <MetalButton
+            size="sm"
+            fullWidth
+            preset={currentTab === "registry" ? "chromatic" : "silver"}
+            active={currentTab === "registry"}
             onClick={() => handleTabSwitch("registry")}
-            className={`min-h-[42px] py-2 px-3 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer touch-manipulation ${
-              currentTab === "registry"
-                ? "bg-blue-600 text-white shadow-xs"
-                : "text-slate-600 dark:text-slate-300 hover:text-[#0a1628] dark:hover:text-white"
-            }`}
           >
-            <ShieldCheck className="w-4 h-4" />
+            <ShieldCheck className="w-4 h-4 shrink-0" />
             <span>محاسبه رجیستری</span>
-          </button>
+          </MetalButton>
         </div>
       )}
 
@@ -234,18 +232,15 @@ export default function Calculators({
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {PRESET_AMOUNTS.map((p) => (
-                <button
+                <MetalButton
                   key={p.value}
-                  type="button"
+                  size="sm"
+                  fullWidth
+                  active={parsedAmount === p.value}
                   onClick={() => setAmountStr(String(p.value))}
-                  className={`min-h-[42px] py-2 px-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap touch-manipulation border ${
-                    parsedAmount === p.value
-                      ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400 font-bold"
-                      : "bg-blue-50/60 dark:bg-[#11192e]/80 text-slate-700 dark:text-slate-300 hover:bg-blue-100/70 dark:hover:bg-[#182442] border-blue-100 dark:border-blue-400/15"
-                  }`}
                 >
                   {p.label}
-                </button>
+                </MetalButton>
               ))}
             </div>
 
@@ -270,18 +265,16 @@ export default function Calculators({
 
             <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
               {(config.installment.monthsOptions || [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).map((m) => (
-                <button
+                <MetalButton
                   key={m}
-                  type="button"
+                  size="sm"
+                  fullWidth
+                  active={selectedMonths === m}
                   onClick={() => setSelectedMonths(m)}
-                  className={`min-h-[42px] py-2 rounded-xl text-xs sm:text-sm font-semibold tabular-nums transition-colors cursor-pointer whitespace-nowrap touch-manipulation border ${
-                    selectedMonths === m
-                      ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400 font-bold"
-                      : "bg-blue-50/60 dark:bg-[#11192e]/80 text-slate-700 dark:text-slate-300 hover:bg-blue-100/70 dark:hover:bg-[#182442] border-blue-100 dark:border-blue-400/15"
-                  }`}
+                  innerClassName="tabular-nums px-2"
                 >
                   {m} ماه
-                </button>
+                </MetalButton>
               ))}
             </div>
           </div>
@@ -337,27 +330,23 @@ export default function Calculators({
           )}
 
           {isMonthlyExceeded || isInvalidAmount ? (
-            <button
-              type="button"
-              disabled
-              className="min-h-[52px] w-full py-3 px-4 bg-slate-100 dark:bg-white/[0.05] text-slate-400 dark:text-slate-500 font-bold rounded-xl cursor-not-allowed border border-slate-200 dark:border-white/[0.08] text-sm text-center"
-            >
+            <HaloButton tone="blue" size="lg" fullWidth disabled>
               {isInvalidAmount
                 ? "مبلغ اقساط را وارد کنید"
                 : "مبلغ قسط بالای سقف مجاز (۱۵ میلیون) است"}
-            </button>
+            </HaloButton>
           ) : (
-            <a
+            <HaloButton
               href={`${config.installment.telegramUrl}?text=${encodeURIComponent(
                 `سلام وقت بخیر، درخواست اقساط دارم.\nمبلغ اولیه: ${parsedAmount.toLocaleString("en-US")} تومان\nتعداد ماه: ${selectedMonths} ماه\nمبلغ هر قسط: ${Math.round(monthlyCheck).toLocaleString("en-US")} تومان`
               )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="min-h-[52px] w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 active:scale-[0.99] text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer touch-manipulation text-base shadow-[0_6px_20px_rgba(11,99,246,0.20)]"
+              tone="blue"
+              size="lg"
+              fullWidth
             >
               <Send className="w-4 h-4 shrink-0" />
               <span>ارسال شرایط اقساط به کارشناس</span>
-            </a>
+            </HaloButton>
           )}
         </div>
       )}
@@ -386,22 +375,18 @@ export default function Calculators({
 
           <div className="flex flex-col gap-2">
             <span className="text-sm font-semibold text-[#0a1628] dark:text-slate-200">۱. سری آیفون</span>
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
               {SERIES_FILTERS.map((s) => {
                 const isSelected = selectedSeries === s.id;
                 return (
-                  <button
+                  <MetalButton
                     key={s.id}
-                    type="button"
+                    size="sm"
+                    active={isSelected}
                     onClick={() => handleSeriesChange(s.id)}
-                    className={`min-h-[40px] py-1.5 px-3.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer touch-manipulation border ${
-                      isSelected
-                        ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400 font-bold"
-                        : "bg-blue-50/60 dark:bg-[#11192e]/80 text-slate-700 dark:text-slate-300 hover:text-[#0a1628] dark:hover:text-white hover:bg-blue-100/70 dark:hover:bg-[#182442] border-blue-100 dark:border-blue-400/15"
-                    }`}
                   >
                     {s.label}
-                  </button>
+                  </MetalButton>
                 );
               })}
             </div>
@@ -463,29 +448,29 @@ export default function Calculators({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <a
+            <HaloButton
               href={`${config.registry.whatsappUrl}?text=${encodeURIComponent(
                 `سلام وقت بخیر، قصد انجام رجیستری دارم.\nمدل دستگاه: ${currentModel.name}\nهزینه گمرک: ${formatCurrency(currentModel.customsFee)} تومان\nمبلغ کل رجیستری: ${formatCurrency(totalRegistryFee)} تومان`
               )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="min-h-[50px] py-3 px-4 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 active:scale-[0.98] text-white dark:text-slate-950 font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer text-sm touch-manipulation"
+              tone="emerald"
+              size="md"
+              fullWidth
             >
               <MessageCircle className="w-4 h-4 shrink-0" />
               <span>انجام رجیستری در واتساپ</span>
-            </a>
+            </HaloButton>
 
-            <a
+            <HaloButton
               href={`${config.registry.telegramUrl}?text=${encodeURIComponent(
                 `سلام وقت بخیر، قصد انجام رجیستری دارم.\nمدل دستگاه: ${currentModel.name}\nهزینه گمرک: ${formatCurrency(currentModel.customsFee)} تومان\nمبلغ کل رجیستری: ${formatCurrency(totalRegistryFee)} تومان`
               )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="min-h-[50px] py-3 px-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 active:scale-[0.98] text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer text-sm touch-manipulation"
+              tone="blue"
+              size="md"
+              fullWidth
             >
               <Send className="w-4 h-4 shrink-0" />
               <span>انجام رجیستری در تلگرام</span>
-            </a>
+            </HaloButton>
           </div>
         </div>
       )}

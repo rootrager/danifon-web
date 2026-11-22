@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useRef, Suspense } from "react";
-import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -29,6 +28,8 @@ import ThemeToggle from "./components/ThemeToggle";
 import Calculators from "./components/Calculators";
 import WaitlistSection from "./components/WaitlistSection";
 import AppleIdSection from "./components/AppleIdSection";
+import HaloButton from "./components/ui/HaloButton";
+import MetalButton, { MetalIconButton } from "./components/ui/MetalButton";
 
 type TabType = "waitlist" | "installment" | "registry" | "appleid";
 
@@ -177,9 +178,12 @@ function HomeContent() {
 
             {/* Primary & Direct Call Action Strip */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-              <Link
+              <HaloButton
                 href="/inventory"
-                className="min-h-[56px] flex-1 py-3 px-5 rounded-2xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 active:scale-[0.985] text-white flex items-center justify-between gap-3 transition-all group cursor-pointer touch-manipulation shadow-[0_10px_28px_rgba(11,99,246,0.22)] dark:shadow-[0_10px_28px_rgba(59,130,246,0.28)]"
+                tone="blue"
+                size="lg"
+                className="flex-1"
+                innerClassName="justify-between"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="flex items-center -space-x-2 space-x-reverse shrink-0">
@@ -207,15 +211,16 @@ function HomeContent() {
                 </div>
 
                 <ArrowLeft className="w-4 h-4 shrink-0 group-hover:-translate-x-0.5 transition-transform" />
-              </Link>
+              </HaloButton>
 
-              <a
+              <MetalButton
                 href={config.contact.phoneUrl}
-                className="min-h-[56px] px-5 py-3 rounded-2xl bg-white dark:bg-[#0b101d] hover:bg-blue-50/70 dark:hover:bg-[#11192e] border border-blue-200 dark:border-blue-400/25 text-[#0a1628] dark:text-white text-sm font-bold flex items-center justify-center gap-2 transition-colors whitespace-nowrap shrink-0 touch-manipulation"
+                preset="silver"
+                size="lg"
               >
                 <PhoneCall className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-                <span className="tabular-nums">تماس مستقیم: {config.contact.phone}</span>
-              </a>
+                <span className="tabular-nums font-bold">تماس مستقیم: {config.contact.phone}</span>
+              </MetalButton>
             </div>
           </div>
 
@@ -241,15 +246,15 @@ function HomeContent() {
                   ویترین موجودی آکبند فروشگاه
                 </span>
 
-                <button
-                  type="button"
+                <MetalIconButton
+                  preset="chromatic"
                   onClick={() => setIsVideoMuted((prev) => !prev)}
-                  className="min-w-[42px] min-h-[42px] rounded-full bg-[#04060c]/70 hover:bg-[#04060c]/90 backdrop-blur-md border border-blue-300/25 text-white flex items-center justify-center transition-colors cursor-pointer touch-manipulation"
+                  innerClassName="!bg-[#04060c]/80 !text-white !shadow-none hover:!bg-[#0b101d]/90"
                   title={isVideoMuted ? "پخش صدای ویدیو" : "بی‌صدا کردن ویدیو"}
-                  aria-label={isVideoMuted ? "پخش صدای ویدیو" : "بی‌صدا کردن ویدیو"}
+                  ariaLabel={isVideoMuted ? "پخش صدای ویدیو" : "بی‌صدا کردن ویدیو"}
                 >
                   {isVideoMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                </button>
+                </MetalIconButton>
               </div>
 
               <div className="absolute bottom-4 inset-x-4 flex items-end justify-between gap-3 pointer-events-none">
@@ -448,13 +453,10 @@ function HomeContent() {
               })}
             </div>
 
-            <a
-              href={config.contact.phoneUrl}
-              className="min-h-[50px] w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors touch-manipulation"
-            >
+            <HaloButton href={config.contact.phoneUrl} tone="blue" size="md" fullWidth>
               <PhoneCall className="w-4 h-4 shrink-0" />
               <span className="tabular-nums">تماس تلفنی با فروشگاه ({config.contact.phone})</span>
-            </a>
+            </HaloButton>
           </div>
 
           {/* Store Location & Routing */}
@@ -511,16 +513,16 @@ function HomeContent() {
                 { label: "بلد", url: config.location.baladUrl },
                 { label: "ویز", url: config.location.wazeUrl },
               ].map((navItem) => (
-                <a
+                <MetalButton
                   key={navItem.label}
                   href={navItem.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="min-h-[46px] py-2 px-3 rounded-xl bg-blue-50/70 dark:bg-[#11192e]/80 hover:bg-blue-100/80 dark:hover:bg-[#182442] active:scale-[0.98] border border-blue-100 dark:border-blue-400/18 text-[#0a1628] dark:text-white text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors whitespace-nowrap touch-manipulation"
+                  preset="silver"
+                  size="sm"
+                  fullWidth
                 >
-                  <Navigation className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  <Navigation className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                   <span>{navItem.label}</span>
-                </a>
+                </MetalButton>
               ))}
             </div>
           </div>

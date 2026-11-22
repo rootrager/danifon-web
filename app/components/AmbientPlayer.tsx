@@ -3,6 +3,7 @@
 import React, { useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Pause, Play } from "lucide-react";
+import MetalButton from "./ui/MetalButton";
 
 export default function AmbientPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -47,17 +48,16 @@ export default function AmbientPlayer() {
           isInventory ? "bottom-[84px] md:bottom-5" : "bottom-4 sm:bottom-5"
         }`}
       >
-        <button
-          type="button"
+        <MetalButton
+          size="sm"
+          preset={isPlaying ? "chromatic" : "silver"}
+          active={isPlaying}
           onClick={togglePlay}
-          className={`min-h-[40px] group flex items-center gap-2 px-3.5 py-2 rounded-full border backdrop-blur-xl transition-colors duration-200 cursor-pointer active:scale-95 shadow-sm touch-manipulation ${
-            isPlaying
-              ? "bg-blue-600 dark:bg-blue-500 border-blue-600 dark:border-blue-400 text-white"
-              : "bg-white/95 dark:bg-[#0b101d]/90 border-blue-200 dark:border-blue-400/20 text-[#0a1628] dark:text-slate-100 hover:border-blue-400 dark:hover:border-blue-400/50"
-          }`}
+          className="rounded-full"
+          innerClassName="rounded-full px-3.5"
           title={isPlaying ? "توقف موزیک پس‌زمینه" : "پخش موزیک لایت"}
-          aria-label={isPlaying ? "توقف موزیک پس‌زمینه" : "پخش موزیک لایت"}
-          aria-pressed={isPlaying}
+          ariaLabel={isPlaying ? "توقف موزیک پس‌زمینه" : "پخش موزیک لایت"}
+          ariaPressed={isPlaying}
         >
           <span className="flex items-end gap-[2px] h-3.5 w-3.5 shrink-0 justify-center" aria-hidden="true">
             <span
@@ -99,7 +99,7 @@ export default function AmbientPlayer() {
           ) : (
             <Play className="w-3.5 h-3.5 shrink-0 opacity-80" />
           )}
-        </button>
+        </MetalButton>
       </aside>
     </>
   );

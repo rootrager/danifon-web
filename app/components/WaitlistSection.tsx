@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import phonesData from "../data/phones.json";
 import config from "../../config.json";
+import HaloButton from "./ui/HaloButton";
+import MetalButton from "./ui/MetalButton";
 
 interface WaitlistSectionProps {
   lalezarClassName?: string;
@@ -297,14 +299,15 @@ export default function WaitlistSection({ lalezarClassName = "" }: WaitlistSecti
               </div>
             </div>
 
-            <button
-              type="button"
+            <HaloButton
+              tone="blue"
+              size="md"
               onClick={handleReset}
-              className="min-h-[46px] w-full max-w-sm py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 text-white font-semibold text-sm transition-colors cursor-pointer inline-flex items-center justify-center gap-2"
+              className="w-full max-w-sm"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-4 h-4 shrink-0" />
               <span>ثبت درخواست جدید</span>
-            </button>
+            </HaloButton>
           </motion.div>
         )}
 
@@ -337,42 +340,25 @@ export default function WaitlistSection({ lalezarClassName = "" }: WaitlistSecti
             </div>
 
             <div className="w-full max-w-sm flex flex-col gap-2.5">
-              <a
-                href={directTelegramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-h-[48px] w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 active:scale-[0.98] text-white font-bold text-sm transition-all flex items-center justify-center gap-2"
-              >
-                <Send className="w-4 h-4" />
+              <HaloButton href={directTelegramUrl} tone="blue" size="md" fullWidth>
+                <Send className="w-4 h-4 shrink-0" />
                 <span>ارسال درخواست در تلگرام</span>
-              </a>
+              </HaloButton>
 
-              <a
-                href={directWhatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-h-[48px] w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 active:scale-[0.98] text-white dark:text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2"
-              >
-                <MessageCircle className="w-4 h-4" />
+              <HaloButton href={directWhatsappUrl} tone="emerald" size="md" fullWidth>
+                <MessageCircle className="w-4 h-4 shrink-0" />
                 <span>ارسال درخواست در واتساپ</span>
-              </a>
+              </HaloButton>
 
-              <button
-                type="button"
-                onClick={handleCopy}
-                className="min-h-[44px] w-full py-2.5 px-4 rounded-xl bg-white dark:bg-[#11192e] hover:bg-blue-50 dark:hover:bg-[#182442] text-[#0a1628] dark:text-slate-100 text-sm font-semibold transition-colors border border-blue-200 dark:border-blue-400/20 flex items-center justify-center gap-2 cursor-pointer"
-              >
+              <MetalButton preset="silver" size="md" fullWidth onClick={handleCopy}>
                 {copied ? <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-4 h-4" />}
                 <span>{copied ? "متن پیام کپی شد" : "کپی متن کامل درخواست"}</span>
-              </button>
+              </MetalButton>
 
-              <button
-                type="button"
-                onClick={handleReset}
-                className="mt-1 py-2 text-sm text-slate-600 dark:text-slate-400 hover:text-[#0a1628] dark:hover:text-white transition-colors cursor-pointer"
-              >
-                بازگشت و ویرایش فرم
-              </button>
+              <MetalButton preset="silver" size="sm" fullWidth onClick={handleReset}>
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>بازگشت و ویرایش فرم</span>
+              </MetalButton>
             </div>
           </motion.div>
         )}
@@ -390,22 +376,18 @@ export default function WaitlistSection({ lalezarClassName = "" }: WaitlistSecti
               <span className="font-semibold text-[#0a1628] dark:text-slate-200">
                 ۱. انتخاب سری گوشی
               </span>
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
                 {SERIES_TABS.map((tab) => {
                   const active = selectedSeries === tab.id;
                   return (
-                    <button
+                    <MetalButton
                       key={tab.id}
-                      type="button"
+                      size="sm"
+                      active={active}
                       onClick={() => handleSeriesChange(tab.id)}
-                      className={`min-h-[40px] py-1.5 px-3.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer touch-manipulation border ${
-                        active
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400 font-bold"
-                          : "bg-blue-50/60 dark:bg-[#11192e]/80 text-slate-700 dark:text-slate-300 hover:text-[#0a1628] dark:hover:text-white hover:bg-blue-100/70 dark:hover:bg-[#182442] border-blue-100 dark:border-blue-400/15"
-                      }`}
                     >
                       {tab.label}
-                    </button>
+                    </MetalButton>
                   );
                 })}
               </div>
@@ -437,22 +419,20 @@ export default function WaitlistSection({ lalezarClassName = "" }: WaitlistSecti
 
               <div className="flex flex-col gap-1.5">
                 <span className="font-semibold text-[#0a1628] dark:text-slate-200">حافظه دستگاه</span>
-                <div className="grid grid-cols-4 gap-1.5">
+                <div className="grid grid-cols-4 gap-2">
                   {currentPhone.storages.map((st) => {
                     const active = selectedStorage === st;
                     return (
-                      <button
+                      <MetalButton
                         key={st}
-                        type="button"
+                        size="md"
+                        fullWidth
+                        active={active}
                         onClick={() => setSelectedStorage(st)}
-                        className={`min-h-[48px] py-2 px-1.5 rounded-xl font-bold font-mono text-xs sm:text-sm transition-colors cursor-pointer touch-manipulation border whitespace-nowrap ${
-                          active
-                            ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400"
-                            : "bg-blue-50/60 dark:bg-[#11192e]/80 text-slate-700 dark:text-slate-200 hover:bg-blue-100/70 dark:hover:bg-[#182442] border-blue-100 dark:border-blue-400/15"
-                        }`}
+                        innerClassName="font-mono px-1.5 text-xs sm:text-sm"
                       >
                         {st}
-                      </button>
+                      </MetalButton>
                     );
                   })}
                 </div>
@@ -470,18 +450,16 @@ export default function WaitlistSection({ lalezarClassName = "" }: WaitlistSecti
                 {availableConditions.map((cond) => {
                   const active = selectedCondition === cond;
                   return (
-                    <button
+                    <MetalButton
                       key={cond}
-                      type="button"
+                      size="sm"
+                      fullWidth
+                      active={active}
                       onClick={() => setSelectedCondition(cond)}
-                      className={`min-h-[44px] py-2 px-2 text-center rounded-xl font-semibold text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap truncate touch-manipulation border ${
-                        active
-                          ? "bg-blue-50 dark:bg-blue-500/20 text-blue-900 dark:text-blue-200 border-blue-600 dark:border-blue-400"
-                          : "bg-blue-50/60 dark:bg-[#11192e]/80 text-slate-700 dark:text-slate-300 hover:bg-blue-100/70 dark:hover:bg-[#182442] border-blue-100 dark:border-blue-400/15"
-                      }`}
+                      innerClassName="px-2 text-xs sm:text-sm"
                     >
-                      {cond}
-                    </button>
+                      <span className="truncate">{cond}</span>
+                    </MetalButton>
                   );
                 })}
               </div>
@@ -494,35 +472,27 @@ export default function WaitlistSection({ lalezarClassName = "" }: WaitlistSecti
                 {currentPhone.colorItems?.map((col) => {
                   const active = selectedColor === col.name;
                   return (
-                    <button
+                    <MetalButton
                       key={col.name}
-                      type="button"
+                      size="sm"
+                      active={active}
                       onClick={() => setSelectedColor(col.name)}
-                      className={`min-h-[42px] py-1.5 px-3.5 rounded-xl font-medium text-xs sm:text-sm flex items-center gap-2 transition-colors cursor-pointer touch-manipulation border whitespace-nowrap ${
-                        active
-                          ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400 font-semibold"
-                          : "bg-blue-50/60 dark:bg-[#11192e]/80 text-slate-700 dark:text-slate-200 hover:bg-blue-100/70 dark:hover:bg-[#182442] border-blue-100 dark:border-blue-400/15"
-                      }`}
                     >
                       <span
                         className="w-3.5 h-3.5 rounded-full shrink-0 border border-black/20 dark:border-white/30"
                         style={{ backgroundColor: col.hex }}
                       />
                       <span>{col.name}</span>
-                    </button>
+                    </MetalButton>
                   );
                 })}
-                <button
-                  type="button"
+                <MetalButton
+                  size="sm"
+                  active={selectedColor === "فرقی ندارد"}
                   onClick={() => setSelectedColor("فرقی ندارد")}
-                  className={`min-h-[42px] py-1.5 px-3.5 rounded-xl font-medium text-xs sm:text-sm transition-colors cursor-pointer touch-manipulation border whitespace-nowrap ${
-                    selectedColor === "فرقی ندارد"
-                      ? "bg-blue-600 dark:bg-blue-500 text-white border-blue-600 dark:border-blue-400 font-semibold"
-                      : "bg-blue-50/60 dark:bg-[#11192e]/80 text-slate-700 dark:text-slate-200 hover:bg-blue-100/70 dark:hover:bg-[#182442] border-blue-100 dark:border-blue-400/15"
-                  }`}
                 >
                   هر رنگی
-                </button>
+                </MetalButton>
               </div>
             </div>
 
@@ -536,18 +506,17 @@ export default function WaitlistSection({ lalezarClassName = "" }: WaitlistSecti
                 {INTENT_OPTIONS.map((opt) => {
                   const active = selectedIntent === opt.percent;
                   return (
-                    <button
+                    <MetalButton
                       key={opt.percent}
-                      type="button"
+                      size="sm"
+                      fullWidth
+                      preset={active ? (opt.percent === 100 ? "chromatic" : "cobalt") : "silver"}
+                      active={active}
                       onClick={() => setSelectedIntent(opt.percent)}
-                      className={`min-h-[44px] px-3 py-2 rounded-xl border text-center transition-colors cursor-pointer touch-manipulation text-xs sm:text-sm font-semibold tabular-nums whitespace-nowrap ${
-                        active
-                          ? opt.colorClass
-                          : "border-blue-100 dark:border-blue-400/15 bg-blue-50/60 dark:bg-[#11192e]/80 text-slate-700 dark:text-slate-300 hover:bg-blue-100/70 dark:hover:bg-[#182442]"
-                      }`}
+                      innerClassName="tabular-nums"
                     >
                       {opt.short}
-                    </button>
+                    </MetalButton>
                   );
                 })}
               </div>
@@ -619,20 +588,17 @@ export default function WaitlistSection({ lalezarClassName = "" }: WaitlistSecti
               </div>
             )}
 
-            <button
+            <HaloButton
               type="submit"
-              disabled={status === "loading"}
-              className="min-h-[52px] w-full py-3 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 active:scale-[0.99] disabled:opacity-60 text-white font-bold text-base transition-all flex items-center justify-center gap-2 cursor-pointer touch-manipulation shadow-[0_6px_20px_rgba(11,99,246,0.20)]"
+              tone="blue"
+              size="lg"
+              fullWidth
+              loading={status === "loading"}
             >
-              {status === "loading" ? (
-                <>
-                  <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  <span>در حال ثبت درخواست...</span>
-                </>
-              ) : (
-                <span>ثبت رایگان در صف انتظار VIP</span>
-              )}
-            </button>
+              <span>
+                {status === "loading" ? "در حال ثبت درخواست..." : "ثبت رایگان در صف انتظار VIP"}
+              </span>
+            </HaloButton>
           </motion.form>
         )}
       </AnimatePresence>

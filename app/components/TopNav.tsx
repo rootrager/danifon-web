@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowUpLeft } from "lucide-react";
+import HaloButton from "./ui/HaloButton";
 
 export default function TopNav() {
   const pathname = usePathname();
@@ -63,21 +64,15 @@ export default function TopNav() {
         {/* Zone 3: Single Primary Action */}
         <div className="flex items-center shrink-0">
           {isInventory ? (
-            <Link
-              href="/?tab=waitlist#services"
-              className="min-h-[42px] px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 text-white text-xs sm:text-sm font-bold transition-colors whitespace-nowrap shrink-0 inline-flex items-center gap-1.5"
-            >
+            <HaloButton href="/?tab=waitlist#services" tone="blue" size="sm">
               <span>رزرو صف VIP</span>
               <ArrowUpLeft className="w-4 h-4" strokeWidth={2.2} />
-            </Link>
+            </HaloButton>
           ) : (
-            <Link
-              href="/inventory"
-              className="min-h-[42px] px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 text-white text-xs sm:text-sm font-bold transition-colors whitespace-nowrap shrink-0 inline-flex items-center gap-1.5"
-            >
+            <HaloButton href="/inventory" tone="blue" size="sm">
               <span>موجودی انبار</span>
               <ArrowUpLeft className="w-4 h-4" strokeWidth={2.2} />
-            </Link>
+            </HaloButton>
           )}
         </div>
       </div>

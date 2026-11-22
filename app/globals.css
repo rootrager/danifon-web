@@ -69,6 +69,146 @@
 .animate-eq-3 { animation: eqBar3 0.9s ease-in-out infinite 0.05s; }
 .animate-eq-4 { animation: eqBar4 0.7s ease-in-out infinite 0.2s; }
 
+/* Cult UI inspired HaloButton & MetalButton GPU-accelerated rim tokens */
+@property --btn-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes btnRimSpin {
+  from {
+    --btn-angle: 0deg;
+  }
+  to {
+    --btn-angle: 360deg;
+  }
+}
+
+.halo-btn-blue {
+  background: conic-gradient(
+    from var(--btn-angle),
+    #1d4ed8 0deg,
+    #38bdf8 70deg,
+    #93c5fd 125deg,
+    #2563eb 200deg,
+    #60a5fa 285deg,
+    #1d4ed8 360deg
+  );
+  animation: btnRimSpin 5.5s linear infinite;
+}
+
+.halo-btn-emerald {
+  background: conic-gradient(
+    from var(--btn-angle),
+    #047857 0deg,
+    #34d399 75deg,
+    #a7f3d0 130deg,
+    #059669 210deg,
+    #10b981 290deg,
+    #047857 360deg
+  );
+  animation: btnRimSpin 5.5s linear infinite;
+}
+
+.halo-btn-neutral {
+  background: conic-gradient(
+    from var(--btn-angle),
+    rgba(148, 163, 184, 0.55) 0deg,
+    rgba(59, 130, 246, 0.85) 85deg,
+    rgba(226, 232, 240, 0.95) 150deg,
+    rgba(100, 116, 139, 0.55) 230deg,
+    rgba(96, 165, 250, 0.8) 305deg,
+    rgba(148, 163, 184, 0.55) 360deg
+  );
+  animation: btnRimSpin 6.5s linear infinite;
+}
+
+/* Liquid-metal brushed rim presets (static metallic sheen at rest, smooth flow on hover/active) */
+.metal-rim-silver {
+  background: conic-gradient(
+    from var(--btn-angle),
+    #cbd5e1 0deg,
+    #ffffff 55deg,
+    #94a3b8 125deg,
+    #e2e8f0 190deg,
+    #64748b 255deg,
+    #f8fafc 315deg,
+    #cbd5e1 360deg
+  );
+}
+
+.dark .metal-rim-silver {
+  background: conic-gradient(
+    from var(--btn-angle),
+    #334155 0deg,
+    #94a3b8 55deg,
+    #1e293b 125deg,
+    #64748b 195deg,
+    #0f172a 265deg,
+    #cbd5e1 320deg,
+    #334155 360deg
+  );
+}
+
+.metal-rim-chromatic {
+  background: conic-gradient(
+    from var(--btn-angle),
+    #93c5fd 0deg,
+    #f8fafc 50deg,
+    #60a5fa 110deg,
+    #c4b5fd 175deg,
+    #38bdf8 240deg,
+    #e2e8f0 305deg,
+    #93c5fd 360deg
+  );
+}
+
+.dark .metal-rim-chromatic {
+  background: conic-gradient(
+    from var(--btn-angle),
+    #2563eb 0deg,
+    #93c5fd 55deg,
+    #1e3a8a 120deg,
+    #38bdf8 190deg,
+    #312e81 260deg,
+    #bfdbfe 315deg,
+    #2563eb 360deg
+  );
+}
+
+.metal-rim-gold {
+  background: conic-gradient(
+    from var(--btn-angle),
+    #d97706 0deg,
+    #fef3c7 60deg,
+    #b45309 130deg,
+    #fcd34d 205deg,
+    #92400e 275deg,
+    #fde68a 325deg,
+    #d97706 360deg
+  );
+}
+
+.metal-rim-cobalt {
+  background: conic-gradient(
+    from var(--btn-angle),
+    #1d4ed8 0deg,
+    #93c5fd 60deg,
+    #1e40af 135deg,
+    #38bdf8 205deg,
+    #1e3a8a 275deg,
+    #bfdbfe 325deg,
+    #1d4ed8 360deg
+  );
+}
+
+.metal-btn-interactive:hover,
+.metal-btn-interactive:focus-visible,
+.metal-btn-active {
+  animation: btnRimSpin 4.2s linear infinite;
+}
+
 .font-display {
   font-family: var(--font-lalezar), var(--font-vazirmatn), sans-serif;
 }

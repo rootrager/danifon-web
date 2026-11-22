@@ -13,6 +13,8 @@ import {
   getRegistryMeta,
   formatPrice,
 } from "./inventoryHelpers";
+import HaloButton from "../../components/ui/HaloButton";
+import MetalButton, { MetalIconButton } from "../../components/ui/MetalButton";
 
 export default function TechnicalInspectionSheet({
   item,
@@ -159,14 +161,13 @@ export default function TechnicalInspectionSheet({
                 </div>
               </div>
 
-              <button
-                type="button"
+              <MetalIconButton
+                preset="silver"
                 onClick={onClose}
-                className="min-w-[42px] min-h-[42px] rounded-full bg-blue-50 dark:bg-[#11192e] hover:bg-blue-100 dark:hover:bg-[#182442] flex items-center justify-center text-[#0a1628] dark:text-slate-200 transition-colors cursor-pointer shrink-0 touch-manipulation"
-                aria-label="بستن پنجره مشخصات"
+                ariaLabel="بستن پنجره مشخصات"
               >
                 <X className="w-4 h-4" />
-              </button>
+              </MetalIconButton>
             </div>
 
             {/* Plain-Language Specs Grid */}
@@ -229,34 +230,21 @@ export default function TechnicalInspectionSheet({
             {/* CTAs */}
             <div className="flex flex-col gap-2.5">
               <div className="grid grid-cols-2 gap-2.5">
-                <a
-                  href={tgUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="min-h-[50px] py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 active:scale-[0.98] text-white text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer touch-manipulation"
-                >
+                <HaloButton href={tgUrl} tone="blue" size="md" fullWidth>
                   <Send className="w-4 h-4 shrink-0" />
                   <span>رزرو در تلگرام</span>
-                </a>
+                </HaloButton>
 
-                <a
-                  href={waUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="min-h-[50px] py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 active:scale-[0.98] text-white dark:text-slate-950 text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer touch-manipulation"
-                >
+                <HaloButton href={waUrl} tone="emerald" size="md" fullWidth>
                   <MessageCircle className="w-4 h-4 shrink-0" />
                   <span>رزرو در واتساپ</span>
-                </a>
+                </HaloButton>
               </div>
 
-              <a
-                href={callUrl}
-                className="min-h-[48px] py-2.5 px-4 rounded-xl bg-blue-50/70 dark:bg-[#11192e] hover:bg-blue-100/80 dark:hover:bg-[#182442] border border-blue-200 dark:border-blue-400/20 text-[#0a1628] dark:text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 touch-manipulation"
-              >
+              <MetalButton href={callUrl} preset="silver" size="md" fullWidth>
                 <PhoneCall className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                 <span className="tabular-nums">تماس مستقیم با فروشگاه ({config.contact.phone})</span>
-              </a>
+              </MetalButton>
             </div>
           </div>
         </div>
