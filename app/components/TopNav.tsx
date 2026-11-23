@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowUpLeft } from "lucide-react";
 import HaloButton from "./ui/HaloButton";
+import TextGif from "./ui/TextGif";
 
 export default function TopNav() {
   const pathname = usePathname();
@@ -13,13 +14,22 @@ export default function TopNav() {
   return (
     <header className="w-full border-b border-blue-100 dark:border-blue-400/15 bg-white/90 dark:bg-[#04060c]/85 backdrop-blur-xl sticky top-0 z-40 transition-colors">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-8">
-        {/* Zone 1: Single-element Brand Wordmark */}
+        {/* Zone 1: Single-element Brand Wordmark with Cult UI TextGif */}
         <Link
           href="/"
-          className="font-display text-2xl sm:text-[26px] tracking-tight text-[#0a1628] dark:text-white whitespace-nowrap shrink-0 hover:opacity-85 transition-opacity"
+          className="inline-flex items-center whitespace-nowrap shrink-0 hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/70 rounded-lg"
           dir="ltr"
+          aria-label="danifon - صفحه اصلی"
         >
-          Danifon
+          <TextGif
+            text="danifon"
+            gifUrl="/danifon-text.gif"
+            size="header"
+            weight="black"
+            compact
+            fallbackColor="#0b63f6"
+            className="tracking-[-0.04em]"
+          />
         </Link>
 
         {/* Zone 2: 4 single-line text nav links */}
