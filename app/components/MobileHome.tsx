@@ -1,23 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
-import { motion } from "motion/react";
-import {
-  Search,
-  Home,
-  Smartphone,
-  Calculator,
-  PhoneCall,
-  ArrowUpLeft,
-  Sparkles,
-  RefreshCw,
-  ShieldCheck,
-  CreditCard,
-  ChevronLeft,
-} from "lucide-react";
+import { Search, SlidersHorizontal, Smartphone, Calculator, Home } from "lucide-react";
 import inventoryData from "../data/inventory.json";
-import HaloButton from "./ui/HaloButton";
 
 interface InventoryItem {
   item_id: string;
@@ -25,194 +11,155 @@ interface InventoryItem {
   series: string;
   model: string;
   capacity: string;
-  registry: string;
-  battery: string;
   price: string;
 }
+
+const TABS = [
+  { id: "all", label: "همه" },
+  { id: "18", label: "سری ۱۸" },
+  { id: "17", label: "سری ۱۷" },
+  { id: "16", label: "سری ۱۶" },
+  { id: "used", label: "کارکرده" },
+];
 
 function formatPriceToman(raw: string): string {
   const num = Number(raw);
   if (!Number.isFinite(num) || num <= 0) return "تماس بگیرید";
-  return `${Math.round(num / 1_000_000).toLocaleString("fa-IR")} میلیون`;
+  return `${Math.round(num / 1_000_000).toLocaleString("fa-IR")} میلیون تومان`;
+}
+
+function cleanModelName(name: string): string {
+  return name.replace(/\s*\([^)]*\)/g, "").trim();
 }
 
 export default function MobileHome() {
-  const [islandExpanded, setIslandExpanded] = useState(false);
-  const featuredItems = (inventoryData as InventoryItem[]).slice(0, 4);
+  const [activeTab, setActiveTab] = useState("all");
+  const [query, setQuery] = useState("");
+
+  const items = inventoryData as InventoryItem[];
+
+  const filtered = useMemo(() => {
+    return items
+      .filter((item) => {
+        if (activeTab === "used") {
+          if (item.type === "new") return false;
+        } else if (activeTab !== "all") {
+          if (item.series !== activeTab) return false;
+        }
+        if (query.trim()) {
+          const q = query.trim().toLowerCase();
+          return (
+            item.model.toLowerCase().includes(q) ||
+            item.capacity.toLowerCase().includes(q)
+          );
+        }
+        return true;
+      })
+      .slice(0, 6);
+  }, [items, activeTab, query]);
 
   return (
-    <div
-      dir="rtl"
-      className="min-h-screen bg-[#F5F2EB] text-[#1C1917] pb-28 selection:bg-[#FF6B1A]/20"
-    >
-      {/* Dynamic Island */}
-      <div className="sticky top-2 z-40 flex justify-center px-4 pt-2">
-        <motion.button
-          type="button"
-          onClick={() => setIslandExpanded((v) => !v)}
-          layout
-          transition={{ type: "spring", stiffness: 380, damping: 30 }}
-          className="bg-[#1C1917] text-[#FAF8F4] rounded-full px-4 py-2 shadow-lg shadow-black/15 flex items-center gap-2.5 cursor-pointer border border-white/10"
+    <div dir="rtl" className="min-h-screen bg-[#F8CFC8] text-[#111111] flex flex-col">
+      {/* Top Peach Header */}
+      <header className="max-w-md w-full mx-auto px-5 pt-6 pb-5 flex items-center gap-3">
+        <div className="flex-1 relative">
+          <Search className="w-4 h-4 text-[#111111]/45 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="جستجو..."
+            className="w-full h-11 pr-10 pl-4 rounded-full bg-white text-sm text-[#111111] placeholder:text-[#111111]/40 focus:outline-none shadow-xs"
+          />
+        </div>
+        <Link
+          href="/tools"
+          aria-label="ابزارها"
+          className="w-11 h-11 rounded-full bg-[#111111] text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-sm"
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF7A18] opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF7A18]" />
-          </span>
-          <span className="text-[11px] font-medium tracking-tight">
-            {islandExpanded
-              ? "دانیفون • تحویل فوری تهران + ضمانت کارشناسی"
-              : "دانیفون آنلاین"}
-          </span>
-        </motion.button>
-      </div>
+          D
+        </Link>
+      </header>
 
-      {/* Minimal Mobile Container */}
-      <main className="max-w-md mx-auto px-5 pt-4 space-y-6">
-        {/* Clean Header */}
-        <header className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#FF7A18] to-[#EA580C] flex items-center justify-center text-white font-bold text-base shadow-sm shadow-orange-500/20">
-              D
-            </div>
-            <div>
-              <h1 className="text-base font-extrabold text-[#1C1917]">دانیفون</h1>
-              <p className="text-[11px] text-[#78716C]">تخصصی‌ترین مرجع آیفون</p>
-            </div>
-          </div>
-
+      {/* Main Curved Sheet */}
+      <main className="flex-1 max-w-md w-full mx-auto bg-[#FFF2EF] rounded-t-[36px] px-5 pt-7 pb-28 shadow-[0_-8px_30px_rgba(0,0,0,0.04)] space-y-5">
+        {/* Title Row */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-extrabold tracking-tight text-[#111111]">
+            موجودی جدید
+          </h1>
           <Link
             href="/inventory"
-            aria-label="جستجو در موجودی"
-            className="w-10 h-10 rounded-full bg-[#FAF8F4] border border-[#E7E2D8] flex items-center justify-center text-[#44403C] shadow-xs active:scale-95 transition"
+            aria-label="فیلتر و همه موجودی"
+            className="p-2 text-[#111111]/80 hover:text-[#111111] transition"
           >
-            <Search className="w-4 h-4" />
+            <SlidersHorizontal className="w-5 h-5" />
           </Link>
-        </header>
+        </div>
 
-        {/* Single Clean Hero Card */}
-        <section className="rounded-3xl bg-gradient-to-br from-[#FF7A18] via-[#FF5E1A] to-[#DC4A09] p-6 text-white shadow-lg shadow-orange-900/10 space-y-4">
-          <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold bg-white/20 backdrop-blur-md px-3 py-1 rounded-full">
-            <Sparkles className="w-3 h-3" />
-            معاوضه و خرید آسان
-          </span>
-          <div className="space-y-1.5">
-            <h2 className="text-xl font-extrabold leading-snug">
-              آیفون قدیمیت رو بده، جدید ببر
-            </h2>
-            <p className="text-xs text-white/85 leading-relaxed">
-              قیمت‌گذاری واقعی بر اساس معاملات روز، خرید اقساطی و استعلام رجیستری.
-            </p>
-          </div>
-          <div className="pt-1">
-            <Link href="/tools">
-              <HaloButton className="!py-2.5 !px-5 !text-xs bg-[#FAF8F4] text-[#1C1917] font-bold rounded-full shadow-md">
-                شروع قیمت‌گذاری و اقساط
-              </HaloButton>
-            </Link>
-          </div>
-        </section>
-
-        {/* 3 Minimal Service Cards */}
-        <section className="grid grid-cols-3 gap-2.5">
-          {[
-            { label: "معاوضه فوری", icon: RefreshCw, href: "/tools", color: "text-[#EA580C] bg-orange-100/70" },
-            { label: "محاسبه اقساط", icon: CreditCard, href: "/tools", color: "text-[#0284C7] bg-sky-100/70" },
-            { label: "هزینه رجیستری", icon: ShieldCheck, href: "/tools", color: "text-[#059669] bg-emerald-100/70" },
-          ].map((item) => {
-            const Icon = item.icon;
+        {/* Outline & Solid Black Pill Tabs */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+          {TABS.map((tab) => {
+            const active = activeTab === tab.id;
             return (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="bg-[#FAF8F4] rounded-2xl p-3.5 border border-[#E7E2D8] flex flex-col items-center gap-2 text-center shadow-xs active:scale-95 transition"
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition cursor-pointer ${
+                  active
+                    ? "bg-[#111111] text-white border border-[#111111]"
+                    : "bg-transparent text-[#111111] border border-[#111111]/30 hover:border-[#111111]"
+                }`}
               >
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${item.color}`}>
-                  <Icon className="w-4 h-4" />
-                </div>
-                <span className="text-[11px] font-bold text-[#292524]">{item.label}</span>
-              </Link>
+                {tab.label}
+              </button>
             );
           })}
-        </section>
+        </div>
 
-        {/* 4 Featured Phones Only (Clean & Uncluttered) */}
-        <section className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-extrabold text-[#1C1917]">منتخب موجودی</h3>
+        {/* Minimal 2-Column Product Cards */}
+        <div className="grid grid-cols-2 gap-3.5">
+          {filtered.map((item) => (
             <Link
-              href="/inventory"
-              className="text-xs font-bold text-[#EA580C] flex items-center gap-0.5"
+              key={item.item_id}
+              href={`/inventory?search=${encodeURIComponent(cleanModelName(item.model))}`}
+              className="bg-[#F7DFDA] rounded-3xl p-4 flex flex-col items-center text-center gap-3 active:scale-[0.98] transition"
             >
-              همه مدل‌ها
-              <ChevronLeft className="w-3.5 h-3.5" />
+              <div className="w-full aspect-square rounded-2xl flex items-center justify-center">
+                <Smartphone className="w-14 h-14 text-[#111111]/80 stroke-[1.4]" />
+              </div>
+              <div className="space-y-0.5 w-full">
+                <h2 className="text-xs font-bold text-[#111111] truncate">
+                  {cleanModelName(item.model)} · {item.capacity}
+                </h2>
+                <p className="text-[11px] font-medium text-[#111111]/65 tabular-nums">
+                  {formatPriceToman(item.price)}
+                </p>
+              </div>
             </Link>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            {featuredItems.map((item) => (
-              <Link
-                key={item.item_id}
-                href={`/inventory?search=${encodeURIComponent(item.model)}`}
-                className="bg-[#FAF8F4] rounded-3xl p-3.5 border border-[#E7E2D8] shadow-xs flex flex-col justify-between gap-3 active:scale-[0.98] transition"
-              >
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EDE8DD] text-[#57534E]">
-                      {item.capacity}
-                    </span>
-                    <span className="text-[10px] font-semibold text-emerald-700">
-                      {item.battery}
-                    </span>
-                  </div>
-                  <h4 className="text-xs font-extrabold text-[#1C1917] line-clamp-2 leading-snug pt-0.5">
-                    {item.model}
-                  </h4>
-                </div>
-
-                <div className="flex items-center justify-between pt-2 border-t border-[#E7E2D8]/80">
-                  <span className="text-xs font-extrabold text-[#1C1917] tabular-nums">
-                    {formatPriceToman(item.price)}
-                  </span>
-                  <span className="w-7 h-7 rounded-full bg-gradient-to-br from-[#FF7A18] to-[#EA580C] text-white flex items-center justify-center shadow-xs">
-                    <ArrowUpLeft className="w-3.5 h-3.5" />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+          ))}
+        </div>
       </main>
 
-      {/* Floating Bottom Tab Bar */}
-      <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-sm bg-[#FAF8F4]/95 backdrop-blur-xl border border-[#E7E2D8] rounded-full p-1.5 shadow-xl shadow-stone-900/10 flex items-center justify-between">
-        <Link
-          href="/"
-          className="flex items-center gap-1.5 bg-gradient-to-r from-[#FF7A18] to-[#EA580C] text-white px-4 py-2.5 rounded-full text-xs font-bold shadow-sm"
-        >
+      {/* Compact Floating Black Pill */}
+      <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 bg-[#111111] text-white rounded-full px-4 py-2.5 shadow-xl shadow-black/20 flex items-center gap-5">
+        <Link href="/" className="flex items-center gap-1.5 text-xs font-bold">
           <Home className="w-4 h-4" />
           <span>خانه</span>
         </Link>
-        <Link
-          href="/inventory"
-          className="p-2.5 rounded-full text-[#78716C] hover:text-[#1C1917] transition"
-          aria-label="موجودی"
-        >
-          <Smartphone className="w-5 h-5" />
+        <span className="w-px h-4 bg-white/20" />
+        <Link href="/inventory" className="text-xs font-medium text-white/80 hover:text-white">
+          موجودی
         </Link>
+        <span className="w-px h-4 bg-white/20" />
         <Link
           href="/tools"
-          className="p-2.5 rounded-full text-[#78716C] hover:text-[#1C1917] transition"
-          aria-label="ابزارها"
+          className="flex items-center gap-1 text-xs font-medium text-white/80 hover:text-white"
         >
-          <Calculator className="w-5 h-5" />
+          <Calculator className="w-3.5 h-3.5" />
+          <span>اقساط و رجیستری</span>
         </Link>
-        <a
-          href="tel:02100000000"
-          className="p-2.5 rounded-full text-[#78716C] hover:text-[#1C1917] transition"
-          aria-label="تماس"
-        >
-          <PhoneCall className="w-5 h-5" />
-        </a>
       </nav>
     </div>
   );
