@@ -13,7 +13,7 @@ export default function BottomNav() {
   const isContact = pathname.startsWith("/contact");
 
   return (
-    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-sm bg-white/95 backdrop-blur-xl border border-[#141413]/20 rounded-full px-3 py-2 shadow-xl shadow-black/10 flex items-center justify-between">
+    <nav className="fixed bottom-3.5 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-[360px] bg-white/95 backdrop-blur-xl border border-[#141413]/20 rounded-full px-3.5 py-2 shadow-xl shadow-black/10 flex items-center justify-between gap-2">
       <Link
         href="/"
         aria-label="خانه"

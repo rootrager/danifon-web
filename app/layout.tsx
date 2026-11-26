@@ -66,18 +66,11 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body
-        className={`${vazirmatn.className} bg-[#F8FAFC] text-[#111827] antialiased min-h-dvh relative overflow-x-hidden selection:bg-[#2563EB]/15 selection:text-[#0B1220]`}
+        className={`${vazirmatn.className} bg-[#FAF6EE] text-[#141413] antialiased min-h-dvh relative overflow-x-hidden selection:bg-[#FBBF24]/30 selection:text-[#141413]`}
         suppressHydrationWarning
       >
-        {/* Luminous Cobalt Blue horizon aura (Blue+White in Day / Blue+Black in Night) */}
-        <div
-          className="fixed top-0 inset-x-0 h-[520px] bg-[radial-gradient(ellipse_85%_60%_at_50%_-10%,rgba(11,99,246,0.16),rgba(96,165,250,0.07)_45%,transparent_75%)] dark:bg-[radial-gradient(ellipse_85%_60%_at_50%_-10%,rgba(37,99,235,0.34),rgba(59,130,246,0.12)_48%,transparent_78%)] pointer-events-none -z-10"
-          aria-hidden="true"
-        />
-
         <ThemeProvider>
-          {/* Responsive Full-Viewport Container: mobile-first ergonomics + 1440px desktop architecture */}
-          <main className="mx-auto w-full max-w-7xl min-h-dvh relative z-10 flex flex-col">
+          <main className="mx-auto w-full min-h-dvh relative z-10 flex flex-col">
             {children}
           </main>
 

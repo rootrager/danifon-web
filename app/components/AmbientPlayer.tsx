@@ -1,15 +1,12 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { usePathname } from "next/navigation";
 import { Pause, Play } from "lucide-react";
 import MetalButton from "./ui/MetalButton";
 
 export default function AmbientPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const pathname = usePathname();
-  const isInventory = pathname?.startsWith("/inventory");
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -44,9 +41,7 @@ export default function AmbientPlayer() {
 
       <aside
         aria-label="کنترل موسیقی پس‌زمینه"
-        className={`fixed left-3 sm:left-5 z-30 select-none transition-transform duration-200 ${
-          isInventory ? "bottom-[84px] md:bottom-5" : "bottom-4 sm:bottom-5"
-        }`}
+        className="fixed left-4 bottom-[88px] md:bottom-5 md:left-5 z-30 select-none transition-transform duration-200"
       >
         <MetalButton
           size="sm"
