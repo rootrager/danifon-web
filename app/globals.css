@@ -3,18 +3,41 @@
 
 /* Tech-Trust Blue & White (Light) / Blue & Black (Dark) semantic tokens */
 :root {
-  --surface-canvas: #f8fbff;
-  --surface-card: #ffffff;
-  --surface-muted: #eff6ff;
-  --surface-border: #dbeafe;
-  --surface-border-strong: #bfdbfe;
-  --text-primary: #0a1628;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --accent-primary: #0b63f6;
-  --accent-sky: #0284c7;
-  --accent-emerald: #059669;
-  --accent-amber: #d97706;
+  /* Brand */
+  --color-navy-950: #0B1220;
+  --color-navy-900: #111827;
+  --color-navy-800: #1E293B;
+  --color-blue-600: #2563EB;
+  --color-blue-500: #3B82F6;
+  --color-blue-50: #EFF6FF;
+
+  /* Surface */
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-border: #E2E8F0;
+
+  /* Text */
+  --color-text-primary: #111827;
+  --color-text-secondary: #475569;
+
+  /* Status */
+  --color-success: #16A34A;
+  --color-danger: #DC2626;
+  --color-warning: #D97706;
+
+  /* Typography */
+  --font-persian: var(--font-vazirmatn), "Vazirmatn", sans-serif;
+  --font-english: var(--font-inter), "Inter", sans-serif;
+
+  /* Radius */
+  --radius-card: 12px;
+  --radius-button: 10px;
+  --radius-section: 20px;
+
+  /* Spacing & Layout */
+  --page-padding: 16px;
+  --section-gap: 48px;
+  --container-width: 1280px;
 }
 
 .dark {

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Vazirmatn, Lalezar } from "next/font/google";
+import { Vazirmatn, Inter } from "next/font/google";
 import "./globals.css";
 import AmbientPlayer from "./components/AmbientPlayer";
 import { ThemeProvider } from "./components/ThemeProvider";
@@ -10,10 +10,9 @@ const vazirmatn = Vazirmatn({
   display: "swap",
 });
 
-const lalezar = Lalezar({
-  weight: "400",
-  subsets: ["arabic", "latin"],
-  variable: "--font-lalezar",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -60,14 +59,14 @@ export default function RootLayout({
     <html
       lang="fa"
       dir="rtl"
-      className={`${vazirmatn.variable} ${lalezar.variable}`}
+      className={`${vazirmatn.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body
-        className={`${vazirmatn.className} bg-[#f8fbff] dark:bg-[#04060c] text-[#0a1628] dark:text-slate-50 antialiased min-h-dvh relative overflow-x-hidden transition-colors duration-200 selection:bg-blue-600/20 selection:text-blue-950 dark:selection:text-white`}
+        className={`${vazirmatn.className} bg-[#F8FAFC] text-[#111827] antialiased min-h-dvh relative overflow-x-hidden selection:bg-[#2563EB]/15 selection:text-[#0B1220]`}
         suppressHydrationWarning
       >
         {/* Luminous Cobalt Blue horizon aura (Blue+White in Day / Blue+Black in Night) */}
