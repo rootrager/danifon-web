@@ -131,7 +131,7 @@ export default function MobileHome() {
             </p>
             <div className="pt-1">
               <Link
-                href="/tools"
+                href="/pricing"
                 className="inline-flex items-center gap-1.5 bg-[#141413] text-white px-4 py-2 rounded-full text-xs font-bold active:scale-95 transition"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#FBBF24]" />

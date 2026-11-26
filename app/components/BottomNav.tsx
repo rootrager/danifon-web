@@ -9,6 +9,7 @@ export default function BottomNav() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isInventory = pathname.startsWith("/inventory") || pathname.startsWith("/product");
+  const isPricing = pathname.startsWith("/pricing");
   const isTools = pathname.startsWith("/tools");
   const isContact = pathname.startsWith("/contact");
 
@@ -34,11 +35,13 @@ export default function BottomNav() {
         <Smartphone className="w-4 h-4" />
       </Link>
 
-      {/* Center Highlight Action Button */}
+      {/* Center Highlight Action Button -> Smart Pricing */}
       <Link
-        href="/tools"
+        href="/pricing"
         aria-label="قیمت‌گذاری هوشمند"
-        className="w-11 h-11 rounded-full bg-[#FBBF24] border border-[#141413] text-[#141413] flex items-center justify-center shadow-sm active:scale-95 transition"
+        className={`w-11 h-11 rounded-full border border-[#141413] flex items-center justify-center shadow-sm active:scale-95 transition ${
+          isPricing ? "bg-[#FF7A18] text-white" : "bg-[#FBBF24] text-[#141413]"
+        }`}
       >
         <Sparkles className="w-5 h-5" />
       </Link>
