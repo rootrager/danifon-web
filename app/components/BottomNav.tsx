@@ -10,6 +10,7 @@ export default function BottomNav() {
   const isHome = pathname === "/";
   const isInventory = pathname.startsWith("/inventory") || pathname.startsWith("/product");
   const isTools = pathname.startsWith("/tools");
+  const isContact = pathname.startsWith("/contact");
 
   return (
     <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-sm bg-white/95 backdrop-blur-xl border border-[#141413]/20 rounded-full px-3 py-2 shadow-xl shadow-black/10 flex items-center justify-between">
@@ -52,13 +53,15 @@ export default function BottomNav() {
         <Calculator className="w-4 h-4" />
       </Link>
 
-      <a
-        href="tel:02100000000"
+      <Link
+        href="/contact"
         aria-label="تماس"
-        className="w-10 h-10 rounded-full text-[#141413]/70 hover:text-[#141413] flex items-center justify-center transition"
+        className={`w-10 h-10 rounded-full flex items-center justify-center transition ${
+          isContact ? "bg-[#141413] text-white" : "text-[#141413]/70 hover:text-[#141413]"
+        }`}
       >
         <PhoneCall className="w-4 h-4" />
-      </a>
+      </Link>
     </nav>
   );
 }
