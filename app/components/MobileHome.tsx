@@ -5,15 +5,12 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import {
   Search,
-  Home,
-  Smartphone,
   Sparkles,
-  Calculator,
-  PhoneCall,
   HelpCircle,
 } from "lucide-react";
 import inventoryData from "../data/inventory.json";
 import OnboardingTutorial from "./OnboardingTutorial";
+import BottomNav from "./BottomNav";
 
 interface InventoryItem {
   item_id: string;
@@ -187,7 +184,7 @@ export default function MobileHome() {
             {filtered.map((item) => (
               <Link
                 key={item.item_id}
-                href={`/inventory?search=${encodeURIComponent(cleanModelName(item.model))}`}
+                href={`/product/${encodeURIComponent(item.item_id)}`}
                 className="bg-white rounded-2xl p-3 border border-[#141413]/15 hover:border-[#141413] flex flex-col justify-between gap-2.5 active:scale-[0.98] transition"
               >
                 <div className="aspect-square w-full rounded-xl overflow-hidden bg-[#FAF6EE]">
@@ -218,49 +215,7 @@ export default function MobileHome() {
         </section>
       </main>
 
-      {/* 5-Icon Mobile App Bottom Bar (Inspired by Ref 1) */}
-      <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-sm bg-white/95 backdrop-blur-xl border border-[#141413]/20 rounded-full px-3 py-2 shadow-xl shadow-black/10 flex items-center justify-between">
-        <Link
-          href="/"
-          aria-label="خانه"
-          className="w-10 h-10 rounded-full bg-[#141413] text-white flex items-center justify-center"
-        >
-          <Home className="w-4 h-4" />
-        </Link>
-
-        <Link
-          href="/inventory"
-          aria-label="موجودی"
-          className="w-10 h-10 rounded-full text-[#141413]/70 hover:text-[#141413] flex items-center justify-center transition"
-        >
-          <Smartphone className="w-4 h-4" />
-        </Link>
-
-        {/* Center Highlight Action Button */}
-        <Link
-          href="/tools"
-          aria-label="قیمت‌گذاری هوشمند"
-          className="w-11 h-11 rounded-full bg-[#FBBF24] border border-[#141413] text-[#141413] flex items-center justify-center shadow-sm active:scale-95 transition"
-        >
-          <Sparkles className="w-5 h-5" />
-        </Link>
-
-        <Link
-          href="/tools"
-          aria-label="اقساط و رجیستری"
-          className="w-10 h-10 rounded-full text-[#141413]/70 hover:text-[#141413] flex items-center justify-center transition"
-        >
-          <Calculator className="w-4 h-4" />
-        </Link>
-
-        <a
-          href="tel:02100000000"
-          aria-label="تماس"
-          className="w-10 h-10 rounded-full text-[#141413]/70 hover:text-[#141413] flex items-center justify-center transition"
-        >
-          <PhoneCall className="w-4 h-4" />
-        </a>
-      </nav>
+      <BottomNav />
     </div>
   );
 }
