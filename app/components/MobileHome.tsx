@@ -201,7 +201,7 @@ export default function MobileHome() {
               <div className="flex items-center justify-between pt-4">
                 <Link href={slide.href}>
                   {activeSlide === 1 ? (
-                    <MetalButton variant="default" className="!py-2 !px-4 !text-xs">
+                    <MetalButton className="!py-2 !px-4 !text-xs">
                       {slide.cta}
                     </MetalButton>
                   ) : (
