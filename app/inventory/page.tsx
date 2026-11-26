@@ -25,14 +25,6 @@ export interface InventoryItem {
   photo_id: string | null;
 }
 
-const FALLBACK_INVENTORY: InventoryItem[] = inventoryJson as InventoryItem[];
-
-async function fetchInventory(): Promise<InventoryItem[]> {
-  return FALLBACK_INVENTORY;
-}
-
 export default async function InventoryPage() {
-  const items = await fetchInventory();
-  const fetchedAt = new Date().toISOString();
-  return <InventoryClient items={items} fetchedAt={fetchedAt} />;
+  return <InventoryClient />;
 }
