@@ -171,7 +171,7 @@ export default async function ProductDetailPage({
           </div>
 
           <a
-            href="tel:02100000000"
+            href="tel:+989128404028"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FF7A18] to-[#EA580C] text-white px-5 py-3 rounded-full text-xs font-bold border border-[#141413] shadow-[3px_3px_0px_#141413] active:scale-95 transition"
           >
             <PhoneCall className="w-4 h-4" />

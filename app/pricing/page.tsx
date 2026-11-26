@@ -332,7 +332,7 @@ export default function PricingPage() {
                   )}
 
                   <a
-                    href="tel:02100000000"
+                    href="tel:+989128404028"
                     className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF7A18] to-[#EA580C] text-white py-3 rounded-full text-xs font-bold border border-[#141413] active:scale-95 transition"
                   >
                     <PhoneCall className="w-4 h-4" />
