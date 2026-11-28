@@ -1854,5 +1854,35 @@
     "condition": "active (آکبند)",
     "photo_id": null,
     "image": "/models/iphone15-black.jpg"
+  },
+  {
+    "item_id": "watch-series-11",
+    "type": "accessory",
+    "series": "watch",
+    "model": "Apple Watch Series 11",
+    "capacity": "46mm · GPS",
+    "part": "LL/A",
+    "sim": "GPS + Cellular",
+    "registry": "بدون نیاز به رجیستری",
+    "battery": "100%",
+    "color": "مشکی",
+    "price": "0",
+    "condition": "آکبند پلمپ",
+    "image": "/home/watch.jpg"
+  },
+  {
+    "item_id": "airpods-pro-usbc",
+    "type": "accessory",
+    "series": "audio",
+    "model": "AirPods Pro (USB-C)",
+    "capacity": "اورجینال اپل",
+    "part": "LL/A",
+    "sim": "MagSafe Case",
+    "registry": "بدون نیاز به رجیستری",
+    "battery": "100%",
+    "color": "سفید",
+    "price": "0",
+    "condition": "آکبند پلمپ",
+    "image": "/home/airpods.jpg"
   }
 ]

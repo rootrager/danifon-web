@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ArrowRight, Search } from "lucide-react";
@@ -89,6 +89,13 @@ export default function InventoryClient() {
     ["new", "used", "accessories"].includes(initialTab) ? initialTab : "new"
   );
   const [query, setQuery] = useState(initialSearch);
+
+  useEffect(() => {
+    const t = searchParams.get("tab") as SectionTab;
+    if (t && ["new", "used", "accessories"].includes(t)) {
+      setActiveSection(t);
+    }
+  }, [searchParams]);
 
   const items = inventoryData as InventoryItem[];
 

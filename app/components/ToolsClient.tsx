@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ArrowRight, ShieldCheck, Calculator, PhoneCall, AlertCircle } from "lucide-react";
@@ -23,6 +23,13 @@ export default function ToolsClient() {
   const searchParams = useSearchParams();
   const initialTab = searchParams.get("tab") === "installment" ? "installment" : "registry";
   const [tab, setTab] = useState<"registry" | "installment">(initialTab);
+
+  useEffect(() => {
+    const t = searchParams.get("tab");
+    if (t === "installment" || t === "registry") {
+      setTab(t);
+    }
+  }, [searchParams]);
 
   // Registry state
   const models = config.registry.models as RegistryModel[];

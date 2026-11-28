@@ -42,7 +42,11 @@ export default function SmoothProductCard({
   isNew,
   image = "/showcase-iphone-17-pro.jpeg",
 }: SmoothProductCardProps) {
-  const shortRegistry = registry.includes("بدون") ? "بدون کد" : "کددار";
+  const shortRegistry = registry.includes("بدون نیاز")
+    ? "اورجینال"
+    : registry.includes("بدون")
+      ? "بدون کد"
+      : "کددار";
   const dotClass = (color && COLOR_DOTS[color]) || "bg-slate-400";
 
   return (

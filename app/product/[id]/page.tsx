@@ -65,8 +65,8 @@ export default async function ProductDetailPage({
       {/* Top App Bar */}
       <header className="max-w-md mx-auto px-4 pt-5 pb-3 flex items-center justify-between">
         <Link
-          href="/"
-          aria-label="بازگشت"
+          href={item.type === "accessory" ? "/inventory?tab=accessories" : "/inventory"}
+          aria-label="بازگشت به موجودی"
           className="w-10 h-10 rounded-full bg-white border border-[#141413]/15 flex items-center justify-center text-[#141413] active:scale-95 transition"
         >
           <ArrowRight className="w-4 h-4" />
@@ -75,7 +75,7 @@ export default async function ProductDetailPage({
         <span className="text-xs font-extrabold tracking-tight">جزئیات دستگاه</span>
 
         <Link
-          href="/tools"
+          href="/tools?tab=installment"
           aria-label="محاسبه اقساط"
           className="w-10 h-10 rounded-full bg-[#FBBF24] border border-[#141413] flex items-center justify-center text-[#141413] active:scale-95 transition"
         >
