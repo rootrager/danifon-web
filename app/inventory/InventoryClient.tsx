@@ -95,9 +95,7 @@ export default function InventoryClient() {
     let pool: InventoryItem[] = [];
 
     if (activeSection === "new") {
-      pool = items
-        .filter((i) => i.type === "new")
-        .sort((a, b) => priorityScore(a.model) - priorityScore(b.model));
+      pool = items.filter((i) => i.type === "new");
     } else if (activeSection === "used") {
       pool = items.filter((i) => i.type !== "new" && i.type !== "accessory");
     } else {
