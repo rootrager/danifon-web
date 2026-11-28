@@ -1,6 +1,6 @@
+import { Suspense } from "react";
 import { Metadata } from "next";
 import InventoryClient from "./InventoryClient";
-import inventoryJson from "@/app/data/inventory.json";
 
 export const metadata: Metadata = {
   title: "موجودی آیفون‌های آکبند | Danifon",
@@ -26,5 +26,9 @@ export interface InventoryItem {
 }
 
 export default async function InventoryPage() {
-  return <InventoryClient />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#FAF6EE]" />}>
+      <InventoryClient />
+    </Suspense>
+  );
 }
