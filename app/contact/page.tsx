@@ -4,7 +4,6 @@ import {
   MapPin,
   Clock,
   PhoneCall,
-  ShieldCheck,
   Navigation,
   Camera,
   Send,
@@ -66,28 +65,27 @@ export default function ContactPage() {
         >
           <ArrowRight className="w-4 h-4" />
         </Link>
-        <h1 className="text-sm font-black text-[#0B1220]">ارتباط و درباره دانیفون</h1>
+        <h1 className="text-sm font-black text-[#0B1220]">ارتباط با دانیفون</h1>
         <span className="w-10" />
       </header>
 
-      <main className="max-w-md mx-auto px-4 space-y-4 pt-1">
-        {/* 1. Social Media Section Right After Header */}
-        <section className="space-y-3">
-          {/* Featured Larger Instagram Card with Header Preview */}
+      <main className="max-w-md mx-auto px-4 space-y-5 pt-1">
+        {/* 1. Social Hub */}
+        <section className="space-y-2.5">
+          {/* Featured Instagram Card */}
           <a
             href="https://instagram.com/daniphoneir"
             target="_blank"
             rel="noreferrer"
-            className="block bg-white rounded-3xl overflow-hidden border border-[#93C5FD] shadow-sm active:scale-[0.99] transition"
+            className="block bg-white rounded-3xl overflow-hidden border border-[#93C5FD] shadow-xs active:scale-[0.99] transition"
           >
-            {/* Mini Instagram Header Preview */}
             <div className="relative h-24 w-full bg-gradient-to-r from-[#0B1220] via-[#1D4ED8] to-[#2563EB] overflow-hidden">
               <img
                 src="/danifon-showcase-poster.jpg"
                 alt="Instagram Danifon"
                 className="w-full h-full object-cover opacity-45"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/80 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/85 to-transparent" />
               <div className="absolute bottom-2.5 right-3.5 left-3.5 flex items-center justify-between text-white">
                 <div className="flex items-center gap-2.5">
                   <div className="w-10 h-10 rounded-full bg-white text-[#0B1220] flex items-center justify-center font-black text-sm ring-2 ring-[#3B82F6]">
@@ -107,13 +105,13 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="px-4 py-3 flex items-center justify-between text-xs text-[#334155]">
-              <span>استوری‌های قیمت روز، آنباکس و کارشناسی واقعی دستگاه‌ها</span>
+            <div className="px-4 py-2.5 flex items-center justify-between text-xs text-[#334155]">
+              <span>استوری قیمت روز، آنباکس و کارشناسی دستگاه‌ها</span>
               <ExternalLink className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
             </div>
           </a>
 
-          {/* 4 Other Channels: WhatsApp, Telegram Channel, Telegram Expert, Bale */}
+          {/* 4 Channels Grid */}
           <div className="grid grid-cols-2 gap-2.5">
             {socialChannels.map((ch) => (
               <a
@@ -138,64 +136,55 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* 2. Trust Intro Card */}
-        <div className="bg-gradient-to-br from-[#0B1220] to-[#1E3A8A] text-white rounded-3xl p-5 shadow-md space-y-2">
-          <div className="flex items-center gap-2 text-xs font-bold text-sky-300">
-            <ShieldCheck className="w-4 h-4" />
-            <span>{location.storeName}</span>
-          </div>
-          <h2 className="text-base font-black">خرید حضوری، معاوضه و مشاوره مستقیم</h2>
-          <p className="text-xs text-blue-100/85 leading-relaxed">
-            تمام دستگاه‌ها قبل از تحویل کارشناسی می‌شن تا با خیال راحت خرید یا معاوضه کنی.
-          </p>
-        </div>
+        {/* 2. Store Location & Map */}
+        <section className="space-y-2">
+          <h2 className="text-xs font-black text-[#1E3A8A] px-1">مراجعه حضوری و لوکیشن فروشگاه</h2>
+          <div className="bg-white rounded-3xl p-3.5 border border-[#BFDBFE] space-y-3 shadow-xs">
+            <div className="w-full h-44 rounded-2xl overflow-hidden border border-[#DBEAFE] bg-[#EFF6FF]">
+              <iframe
+                title="موقعیت فروشگاه دانیفون"
+                src={mapEmbedUrl}
+                className="w-full h-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
 
-        {/* 3. Live Map & Navigation Apps */}
-        <div className="bg-white rounded-3xl p-3.5 border border-[#BFDBFE] space-y-3 shadow-xs">
-          <div className="w-full h-44 rounded-2xl overflow-hidden border border-[#DBEAFE] bg-[#EFF6FF]">
-            <iframe
-              title="موقعیت فروشگاه دانیفون"
-              src={mapEmbedUrl}
-              className="w-full h-full border-0"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
+            <div className="flex items-start gap-2.5 px-1">
+              <MapPin className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="text-xs font-bold leading-relaxed text-[#0B1220]">
+                  {location.addressText}
+                </p>
+                <p className="text-[11px] font-semibold text-[#2563EB]">
+                  {location.laneNote}
+                </p>
+              </div>
+            </div>
 
-          <div className="flex items-start gap-2.5 px-1">
-            <MapPin className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="text-xs font-bold leading-relaxed text-[#0B1220]">
-                {location.addressText}
-              </p>
-              <p className="text-[11px] font-semibold text-[#2563EB]">
-                {location.laneNote}
-              </p>
+            <div className="grid grid-cols-4 gap-2 pt-1">
+              {navApps.map((app) => (
+                <a
+                  key={app.label}
+                  href={app.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-1 py-2 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] hover:border-[#2563EB] text-[11px] font-bold text-[#0B1220] active:scale-95 transition"
+                >
+                  <Navigation className="w-3 h-3 text-[#2563EB]" />
+                  {app.label}
+                </a>
+              ))}
             </div>
           </div>
+        </section>
 
-          <div className="grid grid-cols-4 gap-2 pt-1">
-            {navApps.map((app) => (
-              <a
-                key={app.label}
-                href={app.url}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center gap-1 py-2 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] hover:border-[#2563EB] text-[11px] font-bold text-[#0B1220] active:scale-95 transition"
-              >
-                <Navigation className="w-3 h-3 text-[#2563EB]" />
-                {app.label}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* 4. Hours & Direct Call */}
+        {/* 3. Direct Call */}
         <div className="bg-white rounded-2xl p-4 border border-[#BFDBFE] flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-3">
             <Clock className="w-5 h-5 text-[#2563EB] shrink-0" />
             <div>
-              <h3 className="text-xs font-black text-[#0B1220]">تماس مستقیم فروشگاه</h3>
+              <h3 className="text-xs font-black text-[#0B1220]">تماس مستقیم با فروشگاه</h3>
               <p className="text-[11px] text-[#475569] mt-0.5">همه‌روزه با هماهنگی قبلی</p>
             </div>
           </div>
