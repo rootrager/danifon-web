@@ -284,6 +284,24 @@ export default function ToolsClient() {
               <PhoneCall className="w-4 h-4" />
               هماهنگی خرید اقساطی با کارشناس
             </a>
+
+            {/* Concise Conversational Installment Guide */}
+            <GlassCard className="p-4 space-y-2.5">
+              <h3 className="text-xs font-black text-[#111111]">
+                اقساط چطوری حساب میشه؟ (خیلی خودمونی)
+              </h3>
+              <ul className="space-y-1.5 text-[11px] text-[#111111]/80 leading-relaxed">
+                <li>
+                  • <strong>فرمول شفاف:</strong> روی مبلغ باقی‌مانده (بعد از کسر پیش‌پرداخت)، <strong>10%</strong> کارمزد پایه به اضافه <strong>5%</strong> به ازای هر ماه حساب میشه.
+                </li>
+                <li>
+                  • <strong>قسط سبک‌تر:</strong> هر چقدر پیش‌پرداختت بیشتر و تعداد ماه‌ها کمتر باشه، مبلغ نهایی خیلی به‌صرفه‌تر درمیاد.
+                </li>
+                <li>
+                  • <strong>ثبت سریع:</strong> همین الان با کارشناس تلگرام هماهنگ کن تا همون روز گوشیت رو تحویل بگیری.
+                </li>
+              </ul>
+            </GlassCard>
           </div>
         )}
       </main>
