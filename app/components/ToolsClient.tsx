@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { ArrowRight, ShieldCheck, Calculator, PhoneCall, AlertCircle } from "lucide-react";
 import config from "../../config.json";
 import BottomNav from "./BottomNav";
+import GlassCard from "./ui/GlassCard";
 
 interface RegistryModel {
   name: string;
@@ -47,7 +48,7 @@ export default function ToolsClient() {
   const monthlyInstallment = months > 0 ? totalPayableRemaining / months : 0;
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#F8CFC8] text-[#111111] flex flex-col pb-28">
+    <div dir="rtl" className="min-h-dvh bg-[#F8CFC8] text-[#111111] flex flex-col">
       {/* Pastel Pink Header */}
       <header className="max-w-md w-full mx-auto px-5 pt-5 pb-4 flex items-center justify-between">
         <Link
@@ -63,10 +64,20 @@ export default function ToolsClient() {
         <span className="w-10" />
       </header>
 
-      {/* Curved Pastel Sheet */}
-      <main className="flex-1 max-w-md w-full mx-auto bg-[#FFF2EF] rounded-t-[36px] px-5 pt-6 pb-8 shadow-[0_-8px_30px_rgba(0,0,0,0.04)] space-y-5">
+      {/* Curved Pastel Sheet extending cleanly all the way to bottom */}
+      <main className="relative overflow-hidden flex-1 max-w-md w-full mx-auto bg-gradient-to-b from-[#FFF2EF] via-[#FCE4DF] to-[#FAD6CF] rounded-t-[36px] px-5 pt-6 pb-28 shadow-[0_-8px_30px_rgba(0,0,0,0.04)] space-y-5">
+        {/* Soft ambient orbs so GlassCard frosted blur shines */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-24 -right-12 w-56 h-56 rounded-full bg-[#FF7A18]/20 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-28 -left-12 w-60 h-60 rounded-full bg-[#F472B6]/20 blur-3xl"
+        />
+
         {/* Two Pill Tabs */}
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="relative z-10 grid grid-cols-2 gap-2.5">
           <button
             type="button"
             onClick={() => setTab("registry")}
@@ -94,8 +105,8 @@ export default function ToolsClient() {
         </div>
 
         {tab === "registry" ? (
-          <div className="space-y-4">
-            <div className="bg-[#F7DFDA] rounded-3xl p-4 space-y-3">
+          <div className="relative z-10 space-y-4">
+            <GlassCard className="p-4 space-y-3">
               <label className="block text-xs font-black text-[#111111]">
                 مدل آیفون رو انتخاب کن
               </label>
@@ -103,7 +114,7 @@ export default function ToolsClient() {
                 value={selectedModelIdx}
                 onChange={(e) => setSelectedModelIdx(Number(e.target.value))}
                 dir="ltr"
-                className="w-full h-12 px-4 rounded-2xl bg-white text-sm font-bold text-[#111111] focus:outline-none shadow-xs"
+                className="w-full h-12 px-4 rounded-2xl bg-white/85 text-sm font-bold text-[#111111] focus:outline-none shadow-xs"
               >
                 {models.map((m, i) => (
                   <option key={m.name} value={i}>
@@ -122,24 +133,24 @@ export default function ToolsClient() {
                   className={`px-4 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
                     withPassport
                       ? "bg-[#111111] text-white"
-                      : "bg-white text-[#111111] border border-[#111111]/20"
+                      : "bg-white/80 text-[#111111] border border-[#111111]/20"
                   }`}
                 >
                   {withPassport ? "بله، با پاسپورت" : "فقط عوارض گمرکی"}
                 </button>
               </div>
-            </div>
+            </GlassCard>
 
             {selectedModel.unavailable ? (
-              <div className="bg-white rounded-3xl p-5 text-center space-y-2 shadow-xs">
+              <GlassCard className="p-5 text-center space-y-2">
                 <AlertCircle className="w-8 h-8 text-[#111111] mx-auto" />
                 <h2 className="text-sm font-black">{selectedModel.name}</h2>
                 <p className="text-xs font-bold text-rose-600">
                   رجیستری این مدل فعلاً قابل انجام نیست.
                 </p>
-              </div>
+              </GlassCard>
             ) : (
-              <div className="bg-white rounded-3xl p-5 space-y-3 shadow-xs">
+              <GlassCard className="p-5 space-y-3">
                 <div className="flex items-center justify-between text-xs text-[#111111]/70">
                   <span>عوارض گمرکی ({selectedModel.name})</span>
                   <span className="font-bold text-[#111111] tabular-nums">
@@ -162,7 +173,7 @@ export default function ToolsClient() {
                     {formatToman(registryTotal)}
                   </span>
                 </div>
-              </div>
+              </GlassCard>
             )}
 
             <a
@@ -176,7 +187,7 @@ export default function ToolsClient() {
             </a>
 
             {/* Concise Conversational Registry Guide */}
-            <div className="bg-[#F7DFDA] rounded-3xl p-4 space-y-2.5">
+            <GlassCard className="p-4 space-y-2.5">
               <h3 className="text-xs font-black text-[#111111]">
                 نکات مهم رجیستری (خیلی خلاصه)
               </h3>
@@ -191,11 +202,11 @@ export default function ToolsClient() {
                   • <strong>تغییر لحظه‌ای گمرک:</strong> تعرفه گمرکی از سمت دولت تعیین میشه و ممکنه لحظه‌ای کمی بالاتر بره؛ این موضوع دست ما نیست.
                 </li>
               </ul>
-            </div>
+            </GlassCard>
           </div>
         ) : (
-          <div className="space-y-4">
-            <div className="bg-[#F7DFDA] rounded-3xl p-4 space-y-4">
+          <div className="relative z-10 space-y-4">
+            <GlassCard className="p-4 space-y-4">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs font-black">
                   <span>قیمت گوشی (میلیون تومان)</span>
@@ -239,7 +250,7 @@ export default function ToolsClient() {
                       className={`py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
                         months === m
                           ? "bg-[#111111] text-white"
-                          : "bg-white text-[#111111]"
+                          : "bg-white/80 text-[#111111]"
                       }`}
                     >
                       {m} ماهه
@@ -247,9 +258,9 @@ export default function ToolsClient() {
                   ))}
                 </div>
               </div>
-            </div>
+            </GlassCard>
 
-            <div className="bg-white rounded-3xl p-5 space-y-2.5 shadow-xs">
+            <GlassCard className="p-5 space-y-2.5">
               <div className="flex items-center justify-between text-xs text-[#111111]/70">
                 <span>مانده مبلغ</span>
                 <span className="font-bold text-[#111111] tabular-nums">
@@ -262,7 +273,7 @@ export default function ToolsClient() {
                   {formatToman(monthlyInstallment)}
                 </span>
               </div>
-            </div>
+            </GlassCard>
 
             <a
               href={config.installment.telegramUrl}
