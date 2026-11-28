@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { motion } from "motion/react";
 import { ArrowUpLeft, BatteryCharging } from "lucide-react";
 
 interface SmoothProductCardProps {
@@ -27,21 +26,19 @@ export default function SmoothProductCard({
   image = "/showcase-iphone-17-pro.jpeg",
 }: SmoothProductCardProps) {
   return (
-    <motion.article
+    <article
       role="article"
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.22 }}
       className="group bg-white rounded-3xl p-3 border border-[#141413]/15 hover:border-[#141413] hover:shadow-md transition-all duration-200 flex flex-col justify-between gap-3"
     >
       <Link href={`/product/${encodeURIComponent(id)}`} className="block space-y-2.5">
-        {/* Image Frame with Zoom & Overlay Badge */}
-        <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-white border border-[#141413]/10">
+        {/* Uniform Fixed-Aspect Image Frame (No Flicker, Consistent Size) */}
+        <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-[#FAF6EE] border border-[#141413]/10">
           <img
             src={image}
             alt={title}
-            className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
           />
 
           <span
@@ -76,22 +73,20 @@ export default function SmoothProductCard({
         </div>
       </Link>
 
-      {/* Price & Micro-Interaction CTA */}
+      {/* Price & Action CTA */}
       <div className="pt-2 border-t border-[#141413]/10 flex items-center justify-between gap-2 px-0.5">
         <span className="text-xs font-black text-[#141413] tabular-nums">
           {priceLabel}
         </span>
 
-        <motion.div whileTap={{ scale: 0.92 }}>
-          <Link
-            href={`/product/${encodeURIComponent(id)}`}
-            aria-label={`مشاهده ${title}`}
-            className="w-8 h-8 rounded-full bg-[#141413] group-hover:bg-[#FF7A18] text-white flex items-center justify-center transition-colors duration-200"
-          >
-            <ArrowUpLeft className="w-4 h-4" />
-          </Link>
-        </motion.div>
+        <Link
+          href={`/product/${encodeURIComponent(id)}`}
+          aria-label={`مشاهده ${title}`}
+          className="w-8 h-8 rounded-full bg-[#141413] group-hover:bg-[#FF7A18] text-white flex items-center justify-center active:scale-90 transition-all duration-200"
+        >
+          <ArrowUpLeft className="w-4 h-4" />
+        </Link>
       </div>
-    </motion.article>
+    </article>
   );
 }
