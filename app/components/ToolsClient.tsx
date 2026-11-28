@@ -174,6 +174,24 @@ export default function ToolsClient() {
               <PhoneCall className="w-4 h-4" />
               ثبت درخواست رجیستری در تلگرام
             </a>
+
+            {/* Concise Conversational Registry Guide */}
+            <div className="bg-[#F7DFDA] rounded-3xl p-4 space-y-2.5">
+              <h3 className="text-xs font-black text-[#111111]">
+                نکات مهم رجیستری (خیلی خلاصه)
+              </h3>
+              <ul className="space-y-1.5 text-[11px] text-[#111111]/80 leading-relaxed">
+                <li>
+                  • <strong>فرمول قیمت:</strong> هزینه نهایی رجیستری مجموع <strong>عوارض گمرکی + هزینه ثبت و پاسپورت</strong> هست.
+                </li>
+                <li>
+                  • <strong>کی نیاز به پاسپورت نیست؟</strong> اگر گوشیت <strong>مصوبه</strong> باشه، دیگه نیازی به پاسپورت نداری و فقط عوارض گمرکی رو پرداخت می‌کنی.
+                </li>
+                <li>
+                  • <strong>تغییر لحظه‌ای گمرک:</strong> تعرفه گمرکی از سمت دولت تعیین میشه و ممکنه لحظه‌ای کمی بالاتر بره؛ این موضوع دست ما نیست.
+                </li>
+              </ul>
+            </div>
           </div>
         ) : (
           <div className="space-y-4">
