@@ -17,15 +17,15 @@ interface SmoothProductCardProps {
 }
 
 const COLOR_DOTS: Record<string, string> = {
-  "سفید": "bg-white border border-[#141413]/30",
-  "مشکی": "bg-[#141413]",
+  "سفید": "bg-white border border-white/40",
+  "مشکی": "bg-zinc-800 border border-white/30",
   "آبی یخی": "bg-sky-300",
-  "آلبالویی": "bg-rose-800",
+  "آلبالویی": "bg-rose-700",
   "نارنجی": "bg-[#FF7A18]",
-  "آبی": "bg-blue-600",
-  "سبز": "bg-emerald-600",
-  "بنفش": "bg-purple-500",
-  "تیتانیوم صحرایی": "bg-amber-700/70",
+  "آبی": "bg-blue-500",
+  "سبز": "bg-emerald-500",
+  "بنفش": "bg-purple-400",
+  "تیتانیوم صحرایی": "bg-amber-600",
   "نقره‌ای/طوسی": "bg-slate-400",
   "صورتی": "bg-pink-400",
   "زرد": "bg-amber-300",
@@ -43,75 +43,75 @@ export default function SmoothProductCard({
   image = "/showcase-iphone-17-pro.jpeg",
 }: SmoothProductCardProps) {
   const shortRegistry = registry.includes("بدون") ? "بدون کد" : "کددار";
-  const dotClass = (color && COLOR_DOTS[color]) || "bg-slate-300";
+  const dotClass = (color && COLOR_DOTS[color]) || "bg-slate-400";
 
   return (
     <article
       role="article"
-      className="group h-full bg-white rounded-3xl p-2.5 border border-[#141413]/12 hover:border-[#141413]/40 shadow-[0_2px_12px_rgba(20,20,19,0.04)] hover:shadow-[0_10px_24px_rgba(20,20,19,0.08)] transition-all duration-200 flex flex-col justify-between gap-2.5"
+      className="group h-full bg-[#171920] rounded-2xl p-2 border border-white/10 hover:border-[#FBBF24]/60 shadow-[0_6px_18px_rgba(0,0,0,0.28)] transition-all duration-200 flex flex-col justify-between gap-1.5"
     >
-      <Link href={`/product/${encodeURIComponent(id)}`} className="block space-y-2.5">
-        {/* Clean 3:4 Image Frame with Single Corner Status Pill */}
-        <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-[#141413]">
+      <Link href={`/product/${encodeURIComponent(id)}`} className="block space-y-1.5">
+        {/* Compact Image Frame (~96px) so 6 cards fit cleanly on a mobile screen */}
+        <div className="relative h-24 w-full rounded-xl overflow-hidden bg-[#0E1015] border border-white/5">
           <img
             src={image}
             alt={title}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-300"
+            className="w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-300"
           />
 
           <span
             role="status"
-            className={`absolute top-2 right-2 text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-md ${
+            className={`absolute top-1.5 right-1.5 text-[9px] font-bold px-2 py-0.5 rounded-full ${
               isNew
-                ? "bg-white/90 text-[#141413]"
-                : "bg-[#FBBF24]/95 text-[#141413]"
+                ? "bg-white/15 text-white backdrop-blur-md border border-white/15"
+                : "bg-[#FBBF24] text-[#111111]"
             }`}
           >
-            {isNew ? "آکبند" : `کارکرده · ${battery}`}
+            {isNew ? "آکبند" : battery}
           </span>
         </div>
 
-        {/* Aligned Title & Specs */}
-        <div className="space-y-1 px-1">
+        {/* High-Contrast Dark-Mode Specs */}
+        <div className="space-y-0.5 px-0.5">
           <h2
-            className="text-xs font-extrabold text-[#141413] truncate"
+            className="text-[11px] font-extrabold text-white truncate"
             style={{ fontFamily: "var(--font-english)" }}
             dir="ltr"
           >
             {title}
           </h2>
-          <div className="flex items-center justify-between text-[10px] text-[#141413]/70 font-medium gap-1">
+          <div className="flex items-center justify-between text-[10px] text-slate-300 gap-1">
             <span className="inline-flex items-center gap-1 truncate">
               {color && (
                 <>
                   <span className={`w-2 h-2 rounded-full shrink-0 ${dotClass}`} />
-                  <span className="font-bold text-[#141413]">{color}</span>
-                  <span>·</span>
+                  <span className="font-semibold text-slate-100">{color}</span>
+                  <span className="text-slate-500">·</span>
                 </>
               )}
-              <span>{shortRegistry}</span>
+              <span className="text-slate-400">{shortRegistry}</span>
             </span>
-            <span className="font-bold text-[#141413]/85 shrink-0" dir="ltr">
+            <span className="font-bold text-slate-200 shrink-0" dir="ltr">
               {capacity}
             </span>
           </div>
         </div>
       </Link>
 
-      {/* Aligned Footer Price + Action */}
-      <div className="pt-2 border-t border-[#141413]/8 flex items-center justify-between gap-2 px-1">
-        <span className="text-xs font-black text-[#141413] tabular-nums truncate">
+      {/* Price & Action */}
+      <div className="pt-1.5 border-t border-white/10 flex items-center justify-between gap-1.5 px-0.5">
+        <span className="text-[11px] font-black text-[#FBBF24] tabular-nums truncate">
           {priceLabel}
         </span>
 
         <Link
           href={`/product/${encodeURIComponent(id)}`}
           aria-label={`مشاهده ${title}`}
-          className="w-8 h-8 rounded-full bg-[#141413] group-hover:bg-[#FF7A18] text-white flex items-center justify-center shrink-0 active:scale-90 transition-all duration-200"
+          className="w-6 h-6 rounded-full bg-white/10 group-hover:bg-[#FF7A18] text-white flex items-center justify-center shrink-0 active:scale-90 transition-all duration-200"
         >
-          <ArrowUpLeft className="w-4 h-4" />
+          <ArrowUpLeft className="w-3.5 h-3.5" />
         </Link>
       </div>
     </article>

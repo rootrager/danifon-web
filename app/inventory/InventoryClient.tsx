@@ -118,24 +118,26 @@ export default function InventoryClient() {
   }, [items, activeSection, query]);
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#FAF6EE] text-[#141413] pb-28">
-      {/* Header + 3 Main Section Tabs */}
-      <header className="sticky top-0 z-30 bg-[#FAF6EE]/95 backdrop-blur-md border-b border-[#141413]/10">
-        <div className="max-w-md mx-auto px-4 pt-4 pb-3 space-y-3">
+    <div dir="rtl" className="min-h-screen bg-[#0D0E12] text-white pb-24">
+      {/* Dark Sticky Header + 3 Main Section Tabs */}
+      <header className="sticky top-0 z-30 bg-[#0D0E12]/90 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-md mx-auto px-4 pt-3.5 pb-2.5 space-y-2.5">
           <div className="flex items-center justify-between">
             <Link
               href="/"
               aria-label="بازگشت"
-              className="w-10 h-10 rounded-full bg-white border border-[#141413]/15 flex items-center justify-center text-[#141413] active:scale-95 transition"
+              className="w-9 h-9 rounded-full bg-[#171920] border border-white/15 flex items-center justify-center text-white active:scale-95 transition"
             >
               <ArrowRight className="w-4 h-4" />
             </Link>
-            <h1 className="text-sm font-black">موجودی فروشگاه ({filtered.length})</h1>
-            <span className="w-10" />
+            <h1 className="text-sm font-black text-white">
+              موجودی فروشگاه ({filtered.length})
+            </h1>
+            <span className="w-9" />
           </div>
 
           {/* 3 Separate Sections: New | Used | Watch & AirPods */}
-          <div className="grid grid-cols-3 gap-2 bg-white/80 p-1 rounded-2xl border border-[#141413]/15">
+          <div className="grid grid-cols-3 gap-1.5 bg-[#171920] p-1 rounded-2xl border border-white/10">
             {SECTION_TABS.map((tab) => {
               const active = activeSection === tab.id;
               return (
@@ -143,10 +145,10 @@ export default function InventoryClient() {
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveSection(tab.id)}
-                  className={`py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  className={`py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                     active
-                      ? "bg-[#141413] text-white shadow-xs"
-                      : "text-[#141413]/70 hover:text-[#141413]"
+                      ? "bg-[#FBBF24] text-[#111111] shadow-xs"
+                      : "text-slate-300 hover:text-white"
                   }`}
                 >
                   {tab.label}
@@ -157,29 +159,29 @@ export default function InventoryClient() {
         </div>
       </header>
 
-      <main className="max-w-md mx-auto px-4 space-y-4 pt-3">
-        {/* Simple Search */}
+      <main className="max-w-md mx-auto px-3.5 space-y-3 pt-3">
+        {/* Compact Dark Search */}
         <div className="relative">
-          <Search className="w-4 h-4 text-[#141413]/45 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="جستجوی مدل یا ظرفیت..."
-            className="w-full h-11 pr-10 pl-4 rounded-full bg-white border border-[#141413]/15 text-sm focus:outline-none focus:border-[#141413]"
+            placeholder="جستجوی مدل، رنگ یا ظرفیت..."
+            className="w-full h-10 pr-10 pl-4 rounded-full bg-[#171920] border border-white/12 text-xs text-white placeholder:text-slate-400 focus:outline-none focus:border-[#FBBF24]"
           />
         </div>
 
-        {/* Product Grid */}
+        {/* Compact 2x3+ Product Grid (6+ cards visible per mobile screen) */}
         {filtered.length === 0 ? (
-          <div className="bg-white rounded-3xl p-8 border border-[#141413]/15 text-center space-y-2">
-            <p className="text-sm font-black text-[#141413]">موردی پیدا نشد</p>
-            <p className="text-xs text-[#141413]/60">
+          <div className="bg-[#171920] rounded-3xl p-8 border border-white/10 text-center space-y-2">
+            <p className="text-sm font-black text-white">موردی پیدا نشد</p>
+            <p className="text-xs text-slate-400">
               عبارت جستجو رو تغییر بده یا بخش‌های دیگه رو ببین.
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2.5 items-stretch">
             {filtered.map((item) => (
               <SmoothProductCard
                 key={item.item_id}
