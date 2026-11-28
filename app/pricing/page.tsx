@@ -69,9 +69,15 @@ const AI_TASKS: AiTaskItem[] = [
   { id: "parts", label: "بررسی قطعات و جمع‌بندی نهایی بازه خرید" },
 ];
 
+function toEnDigits(str: string): string {
+  return str
+    .replace(/[۰-۹]/g, (d) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)))
+    .replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
+}
+
 function formatToman(num?: number): string {
   if (!num || num <= 0) return "—";
-  return `${num.toLocaleString("fa-IR")} تومان`;
+  return `${num.toLocaleString("en-US")} تومان`;
 }
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -342,7 +348,11 @@ export default function PricingPage() {
                       بازه پیشنهادی خرید از شما
                     </p>
                     <p className="text-lg font-black text-[#141413] tabular-nums">
-                      {result.range || formatToman(result.buy_center)}
+                      {result.buy_min && result.buy_max
+                        ? `${result.buy_min.toLocaleString("en-US")} تا ${result.buy_max.toLocaleString("en-US")} تومان`
+                        : result.range
+                          ? toEnDigits(result.range)
+                          : formatToman(result.buy_center)}
                     </p>
                     {result.comps?.median_sell && (
                       <p className="text-[11px] text-[#141413]/65 tabular-nums">
@@ -360,11 +370,11 @@ export default function PricingPage() {
                             key={`${d.reason}-${i}`}
                             className="flex items-center justify-between text-xs bg-[#FAF6EE] px-3 py-1.5 rounded-xl"
                           >
-                            <span>{d.label}</span>
+                            <span>{toEnDigits(d.label)}</span>
                             {typeof d.amount === "number" && d.amount !== 0 && (
-                              <span className="font-bold tabular-nums">
+                              <span className="font-bold tabular-nums" dir="ltr">
                                 {d.amount > 0 ? "+" : ""}
-                                {d.amount.toLocaleString("fa-IR")}
+                                {d.amount.toLocaleString("en-US")}
                               </span>
                             )}
                           </div>

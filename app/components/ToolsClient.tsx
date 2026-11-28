@@ -16,7 +16,7 @@ interface RegistryModel {
 }
 
 function formatToman(n: number): string {
-  return `${Math.round(n).toLocaleString("fa-IR")} تومان`;
+  return `${Math.round(n).toLocaleString("en-US")} تومان`;
 }
 
 export default function ToolsClient() {

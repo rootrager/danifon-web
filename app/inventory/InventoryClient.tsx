@@ -70,7 +70,7 @@ function cleanModelName(name: string): string {
 function formatPriceToman(raw: string): string {
   const num = Number(raw);
   if (!Number.isFinite(num) || num <= 0) return "استعلام قیمت";
-  return `${Math.round(num / 1_000_000).toLocaleString("fa-IR")} میلیون`;
+  return `${Math.round(num / 1_000_000).toLocaleString("en-US")} میلیون`;
 }
 
 function priorityScore(model: string): number {

@@ -36,7 +36,7 @@ function cleanModelName(name: string): string {
 function formatPriceFull(raw: string): string {
   const num = Number(raw);
   if (!Number.isFinite(num) || num <= 0) return "تماس بگیرید";
-  return `${num.toLocaleString("fa-IR")} تومان`;
+  return `${num.toLocaleString("en-US")} تومان`;
 }
 
 export function generateStaticParams() {
