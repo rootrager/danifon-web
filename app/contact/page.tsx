@@ -6,7 +6,7 @@ import {
   PhoneCall,
   ShieldCheck,
   Navigation,
-  Instagram,
+  Camera,
   Send,
   ExternalLink,
 } from "lucide-react";
@@ -101,7 +101,7 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <span className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold">
-                  <Instagram className="w-3.5 h-3.5" />
+                  <Camera className="w-3.5 h-3.5" />
                   مشاهده پیج
                 </span>
               </div>
