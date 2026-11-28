@@ -16,6 +16,7 @@ import {
 import OnboardingTutorial from "./OnboardingTutorial";
 import BottomNav from "./BottomNav";
 import PixelFlowField from "./ui/PixelFlowField";
+import GlassCard from "./ui/GlassCard";
 
 const CATEGORY_ITEMS = [
   {
@@ -67,13 +68,26 @@ export default function MobileHome() {
   };
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#FAF6EE] text-[#141413] pb-28">
+    <div
+      dir="rtl"
+      className="relative min-h-screen bg-gradient-to-b from-[#FAF6EE] via-[#F7EFE2] to-[#FCEEE3] text-[#141413] pb-28 overflow-x-hidden"
+    >
+      {/* Soft ambient orbs so GlassCard blur shines */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed top-48 -right-16 w-60 h-60 rounded-full bg-[#FF7A18]/18 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed bottom-32 -left-16 w-64 h-64 rounded-full bg-[#FBBF24]/20 blur-3xl"
+      />
+
       <OnboardingTutorial
         forceOpen={replayTutorial}
         onClose={() => setReplayTutorial(false)}
       />
 
-      <main className="max-w-md mx-auto px-4 pt-5 space-y-4">
+      <main className="relative z-10 max-w-md mx-auto px-4 pt-5 space-y-4">
         {/* Top Interactive Pixel Flow Field Header (DANIFON) */}
         <header className="relative rounded-3xl bg-[#141413] border-2 border-[#141413] shadow-[4px_4px_0px_#FBBF24] overflow-hidden h-20 flex items-center justify-between px-3">
           <div className="w-10 shrink-0" />
@@ -139,36 +153,38 @@ export default function MobileHome() {
           </div>
         </motion.section>
 
-        {/* 2. Registry & Installment Quick Buttons */}
+        {/* 2. Registry & Installment Quick Glass Buttons */}
         <section className="grid grid-cols-2 gap-3">
-          <Link
-            href="/tools"
-            className="bg-white rounded-2xl p-3.5 border border-[#141413]/15 hover:border-[#141413] flex items-center gap-3 active:scale-[0.98] transition"
-          >
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-xs font-black text-[#141413]">رجیستریش چنده؟</h3>
-              <p className="text-[10px] text-[#141413]/60 mt-0.5">استعلام گمرکی و کد ملی</p>
-            </div>
+          <Link href="/tools" className="block active:scale-[0.98] transition">
+            <GlassCard className="!rounded-2xl p-3.5 h-full">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-100/90 text-emerald-700 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-black text-[#141413]">رجیستریش چنده؟</h3>
+                  <p className="text-[10px] text-[#141413]/60 mt-0.5">استعلام گمرکی و کد ملی</p>
+                </div>
+              </div>
+            </GlassCard>
           </Link>
 
-          <Link
-            href="/tools"
-            className="bg-white rounded-2xl p-3.5 border border-[#141413]/15 hover:border-[#141413] flex items-center gap-3 active:scale-[0.98] transition"
-          >
-            <div className="w-10 h-10 rounded-xl bg-[#FBBF24]/25 text-[#141413] flex items-center justify-center shrink-0">
-              <Calculator className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-xs font-black text-[#141413]">قسطی حساب کنیم؟</h3>
-              <p className="text-[10px] text-[#141413]/60 mt-0.5">پیش‌پرداخت و قسط ماهانه</p>
-            </div>
+          <Link href="/tools" className="block active:scale-[0.98] transition">
+            <GlassCard className="!rounded-2xl p-3.5 h-full">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#FBBF24]/30 text-[#141413] flex items-center justify-center shrink-0">
+                  <Calculator className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-xs font-black text-[#141413]">قسطی حساب کنیم؟</h3>
+                  <p className="text-[10px] text-[#141413]/60 mt-0.5">پیش‌پرداخت و قسط ماهانه</p>
+                </div>
+              </div>
+            </GlassCard>
           </Link>
         </section>
 
-        {/* 3. Four Product Categories (Mobile, Watch, AirPods, Console) */}
+        {/* 3. Four Glass Product Categories (Mobile, Watch, AirPods, Console) */}
         <section className="space-y-3 pt-1">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-black text-[#141413]">توی دانیفون چی داریم؟</h3>
@@ -180,38 +196,41 @@ export default function MobileHome() {
           <div className="grid grid-cols-2 gap-3">
             {CATEGORY_ITEMS.map((cat) =>
               cat.comingSoon ? (
-                <div
-                  key={cat.id}
-                  className="bg-white/70 rounded-3xl p-3.5 border border-dashed border-[#141413]/25 flex flex-col justify-between gap-2.5"
-                >
-                  <div className="aspect-[4/3] w-full rounded-2xl bg-[#FAF6EE] flex flex-col items-center justify-center gap-1.5 text-[#141413]/45">
-                    <Gamepad2 className="w-10 h-10 stroke-[1.5]" />
-                    <span className="text-[10px] font-bold bg-[#FBBF24] text-[#141413] px-2.5 py-0.5 rounded-full">
-                      به‌زودی
-                    </span>
+                <GlassCard key={cat.id} className="p-3.5 !bg-white/40 border-dashed !border-[#141413]/20">
+                  <div className="flex flex-col justify-between gap-2.5">
+                    <div className="aspect-[4/3] w-full rounded-2xl bg-white/50 flex flex-col items-center justify-center gap-1.5 text-[#141413]/45">
+                      <Gamepad2 className="w-10 h-10 stroke-[1.5]" />
+                      <span className="text-[10px] font-bold bg-[#FBBF24] text-[#141413] px-2.5 py-0.5 rounded-full">
+                        به‌زودی
+                      </span>
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-black text-[#141413]/75">{cat.title}</h4>
+                      <p className="text-[10px] text-[#141413]/50 mt-0.5">{cat.subtitle}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-xs font-black text-[#141413]/75">{cat.title}</h4>
-                    <p className="text-[10px] text-[#141413]/50 mt-0.5">{cat.subtitle}</p>
-                  </div>
-                </div>
+                </GlassCard>
               ) : (
                 <Link
                   key={cat.id}
                   href={cat.href}
-                  className="bg-white rounded-3xl p-3.5 border border-[#141413]/15 hover:border-[#141413] flex flex-col justify-between gap-2.5 active:scale-[0.98] transition"
+                  className="block active:scale-[0.98] transition"
                 >
-                  <div className="aspect-[4/3] w-full rounded-2xl overflow-hidden bg-[#FAF6EE]">
-                    <img
-                      src={cat.image!}
-                      alt={cat.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-black text-[#141413]">{cat.title}</h4>
-                    <p className="text-[10px] text-[#141413]/60 mt-0.5">{cat.subtitle}</p>
-                  </div>
+                  <GlassCard className="p-3.5 h-full">
+                    <div className="flex flex-col justify-between gap-2.5">
+                      <div className="aspect-[4/3] w-full rounded-2xl overflow-hidden bg-white/60">
+                        <img
+                          src={cat.image!}
+                          alt={cat.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-black text-[#141413]">{cat.title}</h4>
+                        <p className="text-[10px] text-[#141413]/60 mt-0.5">{cat.subtitle}</p>
+                      </div>
+                    </div>
+                  </GlassCard>
                 </Link>
               )
             )}
