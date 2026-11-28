@@ -74,39 +74,24 @@ export default function ContactPage() {
         <section className="space-y-2.5">
           {/* Featured Instagram Card */}
           <a
-            href="https://instagram.com/daniphoneir"
+            href="https://instagram.com/danifon.ir"
             target="_blank"
             rel="noreferrer"
             className="block bg-white rounded-3xl overflow-hidden border border-[#93C5FD] shadow-xs active:scale-[0.99] transition"
           >
-            <div className="relative h-24 w-full bg-gradient-to-r from-[#0B1220] via-[#1D4ED8] to-[#2563EB] overflow-hidden">
+            <div className="w-full bg-[#0B0E14]">
               <img
-                src="/danifon-showcase-poster.jpg"
-                alt="Instagram Danifon"
-                className="w-full h-full object-cover opacity-45"
+                src="/instagram-header.jpg"
+                alt="پیج اینستاگرام danifon.ir"
+                className="w-full h-auto block"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/85 to-transparent" />
-              <div className="absolute bottom-2.5 right-3.5 left-3.5 flex items-center justify-between text-white">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-full bg-white text-[#0B1220] flex items-center justify-center font-black text-sm ring-2 ring-[#3B82F6]">
-                    D
-                  </div>
-                  <div>
-                    <p className="text-xs font-black">پیج اینستاگرام دانیفون</p>
-                    <p className="text-[10px] text-blue-100" dir="ltr">
-                      @daniphoneir
-                    </p>
-                  </div>
-                </div>
-                <span className="inline-flex items-center gap-1 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold">
-                  <Camera className="w-3.5 h-3.5" />
-                  مشاهده پیج
-                </span>
-              </div>
             </div>
 
-            <div className="px-4 py-2.5 flex items-center justify-between text-xs text-[#334155]">
-              <span>استوری قیمت روز، آنباکس و کارشناسی دستگاه‌ها</span>
+            <div className="px-4 py-3 flex items-center justify-between text-xs text-[#0B1220]">
+              <div className="flex items-center gap-2">
+                <Camera className="w-4 h-4 text-[#2563EB] shrink-0" />
+                <span className="font-black">دنبال کردن پیج اینستاگرام (@danifon.ir)</span>
+              </div>
               <ExternalLink className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
             </div>
           </a>
