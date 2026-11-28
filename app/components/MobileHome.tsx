@@ -72,14 +72,18 @@ export default function MobileHome() {
       dir="rtl"
       className="relative min-h-screen bg-gradient-to-b from-[#FAF6EE] via-[#F7EFE2] to-[#FCEEE3] text-[#141413] pb-28 overflow-x-hidden"
     >
-      {/* Soft ambient orbs so GlassCard blur shines */}
+      {/* Stronger ambient color orbs so GlassCard frosted blur is clearly visible */}
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed top-48 -right-16 w-60 h-60 rounded-full bg-[#FF7A18]/18 blur-3xl"
+        className="pointer-events-none fixed top-64 -right-12 w-72 h-72 rounded-full bg-[#FF7A18]/30 blur-3xl"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed bottom-32 -left-16 w-64 h-64 rounded-full bg-[#FBBF24]/20 blur-3xl"
+        className="pointer-events-none fixed bottom-24 -left-12 w-72 h-72 rounded-full bg-[#3B82F6]/20 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed top-[420px] left-1/3 w-56 h-56 rounded-full bg-[#FBBF24]/30 blur-3xl"
       />
 
       <OnboardingTutorial
