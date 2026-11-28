@@ -62,6 +62,12 @@ const REGISTRIES = [
   { id: "NATIONAL_ID", label: "کد ملی" },
 ];
 
+const PARTS = [
+  { id: "CH/A", label: "CH/A" },
+  { id: "ZA/A", label: "ZA/A" },
+  { id: "SINGLE_SIM", label: "تک‌سیم" },
+];
+
 const AI_TASKS: AiTaskItem[] = [
   { id: "usd", label: "بررسی نرخ لحظه‌ای دلار و شیب بازار" },
   { id: "comps", label: "تطبیق مدل و حافظه با معاملات واقعی امروز" },
@@ -87,6 +93,7 @@ export default function PricingPage() {
   const [storage, setStorage] = useState(128);
   const [battery, setBattery] = useState(88);
   const [registry, setRegistry] = useState("REGISTERED");
+  const [part, setPart] = useState("ZA/A");
   const [partsReplaced, setPartsReplaced] = useState(0);
   const [loading, setLoading] = useState(false);
   const [completedTasks, setCompletedTasks] = useState(0);
@@ -112,6 +119,7 @@ export default function PricingPage() {
             storage,
             battery,
             registry,
+            part,
             condition: "CLEAN",
             parts_replaced: partsReplaced,
             national_id_rule: registry === "NATIONAL_ID",
@@ -248,6 +256,27 @@ export default function PricingPage() {
                   }`}
                 >
                   {r.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Part Number */}
+          <div className="space-y-2">
+            <label className="text-xs font-black text-[#141413]">پارت نامبر</label>
+            <div className="grid grid-cols-3 gap-2.5">
+              {PARTS.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => setPart(p.id)}
+                  className={`py-2.5 px-2 rounded-xl text-[11px] font-bold border transition cursor-pointer ${
+                    part === p.id
+                      ? "bg-[#141413] text-white border-[#141413]"
+                      : "bg-white/80 text-[#141413]/75 border-[#141413]/15"
+                  }`}
+                >
+                  {p.label}
                 </button>
               ))}
             </div>
