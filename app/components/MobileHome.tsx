@@ -83,8 +83,8 @@ export default function MobileHome() {
             />
           </div>
           <Link
-            href="/contact"
-            aria-label="درباره دانیفون"
+            href="/install"
+            aria-label="نصب اپلیکیشن دانیفون"
             className="relative z-10 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-[#FAF6EE] active:scale-95 transition shrink-0"
           >
             <svg
