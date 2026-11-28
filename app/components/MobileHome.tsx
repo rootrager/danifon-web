@@ -7,7 +7,6 @@ import {
   Sparkles,
   ShieldCheck,
   Calculator,
-  Gamepad2,
   ArrowLeft,
   MapPin,
 } from "lucide-react";
@@ -22,7 +21,7 @@ const CATEGORY_ITEMS = [
     id: "iphone",
     title: "آیفون‌ها",
     subtitle: "آکبند و کارکرده به‌شرط",
-    image: "/showcase-iphone-17-pro.jpeg",
+    image: "/home/iphone.jpg",
     href: "/inventory",
     comingSoon: false,
   },
@@ -30,23 +29,23 @@ const CATEGORY_ITEMS = [
     id: "watch",
     title: "اپل واچ",
     subtitle: "رفیق مچ دستت",
-    image: "/showcase-apple-watch-ultra.jpeg",
-    href: "/inventory",
+    image: "/home/watch.jpg",
+    href: "/inventory?tab=accessories",
     comingSoon: false,
   },
   {
     id: "airpods",
     title: "ایرپاد",
     subtitle: "موسیقی بدون مزاحم",
-    image: "/showcase-airpods-pro.jpeg",
-    href: "/inventory",
+    image: "/home/airpods.jpg",
+    href: "/inventory?tab=accessories",
     comingSoon: false,
   },
   {
     id: "console",
     title: "کنسول بازی",
     subtitle: "تو راهه، به‌زودی!",
-    image: null,
+    image: "/home/console.jpg",
     href: "#",
     comingSoon: true,
   },
@@ -185,15 +184,19 @@ export default function MobileHome() {
               cat.comingSoon ? (
                 <GlassCard key={cat.id} className="!rounded-2xl p-2.5 !bg-white/40 border-dashed !border-[#141413]/20">
                   <div className="flex flex-col justify-between gap-2">
-                    <div className="aspect-[16/10] w-full rounded-xl bg-white/50 flex flex-col items-center justify-center gap-1 text-[#141413]/45">
-                      <Gamepad2 className="w-7 h-7 stroke-[1.5]" />
-                      <span className="text-[9px] font-bold bg-[#FBBF24] text-[#141413] px-2 py-0.5 rounded-full">
+                    <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-white/60">
+                      <img
+                        src={cat.image}
+                        alt={cat.title}
+                        className="w-full h-full object-cover opacity-85"
+                      />
+                      <span className="absolute top-2 right-2 text-[9px] font-bold bg-[#FBBF24] text-[#141413] px-2 py-0.5 rounded-full shadow-xs">
                         به‌زودی
                       </span>
                     </div>
                     <div>
-                      <h4 className="text-xs font-black text-[#141413]/75">{cat.title}</h4>
-                      <p className="text-[10px] text-[#141413]/50 truncate">{cat.subtitle}</p>
+                      <h4 className="text-xs font-black text-[#141413]/85">{cat.title}</h4>
+                      <p className="text-[10px] text-[#141413]/55 truncate">{cat.subtitle}</p>
                     </div>
                   </div>
                 </GlassCard>
