@@ -1,83 +1,78 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import {
   Search,
   Sparkles,
+  ShieldCheck,
+  Calculator,
   HelpCircle,
+  Gamepad2,
+  ArrowLeft,
 } from "lucide-react";
-import inventoryData from "../data/inventory.json";
 import OnboardingTutorial from "./OnboardingTutorial";
 import BottomNav from "./BottomNav";
 
-interface InventoryItem {
-  item_id: string;
-  type: string;
-  series: string;
-  model: string;
-  capacity: string;
-  part?: string;
-  battery: string;
-  price: string;
-}
-
-const TABS = [
-  { id: "all", label: "همه" },
-  { id: "18", label: "سری ۱۸" },
-  { id: "17", label: "سری ۱۷" },
-  { id: "16", label: "سری ۱۶" },
-  { id: "used", label: "کارکرده" },
+const CATEGORY_ITEMS = [
+  {
+    id: "iphone",
+    title: "آیفون‌ها",
+    subtitle: "آکبند و کارکرده به‌شرط",
+    image: "/showcase-iphone-17-pro.jpeg",
+    href: "/inventory",
+    comingSoon: false,
+  },
+  {
+    id: "watch",
+    title: "اپل واچ",
+    subtitle: "رفیق مچ دستت",
+    image: "/showcase-apple-watch-ultra.jpeg",
+    href: "/inventory",
+    comingSoon: false,
+  },
+  {
+    id: "airpods",
+    title: "ایرپاد",
+    subtitle: "موسیقی بدون مزاحم",
+    image: "/showcase-airpods-pro.jpeg",
+    href: "/inventory",
+    comingSoon: false,
+  },
+  {
+    id: "console",
+    title: "کنسول بازی",
+    subtitle: "تو راهه، به‌زودی!",
+    image: null,
+    href: "#",
+    comingSoon: true,
+  },
 ];
 
-function cleanModelName(name: string): string {
-  return name.replace(/\s*\([^)]*\)/g, "").trim();
-}
-
-function formatPriceToman(raw: string): string {
-  const num = Number(raw);
-  if (!Number.isFinite(num) || num <= 0) return "استعلام قیمت";
-  return `${Math.round(num / 1_000_000).toLocaleString("fa-IR")} میلیون`;
-}
-
 export default function MobileHome() {
-  const [activeTab, setActiveTab] = useState("all");
   const [query, setQuery] = useState("");
   const [replayTutorial, setReplayTutorial] = useState(false);
+  const router = useRouter();
 
-  const items = inventoryData as InventoryItem[];
-
-  const filtered = useMemo(() => {
-    return items
-      .filter((item) => {
-        if (activeTab === "used") {
-          if (item.type === "new") return false;
-        } else if (activeTab !== "all") {
-          if (item.series !== activeTab) return false;
-        }
-        if (query.trim()) {
-          const q = query.trim().toLowerCase();
-          return (
-            item.model.toLowerCase().includes(q) ||
-            item.capacity.toLowerCase().includes(q)
-          );
-        }
-        return true;
-      })
-      .slice(0, 6);
-  }, [items, activeTab, query]);
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      router.push(`/inventory?search=${encodeURIComponent(query.trim())}`);
+    } else {
+      router.push("/inventory");
+    }
+  };
 
   return (
     <div dir="rtl" className="min-h-screen bg-[#FAF6EE] text-[#141413] pb-28">
-      {/* First-Visit Animated Tutorial */}
       <OnboardingTutorial
         forceOpen={replayTutorial}
         onClose={() => setReplayTutorial(false)}
       />
 
-      {/* App Shell Container */}
-      <main className="max-w-md mx-auto px-4 pt-5 space-y-5">
+      <main className="max-w-md mx-auto px-4 pt-5 space-y-4">
         {/* Top App Header */}
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -85,132 +80,141 @@ export default function MobileHome() {
               D
             </div>
             <div>
-              <p className="text-[11px] text-[#141413]/60 font-medium">سلام! خوش اومدی 👋</p>
-              <h1 className="text-base font-black text-[#141413]">فروشگاه دانیفون</h1>
+              <p className="text-[11px] text-[#141413]/65 font-medium">سلام! خوش اومدی 👋</p>
+              <h1 className="text-base font-black text-[#141413]">دانیفون</h1>
             </div>
           </div>
 
           <button
             type="button"
             onClick={() => setReplayTutorial(true)}
-            aria-label="مشاهده راهنما"
+            aria-label="راهنمای اپ"
             className="w-10 h-10 rounded-full bg-white border border-[#141413]/15 flex items-center justify-center text-[#141413] active:scale-95 transition cursor-pointer"
           >
             <HelpCircle className="w-4 h-4" />
           </button>
         </header>
 
-        {/* Capsule Search */}
-        <div className="relative">
+        {/* Search Bar */}
+        <form onSubmit={handleSearch} className="relative">
           <Search className="w-4 h-4 text-[#141413]/45 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="جستجوی مدل آیفون (مثلاً 17 Pro)..."
-            className="w-full h-11 pr-10 pl-4 rounded-full bg-white border border-[#141413]/15 text-sm text-[#141413] placeholder:text-[#141413]/40 focus:outline-none focus:border-[#141413] transition"
+            placeholder="دنبال چه گوشی‌ای هستی؟ (مثلاً 16 Pro)..."
+            className="w-full h-11 pr-10 pl-4 rounded-full bg-white border border-[#141413]/15 text-sm text-[#141413] placeholder:text-[#141413]/45 focus:outline-none focus:border-[#141413] transition"
           />
-        </div>
+        </form>
 
-        {/* Bold Creative Action Card (Inspired by Ref 1 & 2) */}
+        {/* 1. Hero Card: قیمت گوشیت همین الان چنده؟ */}
         <motion.section
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
-          className="rounded-3xl bg-gradient-to-br from-[#FF7A18] via-[#FF5E1A] to-[#EA580C] p-5 text-white border-2 border-[#141413] shadow-[4px_4px_0px_#141413] flex items-center justify-between gap-3"
+          className="rounded-3xl bg-gradient-to-br from-[#FF7A18] via-[#FF5E1A] to-[#EA580C] p-5 text-white border-2 border-[#141413] shadow-[4px_4px_0px_#141413] space-y-3"
         >
-          <div className="space-y-2.5">
-            <span className="inline-block text-[10px] font-bold uppercase tracking-wider bg-black/20 px-2.5 py-0.5 rounded-full">
-              هوشمند و زنده
-            </span>
-            <h2 className="text-lg font-black leading-snug">
-              معاوضه یا فروش فوری گوشیت
+          <span className="inline-flex items-center gap-1 text-[11px] font-bold bg-black/20 px-3 py-1 rounded-full">
+            <Sparkles className="w-3.5 h-3.5 text-[#FBBF24]" />
+            قیمت زنده بازار
+          </span>
+
+          <div className="space-y-1">
+            <h2 className="text-xl font-black leading-snug">
+              قیمت گوشیت همین الان چنده؟
             </h2>
             <p className="text-xs text-white/90 leading-relaxed">
-              برآورد قیمت واقعی بازار + محاسبه اقساط در چند ثانیه.
+              مدل و درصد باتریش رو بگو تا همون لحظه بر اساس معاملات واقعی امروز، قیمت دقیقش رو دربیاریم.
             </p>
-            <div className="pt-1">
-              <Link
-                href="/pricing"
-                className="inline-flex items-center gap-1.5 bg-[#141413] text-white px-4 py-2 rounded-full text-xs font-bold active:scale-95 transition"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-[#FBBF24]" />
-                شروع قیمت‌گذاری
-              </Link>
-            </div>
           </div>
 
-          <div className="w-20 h-24 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/25 overflow-hidden shrink-0">
-            <img
-              src="/showcase-iphone-17-pro.jpeg"
-              alt="iPhone"
-              className="w-full h-full object-cover"
-            />
+          <div className="pt-1">
+            <Link
+              href="/pricing"
+              className="inline-flex items-center gap-2 bg-[#141413] text-white px-5 py-2.5 rounded-full text-xs font-bold active:scale-95 transition"
+            >
+              <span>ببینم چند می‌ارزه!</span>
+              <ArrowLeft className="w-3.5 h-3.5 text-[#FBBF24]" />
+            </Link>
           </div>
         </motion.section>
 
-        {/* Horizontal Pill Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-          {TABS.map((tab) => {
-            const active = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition cursor-pointer ${
-                  active
-                    ? "bg-[#FBBF24] text-[#141413] border border-[#141413]"
-                    : "bg-white text-[#141413]/75 border border-[#141413]/15 hover:border-[#141413]"
-                }`}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
+        {/* 2. Registry & Installment Quick Buttons */}
+        <section className="grid grid-cols-2 gap-3">
+          <Link
+            href="/tools"
+            className="bg-white rounded-2xl p-3.5 border border-[#141413]/15 hover:border-[#141413] flex items-center gap-3 active:scale-[0.98] transition"
+          >
+            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs font-black text-[#141413]">رجیستریش چنده؟</h3>
+              <p className="text-[10px] text-[#141413]/60 mt-0.5">استعلام گمرکی و کد ملی</p>
+            </div>
+          </Link>
 
-        {/* Featured Section */}
-        <section className="space-y-3">
+          <Link
+            href="/tools"
+            className="bg-white rounded-2xl p-3.5 border border-[#141413]/15 hover:border-[#141413] flex items-center gap-3 active:scale-[0.98] transition"
+          >
+            <div className="w-10 h-10 rounded-xl bg-[#FBBF24]/25 text-[#141413] flex items-center justify-center shrink-0">
+              <Calculator className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs font-black text-[#141413]">قسطی حساب کنیم؟</h3>
+              <p className="text-[10px] text-[#141413]/60 mt-0.5">پیش‌پرداخت و قسط ماهانه</p>
+            </div>
+          </Link>
+        </section>
+
+        {/* 3. Four Product Categories (Mobile, Watch, AirPods, Console) */}
+        <section className="space-y-3 pt-1">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-black text-[#141413]">موجودی برگزیده</h3>
+            <h3 className="text-sm font-black text-[#141413]">توی دانیفون چی داریم؟</h3>
             <Link href="/inventory" className="text-xs font-bold text-[#EA580C]">
-              مشاهده همه
+              همه موجودی‌ها
             </Link>
           </div>
 
-          {/* 2-Column App Cards */}
           <div className="grid grid-cols-2 gap-3">
-            {filtered.map((item) => (
-              <Link
-                key={item.item_id}
-                href={`/product/${encodeURIComponent(item.item_id)}`}
-                className="bg-white rounded-2xl p-3 border border-[#141413]/15 hover:border-[#141413] flex flex-col justify-between gap-2.5 active:scale-[0.98] transition"
-              >
-                <div className="aspect-square w-full rounded-xl overflow-hidden bg-[#FAF6EE]">
-                  <img
-                    src="/showcase-iphone-17-pro.jpeg"
-                    alt={cleanModelName(item.model)}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <h4
-                    className="text-xs font-bold text-[#141413] truncate"
-                    style={{ fontFamily: "var(--font-english)" }}
-                    dir="ltr"
-                  >
-                    {cleanModelName(item.model)}
-                  </h4>
-                  <div className="flex items-center justify-between text-[11px] text-[#141413]/65">
-                    <span>{item.capacity}</span>
-                    <span className="font-bold text-[#141413] tabular-nums">
-                      {formatPriceToman(item.price)}
+            {CATEGORY_ITEMS.map((cat) =>
+              cat.comingSoon ? (
+                <div
+                  key={cat.id}
+                  className="bg-white/70 rounded-3xl p-3.5 border border-dashed border-[#141413]/25 flex flex-col justify-between gap-2.5"
+                >
+                  <div className="aspect-[4/3] w-full rounded-2xl bg-[#FAF6EE] flex flex-col items-center justify-center gap-1.5 text-[#141413]/45">
+                    <Gamepad2 className="w-10 h-10 stroke-[1.5]" />
+                    <span className="text-[10px] font-bold bg-[#FBBF24] text-[#141413] px-2.5 py-0.5 rounded-full">
+                      به‌زودی
                     </span>
                   </div>
+                  <div>
+                    <h4 className="text-xs font-black text-[#141413]/75">{cat.title}</h4>
+                    <p className="text-[10px] text-[#141413]/50 mt-0.5">{cat.subtitle}</p>
+                  </div>
                 </div>
-              </Link>
-            ))}
+              ) : (
+                <Link
+                  key={cat.id}
+                  href={cat.href}
+                  className="bg-white rounded-3xl p-3.5 border border-[#141413]/15 hover:border-[#141413] flex flex-col justify-between gap-2.5 active:scale-[0.98] transition"
+                >
+                  <div className="aspect-[4/3] w-full rounded-2xl overflow-hidden bg-[#FAF6EE]">
+                    <img
+                      src={cat.image!}
+                      alt={cat.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-black text-[#141413]">{cat.title}</h4>
+                    <p className="text-[10px] text-[#141413]/60 mt-0.5">{cat.subtitle}</p>
+                  </div>
+                </Link>
+              )
+            )}
           </div>
         </section>
       </main>
