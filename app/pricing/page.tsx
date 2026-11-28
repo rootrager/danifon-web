@@ -148,8 +148,8 @@ export default function PricingPage() {
       </header>
 
       <main className="max-w-md mx-auto px-4 space-y-4 pt-1">
-        {/* AI Orb Face Header Card */}
-        <div className="bg-white rounded-3xl p-4 border-2 border-[#141413] shadow-[4px_4px_0px_#141413] text-center space-y-2">
+        {/* Floating AI Orb Header (No Box) */}
+        <div className="text-center space-y-1.5 py-1">
           <AiOrbFace state={orbState} />
           <h2 className="text-sm font-black text-[#141413]">
             {loading
@@ -159,7 +159,7 @@ export default function PricingPage() {
                 : "دستیار هوشمند قیمت‌گذاری دانیفون"}
           </h2>
           <p className="text-[11px] text-[#141413]/65 leading-relaxed">
-            مشخصات گوشی رو انتخاب کن تا بر اساس معاملات واقعی امروز بازار قیمتش رو دربیارم.
+            مشخصات گوشی رو انتخاب کن تا بر اساس معاملات واقعی امروز قیمتش رو دربیارم.
           </p>
         </div>
 
