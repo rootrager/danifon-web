@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowRight,
-  Sparkles,
   BatteryCharging,
   ShieldCheck,
   Wrench,
@@ -14,6 +13,8 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import BottomNav from "../components/BottomNav";
+import AiOrbFace from "../components/ui/AiOrbFace";
+import AiTaskList, { AiTaskItem } from "../components/ui/AiTaskList";
 
 interface QuoteResponse {
   ok: boolean;
@@ -60,30 +61,47 @@ const REGISTRIES = [
   { id: "NATIONAL_ID", label: "مصوبه کد ملی" },
 ];
 
+const AI_TASKS: AiTaskItem[] = [
+  { id: "usd", label: "بررسی نرخ لحظه‌ای دلار و شیب بازار" },
+  { id: "comps", label: "تطبیق مدل و حافظه با معاملات واقعی امروز" },
+  { id: "battery", label: "محاسبه سلامت باتری و وضعیت رجیستری" },
+  { id: "parts", label: "بررسی قطعات و جمع‌بندی نهایی بازه خرید" },
+];
+
 function formatToman(num?: number): string {
   if (!num || num <= 0) return "—";
   return `${num.toLocaleString("fa-IR")} تومان`;
 }
 
+const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 export default function PricingPage() {
-  const [selectedModelIdx, setSelectedModelIdx] = useState(12); // iPhone 13 default
+  const [selectedModelIdx, setSelectedModelIdx] = useState(12);
   const [storage, setStorage] = useState(128);
   const [battery, setBattery] = useState(88);
   const [registry, setRegistry] = useState("REGISTERED");
   const [partsReplaced, setPartsReplaced] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [completedTasks, setCompletedTasks] = useState(0);
   const [result, setResult] = useState<QuoteResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const selectedModel = MODELS[selectedModelIdx];
 
+  const orbState: "idle" | "thinking" | "done" = loading
+    ? "thinking"
+    : result && result.ok
+      ? "done"
+      : "idle";
+
   const handleEstimate = async () => {
     setLoading(true);
     setError(null);
     setResult(null);
+    setCompletedTasks(0);
 
     try {
-      const res = await fetch("/api/quote", {
+      const fetchPromise = fetch("/api/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -98,8 +116,15 @@ export default function PricingPage() {
             national_id_rule: registry === "NATIONAL_ID",
           },
         }),
-      });
-      const data: QuoteResponse = await res.json();
+      }).then((r) => r.json() as Promise<QuoteResponse>);
+
+      // Step through AI tasks visibly while live API responds
+      for (let i = 1; i <= AI_TASKS.length; i++) {
+        await wait(550);
+        setCompletedTasks(i);
+      }
+
+      const data = await fetchPromise;
       setResult(data);
     } catch {
       setError("ارتباط با سرور قیمت‌گذاری برقرار نشد. لطفاً دوباره تلاش کنید.");
@@ -123,20 +148,23 @@ export default function PricingPage() {
       </header>
 
       <main className="max-w-md mx-auto px-4 space-y-4 pt-1">
-        {/* Intro Card */}
-        <div className="bg-gradient-to-br from-[#FF7A18] to-[#EA580C] text-white rounded-3xl p-4 border-2 border-[#141413] shadow-[4px_4px_0px_#141413] space-y-1">
-          <div className="flex items-center gap-1.5 text-xs font-bold">
-            <Sparkles className="w-4 h-4 text-[#FBBF24]" />
-            <span>موتور قیمت‌گذاری زنده دانیفون</span>
-          </div>
-          <p className="text-xs text-white/90 leading-relaxed">
-            مشخصات گوشی خود را انتخاب کنید تا بر اساس معاملات واقعی روز بازار قیمت خرید را ببینید.
+        {/* AI Orb Face Header Card */}
+        <div className="bg-white rounded-3xl p-4 border-2 border-[#141413] shadow-[4px_4px_0px_#141413] text-center space-y-2">
+          <AiOrbFace state={orbState} />
+          <h2 className="text-sm font-black text-[#141413]">
+            {loading
+              ? "دارم قیمت واقعی گوشیت رو حساب می‌کنم..."
+              : result?.ok
+                ? "قیمت آماده شد! پایین رو ببین"
+                : "دستیار هوشمند قیمت‌گذاری دانیفون"}
+          </h2>
+          <p className="text-[11px] text-[#141413]/65 leading-relaxed">
+            مشخصات گوشی رو انتخاب کن تا بر اساس معاملات واقعی امروز بازار قیمتش رو دربیارم.
           </p>
         </div>
 
         {/* Form Card */}
         <div className="bg-white rounded-3xl p-4 border border-[#141413]/15 space-y-4">
-          {/* Model */}
           <div className="space-y-1.5">
             <label className="text-xs font-black text-[#141413]">مدل آیفون</label>
             <select
@@ -153,7 +181,6 @@ export default function PricingPage() {
             </select>
           </div>
 
-          {/* Storage */}
           <div className="space-y-1.5">
             <label className="text-xs font-black text-[#141413]">ظرفیت حافظه</label>
             <div className="grid grid-cols-4 gap-2">
@@ -174,7 +201,6 @@ export default function PricingPage() {
             </div>
           </div>
 
-          {/* Battery */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <label className="text-xs font-black text-[#141413] flex items-center gap-1.5">
@@ -195,7 +221,6 @@ export default function PricingPage() {
             />
           </div>
 
-          {/* Registry */}
           <div className="space-y-1.5">
             <label className="text-xs font-black text-[#141413] flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
@@ -219,7 +244,6 @@ export default function PricingPage() {
             </div>
           </div>
 
-          {/* Replaced Parts */}
           <div className="space-y-1.5">
             <label className="text-xs font-black text-[#141413] flex items-center gap-1.5">
               <Wrench className="w-4 h-4 text-slate-600" />
@@ -253,11 +277,23 @@ export default function PricingPage() {
             disabled={loading}
             className="w-full py-3.5 rounded-full bg-[#141413] text-white text-sm font-bold shadow-md active:scale-[0.98] transition disabled:opacity-60 cursor-pointer"
           >
-            {loading ? "در حال محاسبه قیمت زنده..." : "محاسبه قیمت واقعی دستگاه"}
+            {loading ? "در حال بررسی مراحل..." : "محاسبه قیمت واقعی دستگاه"}
           </button>
         </div>
 
-        {/* Error */}
+        {/* AI Task List while calculating */}
+        <AnimatePresence>
+          {loading && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+            >
+              <AiTaskList tasks={AI_TASKS} completedCount={completedTasks} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 rounded-2xl p-4 text-xs font-bold">
             {error}
@@ -266,7 +302,7 @@ export default function PricingPage() {
 
         {/* Result Card */}
         <AnimatePresence>
-          {result && (
+          {!loading && result && (
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
