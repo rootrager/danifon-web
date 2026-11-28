@@ -142,7 +142,7 @@ export default function MobileHome() {
 
         {/* 2. Registry & Installment Quick Glass Buttons */}
         <section className="grid grid-cols-2 gap-2.5">
-          <Link href="/tools" className="block active:scale-[0.98] transition">
+          <Link href="/tools?tab=registry" className="block active:scale-[0.98] transition">
             <GlassCard className="!rounded-2xl p-3 h-full">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-emerald-100/90 text-emerald-700 flex items-center justify-center shrink-0">
@@ -156,7 +156,7 @@ export default function MobileHome() {
             </GlassCard>
           </Link>
 
-          <Link href="/tools" className="block active:scale-[0.98] transition">
+          <Link href="/tools?tab=installment" className="block active:scale-[0.98] transition">
             <GlassCard className="!rounded-2xl p-3 h-full">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-[#FBBF24]/30 text-[#141413] flex items-center justify-center shrink-0">
