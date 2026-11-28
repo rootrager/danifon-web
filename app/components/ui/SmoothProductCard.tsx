@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowUpLeft, BatteryCharging } from "lucide-react";
+import { ArrowUpLeft } from "lucide-react";
 
 interface SmoothProductCardProps {
   id: string;
@@ -25,41 +25,38 @@ export default function SmoothProductCard({
   isNew,
   image = "/showcase-iphone-17-pro.jpeg",
 }: SmoothProductCardProps) {
+  const shortRegistry = registry.includes("بدون") ? "بدون کد" : "کددار";
+
   return (
     <article
       role="article"
-      className="group bg-white rounded-3xl p-3 border border-[#141413]/15 hover:border-[#141413] hover:shadow-md transition-all duration-200 flex flex-col justify-between gap-3"
+      className="group h-full bg-white rounded-3xl p-2.5 border border-[#141413]/12 hover:border-[#141413]/40 shadow-[0_2px_12px_rgba(20,20,19,0.04)] hover:shadow-[0_10px_24px_rgba(20,20,19,0.08)] transition-all duration-200 flex flex-col justify-between gap-2.5"
     >
       <Link href={`/product/${encodeURIComponent(id)}`} className="block space-y-2.5">
-        {/* Exact 3:4 Aspect Frame Matching public/models/*.jpg (Full Phone Visible, Uniform Size) */}
-        <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-[#141413] border border-[#141413]/10">
+        {/* Clean 3:4 Image Frame with Single Corner Status Pill */}
+        <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-[#141413]">
           <img
             src={image}
             alt={title}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-300"
           />
 
           <span
             role="status"
             className={`absolute top-2 right-2 text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-md ${
               isNew
-                ? "bg-[#141413]/85 text-white"
-                : "bg-[#FBBF24]/95 text-[#141413] border border-[#141413]/20"
+                ? "bg-white/90 text-[#141413]"
+                : "bg-[#FBBF24]/95 text-[#141413]"
             }`}
           >
-            {isNew ? "آکبند" : "کارکرده"}
-          </span>
-
-          <span className="absolute bottom-2 left-2 inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/90 text-[#141413] tabular-nums">
-            <BatteryCharging className="w-3 h-3 text-emerald-600" />
-            {battery}
+            {isNew ? "آکبند" : `کارکرده · ${battery}`}
           </span>
         </div>
 
-        {/* Title & Specs */}
-        <div className="space-y-1 px-0.5">
+        {/* Aligned Title & Specs */}
+        <div className="space-y-1 px-1">
           <h2
             className="text-xs font-extrabold text-[#141413] truncate"
             style={{ fontFamily: "var(--font-english)" }}
@@ -67,22 +64,25 @@ export default function SmoothProductCard({
           >
             {title}
           </h2>
-          <p className="text-[10px] text-[#141413]/60 truncate">
-            {capacity} · {registry}
-          </p>
+          <div className="flex items-center justify-between text-[10px] text-[#141413]/60 font-medium">
+            <span className="truncate">{shortRegistry}</span>
+            <span className="font-bold text-[#141413]/80" dir="ltr">
+              {capacity}
+            </span>
+          </div>
         </div>
       </Link>
 
-      {/* Price & Action CTA */}
-      <div className="pt-2 border-t border-[#141413]/10 flex items-center justify-between gap-2 px-0.5">
-        <span className="text-xs font-black text-[#141413] tabular-nums">
+      {/* Aligned Footer Price + Action */}
+      <div className="pt-2 border-t border-[#141413]/8 flex items-center justify-between gap-2 px-1">
+        <span className="text-xs font-black text-[#141413] tabular-nums truncate">
           {priceLabel}
         </span>
 
         <Link
           href={`/product/${encodeURIComponent(id)}`}
           aria-label={`مشاهده ${title}`}
-          className="w-8 h-8 rounded-full bg-[#141413] group-hover:bg-[#FF7A18] text-white flex items-center justify-center active:scale-90 transition-all duration-200"
+          className="w-8 h-8 rounded-full bg-[#141413] group-hover:bg-[#FF7A18] text-white flex items-center justify-center shrink-0 active:scale-90 transition-all duration-200"
         >
           <ArrowUpLeft className="w-4 h-4" />
         </Link>
