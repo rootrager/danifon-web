@@ -4,7 +4,6 @@ import {
   MapPin,
   Clock,
   PhoneCall,
-  MessageCircle,
   ShieldCheck,
   Navigation,
   Instagram,
