@@ -157,21 +157,21 @@ export default function PricingPage() {
         <span className="w-10" />
       </header>
 
-      <main className="relative z-10 max-w-md mx-auto px-4 space-y-4 pt-1">
-        {/* Clean Glass Form Card */}
-        <GlassCard className="p-4 space-y-4">
-          <p className="text-xs font-bold text-[#141413]/75">
+      <main className="relative z-10 max-w-md mx-auto px-4 space-y-5 pt-2">
+        {/* Clean Glass Form Card with Comfortable Spacing */}
+        <GlassCard className="p-5 space-y-5">
+          <p className="text-xs font-bold text-[#141413]/80 leading-relaxed">
             مشخصات گوشیت رو انتخاب کن تا قیمت زنده بازار رو دربیاریم:
           </p>
 
           {/* Model */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-black text-[#141413]">مدل آیفون</label>
+          <div className="space-y-2">
+            <label className="block text-xs font-black text-[#141413]">مدل آیفون</label>
             <select
               value={selectedModelIdx}
               onChange={(e) => setSelectedModelIdx(Number(e.target.value))}
               dir="ltr"
-              className="w-full h-11 px-3.5 rounded-2xl bg-white/80 border border-[#141413]/15 text-sm font-bold focus:outline-none focus:border-[#141413]"
+              className="w-full h-12 px-4 rounded-2xl bg-white/85 border border-[#141413]/15 text-sm font-bold focus:outline-none focus:border-[#141413]"
             >
               {MODELS.map((m, idx) => (
                 <option key={m.label} value={idx}>
@@ -182,9 +182,9 @@ export default function PricingPage() {
           </div>
 
           {/* Storage */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-black text-[#141413]">ظرفیت حافظه</label>
-            <div className="grid grid-cols-4 gap-2">
+          <div className="space-y-2">
+            <label className="block text-xs font-black text-[#141413]">ظرفیت حافظه</label>
+            <div className="grid grid-cols-4 gap-2.5">
               {STORAGES.map((s) => (
                 <button
                   key={s}
@@ -193,7 +193,7 @@ export default function PricingPage() {
                   className={`py-2.5 rounded-xl text-xs font-bold border transition cursor-pointer ${
                     storage === s
                       ? "bg-[#141413] text-white border-[#141413]"
-                      : "bg-white/75 text-[#141413] border-[#141413]/15"
+                      : "bg-white/80 text-[#141413] border-[#141413]/15"
                   }`}
                 >
                   {s === 1024 ? "1TB" : `${s}GB`}
@@ -203,13 +203,13 @@ export default function PricingPage() {
           </div>
 
           {/* Battery */}
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <div className="flex items-center justify-between">
               <label className="text-xs font-black text-[#141413] flex items-center gap-1.5">
                 <BatteryCharging className="w-4 h-4 text-[#EA580C]" />
                 سلامت باتری
               </label>
-              <span className="text-xs font-black px-2.5 py-0.5 rounded-full bg-[#FBBF24] border border-[#141413] tabular-nums">
+              <span className="text-xs font-black px-3 py-1 rounded-full bg-[#FBBF24] border border-[#141413] tabular-nums">
                 {battery}%
               </span>
             </div>
@@ -224,21 +224,21 @@ export default function PricingPage() {
           </div>
 
           {/* Registry */}
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <label className="text-xs font-black text-[#141413] flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
               وضعیت رجیستری
             </label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2.5">
               {REGISTRIES.map((r) => (
                 <button
                   key={r.id}
                   type="button"
                   onClick={() => setRegistry(r.id)}
-                  className={`py-2 px-2 rounded-xl text-[11px] font-bold border transition cursor-pointer ${
+                  className={`py-2.5 px-2 rounded-xl text-[11px] font-bold border transition cursor-pointer ${
                     registry === r.id
                       ? "bg-[#FBBF24] text-[#141413] border-[#141413]"
-                      : "bg-white/75 text-[#141413]/75 border-[#141413]/15"
+                      : "bg-white/80 text-[#141413]/75 border-[#141413]/15"
                   }`}
                 >
                   {r.label}
@@ -248,12 +248,12 @@ export default function PricingPage() {
           </div>
 
           {/* Replaced Parts */}
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <label className="text-xs font-black text-[#141413] flex items-center gap-1.5">
               <Wrench className="w-4 h-4 text-slate-600" />
               قطعه تعویضی (ال‌سی‌دی / درب پشت / دوربین)
             </label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2.5">
               {[
                 { val: 0, label: "بدون تعویض" },
                 { val: 1, label: "۱ قطعه" },
@@ -263,10 +263,10 @@ export default function PricingPage() {
                   key={p.val}
                   type="button"
                   onClick={() => setPartsReplaced(p.val)}
-                  className={`py-2 rounded-xl text-[11px] font-bold border transition cursor-pointer ${
+                  className={`py-2.5 rounded-xl text-[11px] font-bold border transition cursor-pointer ${
                     partsReplaced === p.val
                       ? "bg-[#141413] text-white border-[#141413]"
-                      : "bg-white/75 text-[#141413]/75 border-[#141413]/15"
+                      : "bg-white/80 text-[#141413]/75 border-[#141413]/15"
                   }`}
                 >
                   {p.label}
@@ -275,14 +275,16 @@ export default function PricingPage() {
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={handleEstimate}
-            disabled={loading}
-            className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#FF7A18] to-[#EA580C] text-white text-sm font-black border-2 border-[#141413] shadow-[3px_3px_0px_#141413] active:scale-[0.98] transition disabled:opacity-60 cursor-pointer"
-          >
-            {loading ? "در حال بررسی مراحل..." : "ببینم چند می‌ارزه!"}
-          </button>
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={handleEstimate}
+              disabled={loading}
+              className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#FF7A18] to-[#EA580C] text-white text-sm font-black border-2 border-[#141413] shadow-[3px_3px_0px_#141413] active:scale-[0.98] transition disabled:opacity-60 cursor-pointer"
+            >
+              {loading ? "در حال بررسی مراحل..." : "ببینم چند می‌ارزه!"}
+            </button>
+          </div>
         </GlassCard>
 
         {/* AI Task List while calculating */}
@@ -383,6 +385,24 @@ export default function PricingPage() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Friendly Plain-Language Pricing Guide */}
+        <GlassCard className="p-4 space-y-2.5">
+          <h3 className="text-xs font-black text-[#141413]">
+            قیمت چطوری حساب میشه؟ (خیلی خودمونی)
+          </h3>
+          <ul className="space-y-1.5 text-[11px] text-[#141413]/75 leading-relaxed">
+            <li>
+              • <strong>بازه ۵ میلیونی:</strong> عددی که میبینی یک بازه‌ی ۵ میلیونی واقعیه؛ یعنی گوشیِ تر‌وتمیز معمولاً سمت سقف بازه خریداری میشه.
+            </li>
+            <li>
+              • <strong>ظاهر و رد قاب:</strong> خط‌وخش، ضربه یا رد قاب روی فریم، موقع کارشناسی حضوری یه مقدار جزئی افت قیمت داره.
+            </li>
+            <li>
+              • <strong>شفافیت کامل:</strong> قیمت‌ها بر اساس معاملات واقعی روز در فروشگاه دانیفون محاسبه میشن، نه حدس و گمان.
+            </li>
+          </ul>
+        </GlassCard>
       </main>
 
       <BottomNav />
