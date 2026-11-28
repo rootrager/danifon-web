@@ -219,14 +219,21 @@ export default function MobileHome() {
         </section>
 
         {/* 4. Trust & Location Bar + Inline Music Button side by side */}
-        <section className="flex items-center justify-between gap-2.5 pt-0.5">
+        <section className="flex items-stretch justify-between gap-2.5 pt-1">
           <Link href="/contact" className="flex-1 min-w-0 block active:scale-[0.98] transition">
-            <GlassCard className="!rounded-full px-3.5 py-2.5">
-              <div className="flex items-center gap-2 min-w-0">
-                <MapPin className="w-4 h-4 text-[#EA580C] shrink-0" />
-                <p className="text-[11px] font-bold text-[#141413] truncate">
-                  تهران، میدان آزادی • ضمانت کارشناسی
-                </p>
+            <GlassCard className="!rounded-2xl px-3.5 py-3 h-full flex items-center">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded-xl bg-[#FF7A18]/15 text-[#EA580C] flex items-center justify-center shrink-0">
+                  <MapPin className="w-4 h-4" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-black text-[#141413] truncate">
+                    تهران، میدان آزادی
+                  </p>
+                  <p className="text-[10px] text-[#141413]/65 truncate">
+                    خرید حضوری با ضمانت کارشناسی
+                  </p>
+                </div>
               </div>
             </GlassCard>
           </Link>

@@ -59,12 +59,12 @@ export default function AmbientPlayer({ inline = false }: AmbientPlayerProps) {
         }
       >
         <MetalButton
-          size="sm"
+          size={inline ? "md" : "sm"}
           preset={isPlaying ? "chromatic" : "silver"}
           active={isPlaying}
           onClick={togglePlay}
-          className="rounded-full"
-          innerClassName="rounded-full px-3.5"
+          className={inline ? "rounded-2xl h-full" : "rounded-full"}
+          innerClassName={inline ? "rounded-2xl px-3.5 h-full" : "rounded-full px-3.5"}
           title={isPlaying ? "توقف موزیک پس‌زمینه" : "پخش موزیک لایت"}
           ariaLabel={isPlaying ? "توقف موزیک پس‌زمینه" : "پخش موزیک لایت"}
           ariaPressed={isPlaying}
