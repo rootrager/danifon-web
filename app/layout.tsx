@@ -19,19 +19,29 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Danifon - iPhone Store",
   description:
-    "Danifon official mobile landing, stock inventory showcase, VIP waitlist, installment calculator, and Apple ID order system.",
+    "Danifon official mobile web app, live iPhone pricing, inventory showcase, installment and registry calculator.",
+  applicationName: "Danifon",
+  icons: {
+    icon: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  appleWebApp: {
+    capable: true,
+    title: "Danifon",
+    statusBarStyle: "default",
+  },
   openGraph: {
     title: "Danifon - iPhone Store",
     description:
-      "Danifon official mobile landing, stock inventory showcase, VIP waitlist, installment calculator, and Apple ID order system.",
+      "Danifon official mobile web app, live iPhone pricing, inventory showcase, installment and registry calculator.",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fbff" },
-    { media: "(prefers-color-scheme: dark)", color: "#04060c" },
-  ],
+  themeColor: "#FAF6EE",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
