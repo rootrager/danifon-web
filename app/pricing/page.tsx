@@ -11,9 +11,10 @@ import {
   PhoneCall,
   CheckCircle2,
   AlertTriangle,
+  Sparkles,
 } from "lucide-react";
 import BottomNav from "../components/BottomNav";
-import AiOrbFace from "../components/ui/AiOrbFace";
+import GlassCard from "../components/ui/GlassCard";
 import AiTaskList, { AiTaskItem } from "../components/ui/AiTaskList";
 
 interface QuoteResponse {
@@ -56,9 +57,9 @@ const MODELS = [
 const STORAGES = [128, 256, 512, 1024];
 
 const REGISTRIES = [
-  { id: "REGISTERED", label: "با رجیستری (کددار)" },
+  { id: "REGISTERED", label: "با رجیستری" },
   { id: "UNREGISTERED", label: "بدون رجیستری" },
-  { id: "NATIONAL_ID", label: "مصوبه کد ملی" },
+  { id: "NATIONAL_ID", label: "کد ملی" },
 ];
 
 const AI_TASKS: AiTaskItem[] = [
@@ -88,12 +89,6 @@ export default function PricingPage() {
 
   const selectedModel = MODELS[selectedModelIdx];
 
-  const orbState: "idle" | "thinking" | "done" = loading
-    ? "thinking"
-    : result && result.ok
-      ? "done"
-      : "idle";
-
   const handleEstimate = async () => {
     setLoading(true);
     setError(null);
@@ -118,7 +113,6 @@ export default function PricingPage() {
         }),
       }).then((r) => r.json() as Promise<QuoteResponse>);
 
-      // Step through AI tasks visibly while live API responds
       for (let i = 1; i <= AI_TASKS.length; i++) {
         await wait(550);
         setCompletedTasks(i);
@@ -134,44 +128,50 @@ export default function PricingPage() {
   };
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#FAF6EE] text-[#141413] pb-28">
-      <header className="max-w-md mx-auto px-4 pt-5 pb-3 flex items-center justify-between">
+    <div
+      dir="rtl"
+      className="relative min-h-screen bg-gradient-to-b from-[#FAF6EE] via-[#F7EFE2] to-[#FCEEE3] text-[#141413] pb-28 overflow-x-hidden"
+    >
+      {/* Ambient orbs for GlassCard */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed top-28 -right-14 w-64 h-64 rounded-full bg-[#FF7A18]/25 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed bottom-28 -left-14 w-64 h-64 rounded-full bg-[#FBBF24]/25 blur-3xl"
+      />
+
+      <header className="relative z-10 max-w-md mx-auto px-4 pt-5 pb-3 flex items-center justify-between">
         <Link
           href="/"
           aria-label="بازگشت"
-          className="w-10 h-10 rounded-full bg-white border border-[#141413]/15 flex items-center justify-center text-[#141413] active:scale-95 transition"
+          className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-md border border-[#141413]/15 flex items-center justify-center text-[#141413] active:scale-95 transition"
         >
           <ArrowRight className="w-4 h-4" />
         </Link>
-        <h1 className="text-sm font-black">قیمت‌گذاری هوشمند آیفون</h1>
+        <div className="flex items-center gap-1.5">
+          <Sparkles className="w-4 h-4 text-[#EA580C]" />
+          <h1 className="text-sm font-black">قیمت‌گذاری هوشمند</h1>
+        </div>
         <span className="w-10" />
       </header>
 
-      <main className="max-w-md mx-auto px-4 space-y-4 pt-1">
-        {/* Floating AI Orb Header (No Box) */}
-        <div className="text-center space-y-1.5 py-1">
-          <AiOrbFace state={orbState} />
-          <h2 className="text-sm font-black text-[#141413]">
-            {loading
-              ? "دارم قیمت واقعی گوشیت رو حساب می‌کنم..."
-              : result?.ok
-                ? "قیمت آماده شد! پایین رو ببین"
-                : "دستیار هوشمند قیمت‌گذاری دانیفون"}
-          </h2>
-          <p className="text-[11px] text-[#141413]/65 leading-relaxed">
-            مشخصات گوشی رو انتخاب کن تا بر اساس معاملات واقعی امروز قیمتش رو دربیارم.
+      <main className="relative z-10 max-w-md mx-auto px-4 space-y-4 pt-1">
+        {/* Clean Glass Form Card */}
+        <GlassCard className="p-4 space-y-4">
+          <p className="text-xs font-bold text-[#141413]/75">
+            مشخصات گوشیت رو انتخاب کن تا قیمت زنده بازار رو دربیاریم:
           </p>
-        </div>
 
-        {/* Form Card */}
-        <div className="bg-white rounded-3xl p-4 border border-[#141413]/15 space-y-4">
+          {/* Model */}
           <div className="space-y-1.5">
             <label className="text-xs font-black text-[#141413]">مدل آیفون</label>
             <select
               value={selectedModelIdx}
               onChange={(e) => setSelectedModelIdx(Number(e.target.value))}
               dir="ltr"
-              className="w-full h-11 px-3.5 rounded-2xl bg-[#FAF6EE] border border-[#141413]/20 text-sm font-bold focus:outline-none focus:border-[#141413]"
+              className="w-full h-11 px-3.5 rounded-2xl bg-white/80 border border-[#141413]/15 text-sm font-bold focus:outline-none focus:border-[#141413]"
             >
               {MODELS.map((m, idx) => (
                 <option key={m.label} value={idx}>
@@ -181,6 +181,7 @@ export default function PricingPage() {
             </select>
           </div>
 
+          {/* Storage */}
           <div className="space-y-1.5">
             <label className="text-xs font-black text-[#141413]">ظرفیت حافظه</label>
             <div className="grid grid-cols-4 gap-2">
@@ -189,10 +190,10 @@ export default function PricingPage() {
                   key={s}
                   type="button"
                   onClick={() => setStorage(s)}
-                  className={`py-2 rounded-xl text-xs font-bold border transition cursor-pointer ${
+                  className={`py-2.5 rounded-xl text-xs font-bold border transition cursor-pointer ${
                     storage === s
                       ? "bg-[#141413] text-white border-[#141413]"
-                      : "bg-[#FAF6EE] text-[#141413] border-[#141413]/15"
+                      : "bg-white/75 text-[#141413] border-[#141413]/15"
                   }`}
                 >
                   {s === 1024 ? "1TB" : `${s}GB`}
@@ -201,6 +202,7 @@ export default function PricingPage() {
             </div>
           </div>
 
+          {/* Battery */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <label className="text-xs font-black text-[#141413] flex items-center gap-1.5">
@@ -221,6 +223,7 @@ export default function PricingPage() {
             />
           </div>
 
+          {/* Registry */}
           <div className="space-y-1.5">
             <label className="text-xs font-black text-[#141413] flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
@@ -235,7 +238,7 @@ export default function PricingPage() {
                   className={`py-2 px-2 rounded-xl text-[11px] font-bold border transition cursor-pointer ${
                     registry === r.id
                       ? "bg-[#FBBF24] text-[#141413] border-[#141413]"
-                      : "bg-[#FAF6EE] text-[#141413]/75 border-[#141413]/15"
+                      : "bg-white/75 text-[#141413]/75 border-[#141413]/15"
                   }`}
                 >
                   {r.label}
@@ -244,6 +247,7 @@ export default function PricingPage() {
             </div>
           </div>
 
+          {/* Replaced Parts */}
           <div className="space-y-1.5">
             <label className="text-xs font-black text-[#141413] flex items-center gap-1.5">
               <Wrench className="w-4 h-4 text-slate-600" />
@@ -262,7 +266,7 @@ export default function PricingPage() {
                   className={`py-2 rounded-xl text-[11px] font-bold border transition cursor-pointer ${
                     partsReplaced === p.val
                       ? "bg-[#141413] text-white border-[#141413]"
-                      : "bg-[#FAF6EE] text-[#141413]/75 border-[#141413]/15"
+                      : "bg-white/75 text-[#141413]/75 border-[#141413]/15"
                   }`}
                 >
                   {p.label}
@@ -275,11 +279,11 @@ export default function PricingPage() {
             type="button"
             onClick={handleEstimate}
             disabled={loading}
-            className="w-full py-3.5 rounded-full bg-[#141413] text-white text-sm font-bold shadow-md active:scale-[0.98] transition disabled:opacity-60 cursor-pointer"
+            className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#FF7A18] to-[#EA580C] text-white text-sm font-black border-2 border-[#141413] shadow-[3px_3px_0px_#141413] active:scale-[0.98] transition disabled:opacity-60 cursor-pointer"
           >
-            {loading ? "در حال بررسی مراحل..." : "محاسبه قیمت واقعی دستگاه"}
+            {loading ? "در حال بررسی مراحل..." : "ببینم چند می‌ارزه!"}
           </button>
-        </div>
+        </GlassCard>
 
         {/* AI Task List while calculating */}
         <AnimatePresence>
@@ -369,9 +373,9 @@ export default function PricingPage() {
 
                   <a
                     href="tel:+989128404028"
-                    className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF7A18] to-[#EA580C] text-white py-3 rounded-full text-xs font-bold border border-[#141413] active:scale-95 transition"
+                    className="w-full flex items-center justify-center gap-2 bg-[#141413] text-white py-3.5 rounded-full text-xs font-bold active:scale-95 transition"
                   >
-                    <PhoneCall className="w-4 h-4" />
+                    <PhoneCall className="w-4 h-4 text-[#FBBF24]" />
                     ثبت فروش یا معاوضه با کارشناس
                   </a>
                 </>
