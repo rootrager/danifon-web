@@ -31,8 +31,8 @@ export default function SmoothProductCard({
       className="group bg-white rounded-3xl p-3 border border-[#141413]/15 hover:border-[#141413] hover:shadow-md transition-all duration-200 flex flex-col justify-between gap-3"
     >
       <Link href={`/product/${encodeURIComponent(id)}`} className="block space-y-2.5">
-        {/* Uniform Fixed-Aspect Image Frame (No Flicker, Consistent Size) */}
-        <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-[#FAF6EE] border border-[#141413]/10">
+        {/* Exact 3:4 Aspect Frame Matching public/models/*.jpg (Full Phone Visible, Uniform Size) */}
+        <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-[#141413] border border-[#141413]/10">
           <img
             src={image}
             alt={title}

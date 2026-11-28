@@ -55,7 +55,7 @@ export default function AmbientPlayer({ inline = false }: AmbientPlayerProps) {
         className={
           inline
             ? "select-none shrink-0"
-            : "fixed left-4 bottom-[88px] md:bottom-5 md:left-5 z-30 select-none transition-transform duration-200"
+            : "hidden md:block fixed bottom-5 left-5 z-30 select-none transition-transform duration-200"
         }
       >
         <MetalButton
