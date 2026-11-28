@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
 import inventoryData from "../data/inventory.json";
 import BottomNav from "../components/BottomNav";
+import SmoothProductCard from "../components/ui/SmoothProductCard";
 
 interface InventoryItem {
   item_id: string;
@@ -106,34 +107,16 @@ export default function InventoryClient() {
 
         <div className="grid grid-cols-2 gap-3">
           {filtered.map((item) => (
-            <Link
+            <SmoothProductCard
               key={item.item_id}
-              href={`/product/${encodeURIComponent(item.item_id)}`}
-              className="bg-white rounded-2xl p-3 border border-[#141413]/15 hover:border-[#141413] flex flex-col justify-between gap-2.5 active:scale-[0.98] transition"
-            >
-              <div className="aspect-square w-full rounded-xl overflow-hidden bg-[#FAF6EE]">
-                <img
-                  src="/showcase-iphone-17-pro.jpeg"
-                  alt={cleanModelName(item.model)}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="space-y-1">
-                <h2
-                  className="text-xs font-bold text-[#141413] truncate"
-                  style={{ fontFamily: "var(--font-english)" }}
-                  dir="ltr"
-                >
-                  {cleanModelName(item.model)}
-                </h2>
-                <div className="flex items-center justify-between text-[11px] text-[#141413]/65">
-                  <span>{item.capacity} · {item.battery}</span>
-                  <span className="font-bold text-[#141413] tabular-nums">
-                    {formatPriceToman(item.price)}
-                  </span>
-                </div>
-              </div>
-            </Link>
+              id={item.item_id}
+              title={cleanModelName(item.model)}
+              capacity={item.capacity}
+              battery={item.battery}
+              registry={item.registry}
+              priceLabel={formatPriceToman(item.price)}
+              isNew={item.type === "new"}
+            />
           ))}
         </div>
       </main>
