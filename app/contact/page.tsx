@@ -6,11 +6,46 @@ import {
   PhoneCall,
   Navigation,
   Camera,
-  Send,
   ExternalLink,
 } from "lucide-react";
 import config from "../../config.json";
 import BottomNav from "../components/BottomNav";
+
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="11" fill="#25D366" />
+      <path
+        fill="#FFFFFF"
+        d="M16.6 14.3c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8.9-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.3.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.1 0-.3 0-.4-.1-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 3.9 3.5.5.2 1 .4 1.3.5.6.2 1.1.2 1.5.1.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1 0-.1-.2-.2-.4-.3z"
+      />
+    </svg>
+  );
+}
+
+function TelegramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="11" fill="#229ED9" />
+      <path
+        fill="#FFFFFF"
+        d="M16.9 7.6 14.8 17c-.1.6-.5.7-1 .4l-2.9-2.1-1.4 1.3c-.1.1-.3.3-.6.3l.2-2.9 5.4-4.9c.2-.2 0-.3-.4-.1L7.4 13.2l-2.9-.9c-.6-.2-.6-.6.1-.9l11.4-4.4c.5-.2 1 .1.9.6z"
+      />
+    </svg>
+  );
+}
+
+function BaleIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="11" fill="#00BFA5" />
+      <path
+        fill="#FFFFFF"
+        d="M12 6.5c-3.1 0-5.5 2.2-5.5 5.1 0 1.4.6 2.7 1.6 3.6l-.5 2.3 2.3-.9c.7.2 1.4.4 2.1.4 3.1 0 5.5-2.2 5.5-5.1S15.1 6.5 12 6.5zm-1.8 6.3a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3.6 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+      />
+    </svg>
+  );
+}
 
 export default function ContactPage() {
   const { contact, location } = config;
@@ -30,6 +65,7 @@ export default function ContactPage() {
       url: contact.whatsappUrl,
       badge: "WhatsApp",
       accent: "bg-emerald-50 text-emerald-700 border-emerald-200",
+      icon: <WhatsAppIcon />,
     },
     {
       title: "کانال تلگرام",
@@ -37,6 +73,7 @@ export default function ContactPage() {
       url: contact.telegramChannelUrl,
       badge: "@daniphoneir",
       accent: "bg-sky-50 text-sky-700 border-sky-200",
+      icon: <TelegramIcon />,
     },
     {
       title: "کارشناس تلگرام",
@@ -44,13 +81,15 @@ export default function ContactPage() {
       url: contact.telegramExpertUrl,
       badge: "@danikamali",
       accent: "bg-blue-50 text-blue-700 border-blue-200",
+      icon: <TelegramIcon />,
     },
     {
       title: "کانال بله",
       subtitle: "اطلاع‌رسانی و پشتیبانی",
       url: "https://ble.ir/daniphone",
       badge: "Bale",
-      accent: "bg-indigo-50 text-indigo-700 border-indigo-200",
+      accent: "bg-teal-50 text-teal-700 border-teal-200",
+      icon: <BaleIcon />,
     },
   ];
 
@@ -96,7 +135,7 @@ export default function ContactPage() {
             </div>
           </a>
 
-          {/* 4 Channels Grid */}
+          {/* 4 Channels Grid with Official App Logos */}
           <div className="grid grid-cols-2 gap-2.5">
             {socialChannels.map((ch) => (
               <a
@@ -104,13 +143,13 @@ export default function ContactPage() {
                 href={ch.url}
                 target="_blank"
                 rel="noreferrer"
-                className="bg-white rounded-2xl p-3.5 border border-[#BFDBFE] hover:border-[#2563EB] flex flex-col justify-between gap-2 shadow-xs active:scale-[0.98] transition"
+                className="bg-white rounded-2xl p-3.5 border border-[#BFDBFE] hover:border-[#2563EB] flex flex-col justify-between gap-2.5 shadow-xs active:scale-[0.98] transition"
               >
                 <div className="flex items-center justify-between">
+                  {ch.icon}
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${ch.accent}`}>
                     {ch.badge}
                   </span>
-                  <Send className="w-3.5 h-3.5 text-[#2563EB]" />
                 </div>
                 <div>
                   <h2 className="text-xs font-black text-[#0B1220]">{ch.title}</h2>
