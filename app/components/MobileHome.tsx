@@ -10,11 +10,13 @@ import {
   HelpCircle,
   Gamepad2,
   ArrowLeft,
+  MapPin,
 } from "lucide-react";
 import OnboardingTutorial from "./OnboardingTutorial";
 import BottomNav from "./BottomNav";
 import PixelFlowField from "./ui/PixelFlowField";
 import GlassCard from "./ui/GlassCard";
+import AmbientPlayer from "./AmbientPlayer";
 
 const CATEGORY_ITEMS = [
   {
@@ -214,6 +216,22 @@ export default function MobileHome() {
               )
             )}
           </div>
+        </section>
+
+        {/* 4. Trust & Location Bar + Inline Music Button side by side */}
+        <section className="flex items-center justify-between gap-2.5 pt-0.5">
+          <Link href="/contact" className="flex-1 min-w-0 block active:scale-[0.98] transition">
+            <GlassCard className="!rounded-full px-3.5 py-2.5">
+              <div className="flex items-center gap-2 min-w-0">
+                <MapPin className="w-4 h-4 text-[#EA580C] shrink-0" />
+                <p className="text-[11px] font-bold text-[#141413] truncate">
+                  تهران، میدان آزادی • ضمانت کارشناسی
+                </p>
+              </div>
+            </GlassCard>
+          </Link>
+
+          <AmbientPlayer inline />
         </section>
       </main>
 

@@ -1,12 +1,23 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { Pause, Play } from "lucide-react";
 import MetalButton from "./ui/MetalButton";
 
-export default function AmbientPlayer() {
+interface AmbientPlayerProps {
+  inline?: boolean;
+}
+
+export default function AmbientPlayer({ inline = false }: AmbientPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const pathname = usePathname();
+
+  // On Home (/), AmbientPlayer is rendered inline next to the trust bar
+  if (!inline && pathname === "/") {
+    return null;
+  }
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -41,7 +52,11 @@ export default function AmbientPlayer() {
 
       <aside
         aria-label="کنترل موسیقی پس‌زمینه"
-        className="fixed left-4 bottom-[88px] md:bottom-5 md:left-5 z-30 select-none transition-transform duration-200"
+        className={
+          inline
+            ? "select-none shrink-0"
+            : "fixed left-4 bottom-[88px] md:bottom-5 md:left-5 z-30 select-none transition-transform duration-200"
+        }
       >
         <MetalButton
           size="sm"
