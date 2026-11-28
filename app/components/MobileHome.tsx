@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import OnboardingTutorial from "./OnboardingTutorial";
 import BottomNav from "./BottomNav";
+import PixelFlowField from "./ui/PixelFlowField";
 
 const CATEGORY_ITEMS = [
   {
@@ -73,23 +74,22 @@ export default function MobileHome() {
       />
 
       <main className="max-w-md mx-auto px-4 pt-5 space-y-4">
-        {/* Top App Header */}
-        <header className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#141413] text-[#FAF6EE] flex items-center justify-center font-black text-sm border-2 border-[#141413]">
-              D
-            </div>
-            <div>
-              <p className="text-[11px] text-[#141413]/65 font-medium">سلام! خوش اومدی 👋</p>
-              <h1 className="text-base font-black text-[#141413]">دانیفون</h1>
-            </div>
+        {/* Top Interactive Pixel Flow Field Header (DANIFON) */}
+        <header className="relative rounded-3xl bg-[#141413] border-2 border-[#141413] shadow-[4px_4px_0px_#FBBF24] overflow-hidden h-20 flex items-center justify-between px-3">
+          <div className="w-10 shrink-0" />
+          <div className="flex-1 h-full">
+            <PixelFlowField
+              text="DANIFON"
+              color="#FAF6EE"
+              accentColor="#FF7A18"
+              className="w-full h-full"
+            />
           </div>
-
           <button
             type="button"
             onClick={() => setReplayTutorial(true)}
             aria-label="راهنمای اپ"
-            className="w-10 h-10 rounded-full bg-white border border-[#141413]/15 flex items-center justify-center text-[#141413] active:scale-95 transition cursor-pointer"
+            className="relative z-10 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-[#FAF6EE] active:scale-95 transition cursor-pointer shrink-0"
           >
             <HelpCircle className="w-4 h-4" />
           </button>
