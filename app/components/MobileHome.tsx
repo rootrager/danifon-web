@@ -2,10 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import {
-  Search,
   Sparkles,
   ShieldCheck,
   Calculator,
@@ -54,23 +52,12 @@ const CATEGORY_ITEMS = [
 ];
 
 export default function MobileHome() {
-  const [query, setQuery] = useState("");
   const [replayTutorial, setReplayTutorial] = useState(false);
-  const router = useRouter();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (query.trim()) {
-      router.push(`/inventory?search=${encodeURIComponent(query.trim())}`);
-    } else {
-      router.push("/inventory");
-    }
-  };
 
   return (
     <div
       dir="rtl"
-      className="relative min-h-screen bg-gradient-to-b from-[#FAF6EE] via-[#F7EFE2] to-[#FCEEE3] text-[#141413] pb-28 overflow-x-hidden"
+      className="relative min-h-dvh bg-gradient-to-b from-[#FAF6EE] via-[#F7EFE2] to-[#FCEEE3] text-[#141413] pb-20 overflow-x-hidden"
     >
       {/* Stronger ambient color orbs so GlassCard frosted blur is clearly visible */}
       <div
@@ -91,10 +78,10 @@ export default function MobileHome() {
         onClose={() => setReplayTutorial(false)}
       />
 
-      <main className="relative z-10 max-w-md mx-auto px-4 pt-5 space-y-4">
+      <main className="relative z-10 max-w-md mx-auto px-4 pt-3 space-y-3">
         {/* Top Interactive Pixel Flow Field Header (DANIFON) */}
-        <header className="relative rounded-3xl bg-[#141413] border-2 border-[#141413] shadow-[4px_4px_0px_#FBBF24] overflow-hidden h-20 flex items-center justify-between px-3">
-          <div className="w-10 shrink-0" />
+        <header className="relative rounded-2xl bg-[#141413] border-2 border-[#141413] shadow-[3px_3px_0px_#FBBF24] overflow-hidden h-16 flex items-center justify-between px-3">
+          <div className="w-8 shrink-0" />
           <div className="flex-1 h-full">
             <PixelFlowField
               text="DANIFON"
@@ -107,49 +94,37 @@ export default function MobileHome() {
             type="button"
             onClick={() => setReplayTutorial(true)}
             aria-label="راهنمای اپ"
-            className="relative z-10 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-[#FAF6EE] active:scale-95 transition cursor-pointer shrink-0"
+            className="relative z-10 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-[#FAF6EE] active:scale-95 transition cursor-pointer shrink-0"
           >
             <HelpCircle className="w-4 h-4" />
           </button>
         </header>
-
-        {/* Search Bar */}
-        <form onSubmit={handleSearch} className="relative">
-          <Search className="w-4 h-4 text-[#141413]/45 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="دنبال چه گوشی‌ای هستی؟ (مثلاً 16 Pro)..."
-            className="w-full h-11 pr-10 pl-4 rounded-full bg-white border border-[#141413]/15 text-sm text-[#141413] placeholder:text-[#141413]/45 focus:outline-none focus:border-[#141413] transition"
-          />
-        </form>
 
         {/* 1. Hero Card: قیمت گوشیت همین الان چنده؟ */}
         <motion.section
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
-          className="rounded-3xl bg-gradient-to-br from-[#FF7A18] via-[#FF5E1A] to-[#EA580C] p-5 text-white border-2 border-[#141413] shadow-[4px_4px_0px_#141413] space-y-3"
+          className="rounded-3xl bg-gradient-to-br from-[#FF7A18] via-[#FF5E1A] to-[#EA580C] p-4 text-white border-2 border-[#141413] shadow-[4px_4px_0px_#141413] space-y-2"
         >
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold bg-black/20 px-3 py-1 rounded-full">
-            <Sparkles className="w-3.5 h-3.5 text-[#FBBF24]" />
-            قیمت زنده بازار
-          </span>
-
-          <div className="space-y-1">
-            <h2 className="text-xl font-black leading-snug">
-              قیمت گوشیت همین الان چنده؟
-            </h2>
-            <p className="text-xs text-white/90 leading-relaxed">
-              مدل و درصد باتریش رو بگو تا همون لحظه بر اساس معاملات واقعی امروز، قیمت دقیقش رو دربیاریم.
-            </p>
+          <div className="flex items-center justify-between">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-black/20 px-2.5 py-0.5 rounded-full">
+              <Sparkles className="w-3 h-3 text-[#FBBF24]" />
+              قیمت زنده بازار
+            </span>
           </div>
 
-          <div className="pt-1">
+          <h2 className="text-lg font-black leading-snug">
+            قیمت گوشیت همین الان چنده؟
+          </h2>
+          <p className="text-[11px] text-white/90 leading-relaxed">
+            مدل و باتریش رو بگو تا همون لحظه قیمت واقعی امروزش رو دربیاریم.
+          </p>
+
+          <div className="pt-0.5">
             <Link
               href="/pricing"
-              className="inline-flex items-center gap-2 bg-[#141413] text-white px-5 py-2.5 rounded-full text-xs font-bold active:scale-95 transition"
+              className="inline-flex items-center gap-2 bg-[#141413] text-white px-4 py-2 rounded-full text-xs font-bold active:scale-95 transition"
             >
               <span>ببینم چند می‌ارزه!</span>
               <ArrowLeft className="w-3.5 h-3.5 text-[#FBBF24]" />
@@ -158,30 +133,30 @@ export default function MobileHome() {
         </motion.section>
 
         {/* 2. Registry & Installment Quick Glass Buttons */}
-        <section className="grid grid-cols-2 gap-3">
+        <section className="grid grid-cols-2 gap-2.5">
           <Link href="/tools" className="block active:scale-[0.98] transition">
-            <GlassCard className="!rounded-2xl p-3.5 h-full">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-100/90 text-emerald-700 flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-5 h-5" />
+            <GlassCard className="!rounded-2xl p-3 h-full">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-emerald-100/90 text-emerald-700 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div>
                   <h3 className="text-xs font-black text-[#141413]">رجیستریش چنده؟</h3>
-                  <p className="text-[10px] text-[#141413]/60 mt-0.5">استعلام گمرکی و کد ملی</p>
+                  <p className="text-[10px] text-[#141413]/60">گمرکی و کد ملی</p>
                 </div>
               </div>
             </GlassCard>
           </Link>
 
           <Link href="/tools" className="block active:scale-[0.98] transition">
-            <GlassCard className="!rounded-2xl p-3.5 h-full">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#FBBF24]/30 text-[#141413] flex items-center justify-center shrink-0">
-                  <Calculator className="w-5 h-5" />
+            <GlassCard className="!rounded-2xl p-3 h-full">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[#FBBF24]/30 text-[#141413] flex items-center justify-center shrink-0">
+                  <Calculator className="w-4 h-4" />
                 </div>
                 <div>
                   <h3 className="text-xs font-black text-[#141413]">قسطی حساب کنیم؟</h3>
-                  <p className="text-[10px] text-[#141413]/60 mt-0.5">پیش‌پرداخت و قسط ماهانه</p>
+                  <p className="text-[10px] text-[#141413]/60">پیش‌پرداخت و قسط</p>
                 </div>
               </div>
             </GlassCard>
@@ -189,28 +164,28 @@ export default function MobileHome() {
         </section>
 
         {/* 3. Four Glass Product Categories (Mobile, Watch, AirPods, Console) */}
-        <section className="space-y-3 pt-1">
+        <section className="space-y-2">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-black text-[#141413]">توی دانیفون چی داریم؟</h3>
-            <Link href="/inventory" className="text-xs font-bold text-[#EA580C]">
+            <h3 className="text-xs font-black text-[#141413]">توی دانیفون چی داریم؟</h3>
+            <Link href="/inventory" className="text-[11px] font-bold text-[#EA580C]">
               همه موجودی‌ها
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2.5">
             {CATEGORY_ITEMS.map((cat) =>
               cat.comingSoon ? (
-                <GlassCard key={cat.id} className="p-3.5 !bg-white/40 border-dashed !border-[#141413]/20">
-                  <div className="flex flex-col justify-between gap-2.5">
-                    <div className="aspect-[4/3] w-full rounded-2xl bg-white/50 flex flex-col items-center justify-center gap-1.5 text-[#141413]/45">
-                      <Gamepad2 className="w-10 h-10 stroke-[1.5]" />
-                      <span className="text-[10px] font-bold bg-[#FBBF24] text-[#141413] px-2.5 py-0.5 rounded-full">
+                <GlassCard key={cat.id} className="!rounded-2xl p-2.5 !bg-white/40 border-dashed !border-[#141413]/20">
+                  <div className="flex flex-col justify-between gap-2">
+                    <div className="aspect-[16/10] w-full rounded-xl bg-white/50 flex flex-col items-center justify-center gap-1 text-[#141413]/45">
+                      <Gamepad2 className="w-7 h-7 stroke-[1.5]" />
+                      <span className="text-[9px] font-bold bg-[#FBBF24] text-[#141413] px-2 py-0.5 rounded-full">
                         به‌زودی
                       </span>
                     </div>
                     <div>
                       <h4 className="text-xs font-black text-[#141413]/75">{cat.title}</h4>
-                      <p className="text-[10px] text-[#141413]/50 mt-0.5">{cat.subtitle}</p>
+                      <p className="text-[10px] text-[#141413]/50 truncate">{cat.subtitle}</p>
                     </div>
                   </div>
                 </GlassCard>
@@ -220,9 +195,9 @@ export default function MobileHome() {
                   href={cat.href}
                   className="block active:scale-[0.98] transition"
                 >
-                  <GlassCard className="p-3.5 h-full">
-                    <div className="flex flex-col justify-between gap-2.5">
-                      <div className="aspect-[4/3] w-full rounded-2xl overflow-hidden bg-white/60">
+                  <GlassCard className="!rounded-2xl p-2.5 h-full">
+                    <div className="flex flex-col justify-between gap-2">
+                      <div className="aspect-[16/10] w-full rounded-xl overflow-hidden bg-white/60">
                         <img
                           src={cat.image!}
                           alt={cat.title}
@@ -231,7 +206,7 @@ export default function MobileHome() {
                       </div>
                       <div>
                         <h4 className="text-xs font-black text-[#141413]">{cat.title}</h4>
-                        <p className="text-[10px] text-[#141413]/60 mt-0.5">{cat.subtitle}</p>
+                        <p className="text-[10px] text-[#141413]/60 truncate">{cat.subtitle}</p>
                       </div>
                     </div>
                   </GlassCard>
