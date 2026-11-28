@@ -17,6 +17,7 @@ interface InventoryItem {
   part?: string;
   registry: string;
   battery: string;
+  color?: string;
   price: string;
   image?: string;
 }
@@ -187,6 +188,7 @@ export default function InventoryClient() {
                 capacity={item.capacity}
                 battery={item.battery}
                 registry={item.registry}
+                color={item.color}
                 priceLabel={formatPriceToman(item.price)}
                 isNew={item.type === "new" || item.type === "accessory"}
                 image={item.image || "/showcase-iphone-17-pro.jpeg"}

@@ -10,10 +10,26 @@ interface SmoothProductCardProps {
   capacity: string;
   battery: string;
   registry: string;
+  color?: string;
   priceLabel: string;
   isNew: boolean;
   image?: string;
 }
+
+const COLOR_DOTS: Record<string, string> = {
+  "سفید": "bg-white border border-[#141413]/30",
+  "مشکی": "bg-[#141413]",
+  "آبی یخی": "bg-sky-300",
+  "آلبالویی": "bg-rose-800",
+  "نارنجی": "bg-[#FF7A18]",
+  "آبی": "bg-blue-600",
+  "سبز": "bg-emerald-600",
+  "بنفش": "bg-purple-500",
+  "تیتانیوم صحرایی": "bg-amber-700/70",
+  "نقره‌ای/طوسی": "bg-slate-400",
+  "صورتی": "bg-pink-400",
+  "زرد": "bg-amber-300",
+};
 
 export default function SmoothProductCard({
   id,
@@ -21,11 +37,13 @@ export default function SmoothProductCard({
   capacity,
   battery,
   registry,
+  color,
   priceLabel,
   isNew,
   image = "/showcase-iphone-17-pro.jpeg",
 }: SmoothProductCardProps) {
   const shortRegistry = registry.includes("بدون") ? "بدون کد" : "کددار";
+  const dotClass = (color && COLOR_DOTS[color]) || "bg-slate-300";
 
   return (
     <article
@@ -64,9 +82,18 @@ export default function SmoothProductCard({
           >
             {title}
           </h2>
-          <div className="flex items-center justify-between text-[10px] text-[#141413]/60 font-medium">
-            <span className="truncate">{shortRegistry}</span>
-            <span className="font-bold text-[#141413]/80" dir="ltr">
+          <div className="flex items-center justify-between text-[10px] text-[#141413]/70 font-medium gap-1">
+            <span className="inline-flex items-center gap-1 truncate">
+              {color && (
+                <>
+                  <span className={`w-2 h-2 rounded-full shrink-0 ${dotClass}`} />
+                  <span className="font-bold text-[#141413]">{color}</span>
+                  <span>·</span>
+                </>
+              )}
+              <span>{shortRegistry}</span>
+            </span>
+            <span className="font-bold text-[#141413]/85 shrink-0" dir="ltr">
               {capacity}
             </span>
           </div>
