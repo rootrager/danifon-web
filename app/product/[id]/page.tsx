@@ -26,6 +26,7 @@ interface InventoryItem {
   color?: string;
   price: string;
   condition?: string;
+  image?: string;
 }
 
 function cleanModelName(name: string): string {
@@ -87,9 +88,9 @@ export default async function ProductDetailPage({
         <div className="bg-white rounded-[32px] p-4 border-2 border-[#141413] shadow-[5px_5px_0px_#141413]">
           <div className="aspect-[4/3] w-full rounded-2xl overflow-hidden bg-[#FAF6EE]">
             <img
-              src="/showcase-iphone-17-pro.jpeg"
+              src={item.image || "/showcase-iphone-17-pro.jpeg"}
               alt={title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
           </div>
         </div>

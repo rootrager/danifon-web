@@ -37,11 +37,11 @@ export default function SmoothProductCard({
     >
       <Link href={`/product/${encodeURIComponent(id)}`} className="block space-y-2.5">
         {/* Image Frame with Zoom & Overlay Badge */}
-        <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-[#FAF6EE]">
+        <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-white border border-[#141413]/10">
           <img
             src={image}
             alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
           />
 
           <span
