@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import {
@@ -10,7 +10,6 @@ import {
   ArrowLeft,
   MapPin,
 } from "lucide-react";
-import OnboardingTutorial from "./OnboardingTutorial";
 import BottomNav from "./BottomNav";
 import PixelFlowField from "./ui/PixelFlowField";
 import GlassCard from "./ui/GlassCard";
@@ -52,8 +51,6 @@ const CATEGORY_ITEMS = [
 ];
 
 export default function MobileHome() {
-  const [replayTutorial, setReplayTutorial] = useState(false);
-
   return (
     <div
       dir="rtl"
@@ -73,11 +70,6 @@ export default function MobileHome() {
         className="pointer-events-none fixed top-[420px] left-1/3 w-56 h-56 rounded-full bg-[#FBBF24]/30 blur-3xl"
       />
 
-      <OnboardingTutorial
-        forceOpen={replayTutorial}
-        onClose={() => setReplayTutorial(false)}
-      />
-
       <main className="relative z-10 max-w-md mx-auto px-4 pt-3 space-y-3">
         {/* Top Interactive Pixel Flow Field Header (DANIFON) */}
         <header className="relative rounded-2xl bg-[#141413] border-2 border-[#141413] shadow-[3px_3px_0px_#FBBF24] overflow-hidden h-16 flex items-center justify-between px-3">
@@ -90,11 +82,10 @@ export default function MobileHome() {
               className="w-full h-full"
             />
           </div>
-          <button
-            type="button"
-            onClick={() => setReplayTutorial(true)}
-            aria-label="راهنمای اپ"
-            className="relative z-10 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-[#FAF6EE] active:scale-95 transition cursor-pointer shrink-0"
+          <Link
+            href="/contact"
+            aria-label="درباره دانیفون"
+            className="relative z-10 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-[#FAF6EE] active:scale-95 transition shrink-0"
           >
             <svg
               viewBox="0 0 24 24"
@@ -104,7 +95,7 @@ export default function MobileHome() {
             >
               <path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.955 4.45z" />
             </svg>
-          </button>
+          </Link>
         </header>
 
         {/* 1. Hero Card: قیمت گوشیت همین الان چنده؟ */}
