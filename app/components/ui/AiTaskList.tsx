@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Circle } from "lucide-react";
+import AiLoader from "./AiLoader";
 
 export interface AiTaskItem {
   id: string;
@@ -23,6 +24,8 @@ export default function AiTaskList({ tasks, completedCount }: AiTaskListProps) {
           {Math.min(completedCount, tasks.length)} از {tasks.length}
         </span>
       </div>
+
+      <AiLoader />
 
       <div className="space-y-2">
         {tasks.map((task, idx) => {
